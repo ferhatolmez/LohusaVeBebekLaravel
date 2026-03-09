@@ -60,3 +60,38 @@ test('bebek form pdf olarak indirilebilir', function () {
     $response->assertStatus(200);
     $response->assertHeader('content-type', 'application/pdf');
 });
+
+test('bebek form düzenleme sayfası yüklenir', function () {
+    $form = BebekForm::factory()->create();
+
+    $response = $this->get(route('bebek.edit', $form));
+
+    $response->assertStatus(200);
+    $response->assertSee('Düzenle');
+});
+
+test('bebek formu güncellenebilir', function () {
+    $form = BebekForm::factory()->create(['cinsiyet' => 'Erkek']);
+
+    $response = $this->put(route('bebek.update', $form), [
+        'cinsiyet' => 'Kız',
+        'termin_durumu' => 'Term',
+        '_token' => csrf_token(),
+    ]);
+
+    $response->assertRedirect(route('bebek.index'));
+    $response->assertSessionHas('success');
+    expect($form->fresh()->cinsiyet)->toBe('Kız');
+});
+
+test('bebek formu silinebilir', function () {
+    $form = BebekForm::factory()->create();
+
+    $response = $this->delete(route('bebek.destroy', $form), [
+        '_token' => csrf_token(),
+    ]);
+
+    $response->assertRedirect(route('bebek.index'));
+    $response->assertSessionHas('success');
+    $this->assertDatabaseMissing('bebek_forms', ['id' => $form->id]);
+});

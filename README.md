@@ -62,8 +62,11 @@ Uygulama; ebe ve sağlık profesyonellerinin sahadaki klinik değerlendirmelerin
 ### 🔧 Kayıt Yönetimi
 
 - Lohusa ve bebek kayıtları listelenebilir, detay sayfasından görüntülenebilir
-- Lohusa kayıtları **güvenli silme** ile yönetilebilir
-- Anasayfada **son kayıtlar** hızlı erişim listesi
+- **Arama ve filtreleme** – Lohusa: ad soyad; Bebek: cinsiyet, termin, haftalık
+- **Pagination** – Sayfa başına 15 kayıt
+- Lohusa ve bebek kayıtları **güvenli silme** ile yönetilebilir
+- **Bebek formu düzenleme** – Mevcut kayıtlar güncellenebilir
+- Anasayfada **son Lohusa ve Bebek kayıtları** ayrı kartlarda
 
 ---
 
@@ -71,11 +74,12 @@ Uygulama; ebe ve sağlık profesyonellerinin sahadaki klinik değerlendirmelerin
 
 | Rota | Açıklama |
 |------|----------|
-| `/` | Ana sayfa – Lohusa/Bebek form seçimi, son kayıtlar |
-| `/lohusa` | Lohusa form listesi – Detay, PDF, Sil |
+| `/` | Ana sayfa – Form seçimi, son Lohusa ve Bebek kayıtları |
+| `/lohusa` | Lohusa listesi – Arama, pagination, Detay, PDF, Sil |
 | `/lohusa/create` | 16 adımlı Lohusa form oluşturma |
-| `/bebek` | Bebek form listesi |
+| `/bebek` | Bebek listesi – Arama, filtre, pagination, Detay, Düzenle, Sil, PDF |
 | `/bebek/create` | Bebek form oluşturma |
+| `/bebek/{id}/edit` | Bebek formu düzenleme |
 
 ---
 
@@ -183,6 +187,19 @@ git push -u origin main
 ### Shared Hosting
 
 `public` klasörünü document root yapın, `.env` düzenleyin, `composer install` ve `php artisan migrate --force` çalıştırın.
+
+---
+
+## 🚧 Önerilen Sonraki Geliştirmeler
+
+| Öncelik | Özellik | Açıklama |
+|---------|---------|----------|
+| Yüksek | **Kimlik doğrulama** | Laravel Breeze ile login/register; form rotalarını `auth` middleware ile koruma |
+| Yüksek | **Lohusa düzenleme** | 16 adımlı form için edit/update (mevcut veri ile ön doldurma) |
+| Orta | **FormRequest** | Validation kurallarını `StoreLohusaFormRequest`, `StoreBebekFormRequest` sınıflarına taşıma |
+| Orta | **Policy** | `LohusaFormPolicy`, `BebekFormPolicy` ile yetkilendirme |
+| Düşük | **KVKK uyumu** | Veri işleme onayı, aydınlatma metni |
+| Düşük | **Audit log** | Kim, ne zaman, ne değiştirdi kaydı |
 
 ---
 

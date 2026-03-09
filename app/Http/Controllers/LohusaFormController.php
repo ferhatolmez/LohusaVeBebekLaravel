@@ -8,9 +8,15 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class LohusaFormController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $forms = LohusaForm::orderBy('created_at', 'desc')->get();
+        $query = LohusaForm::orderBy('created_at', 'desc');
+
+        if ($request->filled('q')) {
+            $query->where('ad_soyad', 'like', '%' . $request->q . '%');
+        }
+
+        $forms = $query->paginate(15)->withQueryString();
         return view('lohusa.index', compact('forms'));
     }
 
@@ -138,6 +144,7 @@ class LohusaFormController extends Controller
             'bogaz_bulgular' => 'nullable|json',
             'solunum_bulgular' => 'nullable|json',
             'gogus_bulgular' => 'nullable|json',
+            'fiziksel_muayene' => 'nullable|json',
             'emzirmeye_uygun' => 'nullable|string',
             'fundus_palpe_ediliyor' => 'nullable|string',
             'abdomen_bulgulari' => 'nullable|json',
@@ -288,7 +295,8 @@ class LohusaFormController extends Controller
     public function sonKayitlar()
     {
         $sonLohusaKayitlar = LohusaForm::latest()->take(3)->get();
-        return view('welcome', compact('sonLohusaKayitlar'));
+        $sonBebekKayitlar = \App\Models\BebekForm::latest()->take(3)->get();
+        return view('welcome', compact('sonLohusaKayitlar', 'sonBebekKayitlar'));
     }
 
 

@@ -19,24 +19,14 @@
                 </div>
             @endif
 
-            {{-- Arama ve Filtreleme Alanı (Opsiyonel - Backend Gerekir) --}}
-            {{--
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="Ad Soyad'a göre ara...">
+            <form method="GET" class="row mb-3">
+                <div class="col-md-8">
+                    <input type="text" name="q" class="form-control" placeholder="Ad Soyad'a göre ara..." value="{{ request('q') }}">
                 </div>
-                <div class="col-md-3">
-                    <select class="form-select">
-                        <option value="">Tüm Alanlar</option>
-                        <option value="ad_soyad">Ad Soyad</option>
-                        <!-- Diğer filtreleme seçenekleri eklenebilir -->
-                    </select>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-outline-primary w-100">🔍 Ara</button>
                 </div>
-                <div class="col-md-3">
-                    <button class="btn btn-outline-secondary w-100">Ara</button>
-                </div>
-            </div>
-            --}}
+            </form>
 
             <div class="table-responsive">
                 <table class="table table-hover table-striped border">
@@ -77,12 +67,9 @@
                 </table>
             </div>
 
-            {{-- Pagination (Opsiyonel - Backend Gerekir) --}}
-            {{--
-            <div class="d-flex justify-content-center">
-                 {{ $forms->links() }}
+            <div class="d-flex justify-content-center mt-3">
+                {{ $forms->links() }}
             </div>
-            --}}
 
         </div>
     </div>

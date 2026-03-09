@@ -9,9 +9,22 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class BebekFormController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $forms = BebekForm::orderBy('created_at', 'desc')->get();
+        $query = BebekForm::orderBy('created_at', 'desc');
+
+        if ($request->filled('q')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('cinsiyet', 'like', '%' . $request->q . '%')
+                    ->orWhere('termin_durumu', 'like', '%' . $request->q . '%')
+                    ->orWhere('kac_haftalik', 'like', '%' . $request->q . '%');
+            });
+        }
+        if ($request->filled('cinsiyet')) {
+            $query->where('cinsiyet', $request->cinsiyet);
+        }
+
+        $forms = $query->paginate(15)->withQueryString();
         return view('bebek.index', compact('forms'));
     }
 
@@ -75,10 +88,64 @@ class BebekFormController extends Controller
     public function exportPdf($id)
     {
         $bebekForm = BebekForm::findOrFail($id);
-
-        $pdf = Pdf::loadView('bebek.pdf', ['bebekForm' => $bebekForm])->setPaper('a4', 'portrait');
-
+        $pdf = Pdf::loadView('bebek.pdf', ['bebekForm' => $bebekForm])
+            ->setPaper('a4', 'portrait')
+            ->setOptions(['defaultFont' => 'DejaVu Sans']);
         return $pdf->download('bebek-izlem-formu.pdf');
     }
 
+    public function edit(BebekForm $bebekForm)
+    {
+        return view('bebek.edit', compact('bebekForm'));
+    }
+
+    public function update(Request $request, BebekForm $bebekForm)
+    {
+        $validated = $request->validate([
+            'dogum_tarihi' => 'nullable|date',
+            'kac_haftalik' => 'nullable|string',
+            'muayene_tarihi' => 'nullable|date',
+            'izlem_sayisi' => 'nullable|integer',
+            'termin_durumu' => 'nullable|string|in:Term,Prematür,Postmatür',
+            'cinsiyet' => 'nullable|string',
+            'kacinci_cocuk' => 'nullable|integer',
+            'kan_grubu' => 'nullable|string',
+            'ates' => 'nullable|numeric',
+            'nabiz' => 'nullable|integer',
+            'solunum' => 'nullable|integer',
+            'kilo' => 'nullable|numeric',
+            'boy' => 'nullable|numeric',
+            'bas_cevresi' => 'nullable|numeric',
+            'gogus_cevresi' => 'nullable|numeric',
+        ]);
+
+        $data = array_merge($validated, [
+            'deri' => $request->input('deri', []),
+            'bas' => $request->input('bas', []),
+            'gozler' => $request->input('gozler', []),
+            'burun' => $request->input('burun', []),
+            'agiz' => $request->input('agiz', []),
+            'kulak' => $request->input('kulak', []),
+            'boyun' => $request->input('boyun', []),
+            'gogus' => $request->input('gogus', []),
+            'abdomen' => $request->input('abdomen', []),
+            'kasik' => $request->input('kasik', []),
+            'genital' => $request->input('genital', []),
+            'solunum_sistemi' => $request->input('solunum_sistemi', []),
+            'kvs' => $request->input('kvs', []),
+            'gis' => $request->input('gis', []),
+            'uriner' => $request->input('uriner', []),
+            'kas_iskelet' => $request->input('kas_iskelet', []),
+            'norolojik' => $request->input('norolojik', []),
+        ]);
+
+        $bebekForm->update($data);
+        return redirect()->route('bebek.index')->with('success', 'Bebek formu güncellendi.');
+    }
+
+    public function destroy(BebekForm $bebekForm)
+    {
+        $bebekForm->delete();
+        return redirect()->route('bebek.index')->with('success', 'Bebek formu silindi.');
+    }
 }

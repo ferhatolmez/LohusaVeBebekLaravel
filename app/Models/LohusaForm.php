@@ -40,6 +40,7 @@ class LohusaForm extends Model
 
         'deri', 'bas', 'gozler', 'burun', 'agiz', 'kulak', 'boyun', 'gogus', 'abdomen', 'kasik', 'genital',
         'solunum_sistemi', 'kvs', 'gis', 'uriner', 'kas_iskelet', 'norolojik',
+        'fiziksel_muayene',
     ];
 
     protected $casts = [
@@ -90,6 +91,7 @@ class LohusaForm extends Model
         'kas_iskelet' => 'array',
         'norolojik' => 'array',
         'uykusuzluk' => 'array',
+        'fiziksel_muayene' => 'array',
     ];
 }
 

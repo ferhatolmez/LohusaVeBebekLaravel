@@ -47,9 +47,7 @@
                 <tr><th>Aile Yaklaşım</th><td>{{ goster($lohusaForm->aile_yaklasim) }}</td></tr>
                 <tr><th>Doğum Sonrası Cinsel Yaşam</th><td>{{ goster($lohusaForm->dogum_sonrasi_cinsel_yasam) }}</td></tr>
                 <tr><th>Geleneksel Uygulamalar</th><td>{{ goster($lohusaForm->geleneksel_uygulamalar) }}</td></tr>
-                <tr><th>İlaç Kullanıyor mu?</th><td>{{ $lohusaForm->ilac_kullaniyor_mu ? 'Evet' : 'Hayır' }}</td></tr>
-                <tr><th>İlaç Kullanım Süresi</th><td>{{ goster($lohusaForm->ilac_kullanim_suresi) }}</td></tr>
-                <tr><th>İlaç Kullanım Nedeni</th><td>{{ goster($lohusaForm->ilac_kullanim_nedeni) }}</td></tr>
+                <tr><th>İlaç Kullanıyor mu?</th><td>{{ goster($lohusaForm->ilac_kullaniyor_mu) }}</td></tr>
                 <tr><th>Postpartum Problemleri</th><td>{{ goster($lohusaForm->postpartum_problemleri) }}</td></tr>
                 <tr><th>Postpartum Gün</th><td>{{ goster($lohusaForm->postpartum_gun) }}</td></tr>
             </table>
