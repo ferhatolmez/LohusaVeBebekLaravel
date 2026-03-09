@@ -18,6 +18,49 @@ Bu rehber, Lohusa ve Bebek İzlem uygulamasını **internette canlı** yayınlay
 
 ---
 
+## 500 Hatası Giderme (Render)
+
+Sayfa açılmıyor, **500 Internal Server Error** alıyorsanız sırayla şunları yapın:
+
+### 1. APP_KEY mutlaka ekleyin
+Laravel `APP_KEY` olmadan çalışmaz.
+
+1. Render Dashboard → **lohusa-bebek-izlem** servisi → **Environment**
+2. **Add Environment Variable**: Key = `APP_KEY`, Value = aşağıdaki komutun çıktısı:
+   ```bash
+   php artisan key:generate --show
+   ```
+   (Örnek: `base64:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=`)
+3. **Save Changes** → Render otomatik yeniden deploy eder.
+
+### 2. APP_URL ekleyin
+1. Aynı Environment sayfasında: Key = `APP_URL`, Value = `https://lohusa-bebek-izlem.onrender.com`
+2. Save (veya kendi Render URL’iniz ne ise onu yazın).
+
+### 3. Veritabanı bağlantısı
+- **Blueprint** kullandıysanız: PostgreSQL (`lohusa-db`) ve `DB_URL` otomatik gelir.
+- **Manuel** kurduysanız: Environment’ta mutlaka olmalı:
+  - `DB_CONNECTION` = `pgsql`
+  - `DB_URL` = PostgreSQL **Internal Database URL** (Render’da DB sayfasında “Internal” olanı kopyalayın).
+
+### 4. Hatayı görmek için geçici debug
+1. Environment’ta `APP_DEBUG` = `true` yapın, Save.
+2. Deploy bitince sayfayı tekrar açın; ekranda gerçek hata mesajı çıkar.
+3. Hatayı giderdikten sonra `APP_DEBUG` = `false` yapın.
+
+### 5. Render logları
+Dashboard → servisiniz → **Logs** sekmesi. PHP/Laravel hataları veya migration hataları burada görünür.
+
+### 6. Sık nedenler
+| Neden | Çözüm |
+|-------|--------|
+| `APP_KEY` yok | Yukarıdaki gibi ekleyin |
+| `DB_URL` yanlış / yok | PostgreSQL’i servise bağlayın, Internal URL’i `DB_URL` olarak verin |
+| Migration hatası | Logs’ta hata mesajına bakın; genelde bağlantı veya yetki sorunudur |
+| Storage yazılamıyor | Yeni deploy ile `render-build.sh` storage izinlerini düzeltir |
+
+---
+
 ## Özet: Hangi Yöntem?
 
 | Yöntem | Zorluk | Maliyet | Veritabanı | Öneri |
