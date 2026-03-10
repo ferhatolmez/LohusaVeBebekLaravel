@@ -325,4 +325,3 @@ class StoreLohusaFormRequest extends FormRequest
         ];
     }
 }
-
