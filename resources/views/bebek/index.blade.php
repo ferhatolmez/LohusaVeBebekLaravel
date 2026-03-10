@@ -23,7 +23,7 @@
             </div>
             <div class="d-flex flex-wrap gap-2">
                 @can('export', App\Models\BebekForm::class)
-                    <a href="{{ route('bebek.csv', request()->query()) }}" class="btn btn-outline-success d-flex align-items-center gap-2"><i data-lucide="download" style="width:16px;height:16px"></i> CSV İndir</a>
+                    <a href="{{ route('bebek.csv', request()->query()) }}" class="btn btn-outline-success d-flex align-items-center gap-2"><i data-lucide="file-spreadsheet" style="width:16px;height:16px"></i> Excel İndir</a>
                 @endcan
                 @can('create', App\Models\BebekForm::class)
                     <a href="{{ route('bebek.create') }}" class="btn btn-primary d-flex align-items-center gap-2"><i data-lucide="plus" style="width:16px;height:16px"></i> Yeni kayıt</a>

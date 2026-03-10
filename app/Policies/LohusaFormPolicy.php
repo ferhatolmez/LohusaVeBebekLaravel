@@ -32,7 +32,7 @@ class LohusaFormPolicy
         return $user->can('delete lohusa forms');
     }
 
-    public function export(User $user, LohusaForm $lohusaForm): bool
+    public function export(User $user, ?LohusaForm $lohusaForm = null): bool
     {
         return $user->can('export lohusa forms');
     }

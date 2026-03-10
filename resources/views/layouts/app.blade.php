@@ -479,7 +479,7 @@
                                 @endphp
                                 <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding:0.25rem 0.5rem">
                                     <div class="user-avatar" style="width:32px;height:32px;font-size:0.9rem">{{ substr(auth()->user()->name, 0, 1) }}</div>
-                                    <div class="d-none d-lg-block text-start lh-1">
+                                    <div class="d-block text-start lh-1">
                                         <div class="fw-semibold text-white mb-1" style="font-size:0.85rem">{{ auth()->user()->name }}</div>
                                         <span class="badge" style="{{ $roleColors[$roleName] ?? 'background:#64748b;color:#fff' }};font-size:0.6rem;padding:0.2em 0.4em">
                                             {{ strtoupper($roleLabels[$roleName] ?? $roleName) }}

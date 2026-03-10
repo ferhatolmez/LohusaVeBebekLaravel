@@ -32,7 +32,7 @@ class BebekFormPolicy
         return $user->can('delete bebek forms');
     }
 
-    public function export(User $user, BebekForm $bebekForm): bool
+    public function export(User $user, ?BebekForm $bebekForm = null): bool
     {
         return $user->can('export bebek forms');
     }

@@ -23,7 +23,7 @@
 
     <div class="glass-panel p-0 overflow-hidden">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+            <table class="table table-responsive-stack table-hover align-middle mb-0">
                 <thead class="bg-light">
                     <tr>
                         <th class="ps-4">Ad Soyad</th>
@@ -36,9 +36,9 @@
                 <tbody>
                     @forelse($users as $user)
                         <tr>
-                            <td class="ps-4 fw-medium">{{ $user->name }}</td>
-                            <td class="text-secondary">{{ $user->email }}</td>
-                            <td>
+                            <td data-label="Ad Soyad" class="ps-4 fw-medium">{{ $user->name }}</td>
+                            <td data-label="E-posta" class="text-secondary">{{ $user->email }}</td>
+                            <td data-label="Rol">
                                 @foreach($user->roles as $role)
                                     @php
                                         $enumRole = \App\Enums\Role::tryFrom($role->name);
@@ -48,8 +48,8 @@
                                     </span>
                                 @endforeach
                             </td>
-                            <td class="text-secondary">{{ $user->created_at->format('d.m.Y H:i') }}</td>
-                            <td class="text-end pe-4">
+                            <td data-label="Kayıt Tarihi" class="text-secondary">{{ $user->created_at->format('d.m.Y H:i') }}</td>
+                            <td data-label="İşlemler" class="text-end pe-4">
                                 <div class="btn-group">
                                     <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-outline-primary" title="Düzenle">
                                         <i data-lucide="edit-2" style="width:16px;height:16px"></i>
