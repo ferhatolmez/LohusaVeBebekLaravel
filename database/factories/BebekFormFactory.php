@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 namespace Database\Factories;
 
@@ -30,4 +30,3 @@ class BebekFormFactory extends Factory
         ];
     }
 }
-

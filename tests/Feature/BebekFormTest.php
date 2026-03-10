@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 use App\Models\BebekForm;
 
@@ -75,4 +75,3 @@ it('forbids student from updating bebek form', function () {
         'gogus_cevresi' => 33,
     ])->assertForbidden();
 });
-

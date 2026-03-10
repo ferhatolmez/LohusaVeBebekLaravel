@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 use App\Models\LohusaForm;
 use App\Models\User;
@@ -86,4 +86,3 @@ it('allows ebe to create and update bebek via api', function () {
 
     $this->assertDatabaseHas('bebek_forms', ['id' => $id, 'cinsiyet' => 'Kız']);
 });
-

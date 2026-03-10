@@ -288,4 +288,3 @@ class StoreLohusaFormRequest extends FormRequest
         ];
     }
 }
-

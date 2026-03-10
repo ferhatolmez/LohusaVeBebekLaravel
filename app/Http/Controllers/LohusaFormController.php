@@ -65,6 +65,3 @@ class LohusaFormController extends Controller
         return redirect()->route('lohusa.index')->with('success', 'Kayıt silindi.');
     }
 }
-
-
-

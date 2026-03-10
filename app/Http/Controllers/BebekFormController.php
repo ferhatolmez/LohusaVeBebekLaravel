@@ -79,5 +79,3 @@ class BebekFormController extends Controller
         return redirect()->route('bebek.index')->with('success', 'Bebek formu silindi.');
     }
 }
-
-

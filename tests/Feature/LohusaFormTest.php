@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 use App\Models\LohusaForm;
 use Illuminate\Support\Carbon;
@@ -80,4 +80,3 @@ it('downloads lohusa pdf for authorized users', function () {
         ->assertOk()
         ->assertHeader('content-type', 'application/pdf');
 });
-

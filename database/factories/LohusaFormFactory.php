@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 namespace Database\Factories;
 
@@ -25,4 +25,3 @@ class LohusaFormFactory extends Factory
         ];
     }
 }
-
