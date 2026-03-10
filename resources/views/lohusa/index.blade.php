@@ -3,16 +3,43 @@
 @section('title', 'Lohusa Kayıtları')
 
 @section('content')
+@php
+    $activeFilters = array_filter([
+        'Arama: ' . request('q') => filled(request('q')),
+        'Doğum yeri: ' . request('dogum_yeri') => filled(request('dogum_yeri')),
+        'Beslenme: ' . request('bebek_beslenmesi') => filled(request('bebek_beslenmesi')),
+        'Min. hafta: ' . request('postpartum_hafta_min') => filled(request('postpartum_hafta_min')),
+        'Başlangıç: ' . request('created_from') => filled(request('created_from')),
+        'Bitiş: ' . request('created_to') => filled(request('created_to')),
+    ]);
+@endphp
 <div class="container">
-    <section class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-center mb-4">
-        <div>
-            <span class="badge-soft mb-2">Lohusa takip listesi</span>
-            <h1 class="h2 mb-1">Lohusa kayıtları</h1>
-            <p class="text-secondary mb-0">Arama, takip filtreleri ve yaklaşan kontroller tek ekranda.</p>
+    <section class="page-header">
+        <div class="page-header-row">
+            <div>
+                <span class="badge-soft mb-2">Lohusa takip listesi</span>
+                <h1 class="h2 mb-2">Lohusa kayıtları</h1>
+                <p class="text-secondary mb-0">Liste ekranı filtre yoğunluğunu azaltacak şekilde özetlendi; aktif filtreler, sonuç sayısı ve mobil okunabilirlik tek bakışta görülüyor.</p>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{{ route('lohusa.create') }}" class="btn btn-primary">Yeni kayıt</a>
+                <a href="{{ route('home') }}" class="btn btn-outline-primary">Ana panel</a>
+            </div>
         </div>
-        <div class="d-flex flex-wrap gap-2">
-            <a href="{{ route('lohusa.create') }}" class="btn btn-primary">Yeni kayıt</a>
-            <a href="{{ route('home') }}" class="btn btn-outline-primary">Ana panel</a>
+
+        <div class="status-strip">
+            <div class="status-chip">
+                <strong>{{ $forms->total() }}</strong>
+                <span>Toplam sonuç</span>
+            </div>
+            <div class="status-chip">
+                <strong>{{ count($activeFilters) }}</strong>
+                <span>Aktif filtre</span>
+            </div>
+            <div class="status-chip">
+                <strong>{{ $forms->firstItem() ?? 0 }}-{{ $forms->lastItem() ?? 0 }}</strong>
+                <span>Gösterilen aralık</span>
+            </div>
         </div>
     </section>
 
@@ -20,9 +47,17 @@
         <div class="alert alert-success glass-panel border-0">{{ session('success') }}</div>
     @endif
 
-    <div class="card table-card">
-        <div class="card-body p-3 p-lg-4">
-            <form method="GET" class="row g-3 align-items-end mb-4">
+    <div class="card table-card mb-4">
+        <div class="filter-panel">
+            <div class="filter-toolbar">
+                <div>
+                    <h2 class="h5 mb-1">Filtreler</h2>
+                    <p class="text-secondary mb-0">Ara, daralt ve tek tıkla sıfırla. Tarih ve postpartum hafta birlikte kullanılabilir.</p>
+                </div>
+                <div class="text-secondary small">{{ $forms->total() }} kayıt bulundu</div>
+            </div>
+
+            <form method="GET" class="row g-3 align-items-end">
                 <div class="col-lg-4">
                     <label for="q" class="form-label">Kayıt ara</label>
                     <input type="text" id="q" name="q" class="form-control" placeholder="Ad soyad, doğum yeri veya meslek" value="{{ request('q') }}">
@@ -57,24 +92,34 @@
                     <label for="created_to" class="form-label">Bitiş</label>
                     <input type="date" id="created_to" name="created_to" class="form-control" value="{{ request('created_to') }}">
                 </div>
-                <div class="col-lg-2 d-flex gap-2">
-                    <button type="submit" class="btn btn-primary w-100">Filtrele</button>
+                <div class="col-lg-4 d-flex flex-wrap gap-2">
+                    <button type="submit" class="btn btn-primary">Filtrele</button>
                     <a href="{{ route('lohusa.index') }}" class="btn btn-outline-primary">Sıfırla</a>
                 </div>
             </form>
 
+            @if (count($activeFilters))
+                <div class="filter-summary">
+                    @foreach (array_keys($activeFilters) as $filter)
+                        <span class="filter-pill">{{ $filter }}</span>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table align-middle mb-0">
+                <table class="table table-responsive-stack align-middle mb-0">
                     <thead>
                         <tr><th>ID</th><th>Danışan</th><th>Tarih</th><th>Takip</th><th>Kalite</th><th class="text-end">İşlemler</th></tr>
                     </thead>
                     <tbody>
                         @forelse ($forms as $form)
                             <tr>
-                                <td>#{{ $form->id }}</td>
-                                <td><div class="fw-bold">{{ $form->ad_soyad }}</div><div class="text-secondary small">Yaş: {{ $form->yas ?? '-' }} | Doğum yeri: {{ $form->dogum_yeri ?? '-' }}</div></td>
-                                <td>{{ $form->created_at->format('d.m.Y') }}</td>
-                                <td>
+                                <td data-label="ID">#{{ $form->id }}</td>
+                                <td data-label="Danışan"><div class="fw-bold">{{ $form->ad_soyad }}</div><div class="text-secondary small">Yaş: {{ $form->yas ?? '-' }} | Doğum yeri: {{ $form->dogum_yeri ?? '-' }}</div></td>
+                                <td data-label="Tarih">{{ $form->created_at->format('d.m.Y') }}</td>
+                                <td data-label="Takip">
                                     @if ($form->suggested_follow_up_date)
                                         <div class="fw-semibold">{{ $form->suggested_follow_up_label }}</div>
                                         <span class="badge text-bg-{{ $form->follow_up_tone }}">{{ $form->suggested_follow_up_date->format('d.m.Y') }}</span>
@@ -82,8 +127,8 @@
                                         <span class="text-secondary small">Takip hedefi yok</span>
                                     @endif
                                 </td>
-                                <td><span class="badge text-bg-{{ $form->completion_tone }}">%{{ $form->completion_score }}</span></td>
-                                <td>
+                                <td data-label="Kalite"><span class="badge text-bg-{{ $form->completion_tone }}">%{{ $form->completion_score }}</span></td>
+                                <td data-label="İşlemler">
                                     <div class="d-flex justify-content-end flex-wrap gap-2">
                                         <a href="{{ route('lohusa.show', $form) }}" class="btn btn-sm btn-outline-primary">Detay</a>
                                         <a href="{{ route('lohusa.pdf', $form->id) }}" class="btn btn-sm btn-outline-secondary">PDF</a>
@@ -101,9 +146,9 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="mt-4">{{ $forms->links() }}</div>
         </div>
     </div>
+
+    <div>{{ $forms->links() }}</div>
 </div>
 @endsection

@@ -52,7 +52,9 @@ it('stores a lohusa form for ebe role', function () {
         'saglik_guvence' => 'SGK',
         'gebelik_planlandimi' => 'Evet',
         'dogum_yeri' => 'Istanbul',
-    ])->assertRedirect(route('lohusa.index'));
+    ])
+        ->assertRedirect(route('lohusa.index'))
+        ->assertSessionHas('clear_lohusa_draft', true);
 
     $this->assertDatabaseHas('lohusa_forms', ['ad_soyad' => 'Ayse Yilmaz']);
 });
@@ -80,3 +82,4 @@ it('downloads lohusa pdf for authorized users', function () {
         ->assertOk()
         ->assertHeader('content-type', 'application/pdf');
 });
+
