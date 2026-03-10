@@ -1,13 +1,13 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
-@section('title', 'Bebek kayitlari')
+@section('title', 'Bebek Kayıtları')
 
 @section('content')
 <div class="container">
     <section class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-center mb-4">
         <div>
             <span class="badge-soft mb-2">Bebek takip listesi</span>
-            <h1 class="h2 mb-1">Bebek kayitlari</h1>
+            <h1 class="h2 mb-1">Bebek kayıtları</h1>
             <p class="text-secondary mb-0">Klinik filtreler, izlem seviyesi ve bir sonraki kontrol görünürlüğü eklendi.</p>
         </div>
         <div class="d-flex flex-wrap gap-2">
@@ -56,36 +56,19 @@
                     <label for="muayene_to" class="form-label">Bitiş</label>
                     <input type="date" id="muayene_to" name="muayene_to" class="form-control" value="{{ request('muayene_to') }}">
                 </div>
-                <div class="col-lg-1 d-flex gap-2">
-                    <button type="submit" class="btn btn-primary w-100">Filtrele</button>
-                </div>
-                <div class="col-lg-12">
-                    <a href="{{ route('bebek.index') }}" class="btn btn-outline-primary">Filtreleri sıfırla</a>
-                </div>
+                <div class="col-lg-1 d-flex gap-2"><button type="submit" class="btn btn-primary w-100">Filtrele</button></div>
+                <div class="col-lg-12"><a href="{{ route('bebek.index') }}" class="btn btn-outline-primary">Filtreleri sıfırla</a></div>
             </form>
 
             <div class="table-responsive">
                 <table class="table align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Doğum tarihi</th>
-                            <th>Cinsiyet</th>
-                            <th>İzlem</th>
-                            <th>Sonraki kontrol</th>
-                            <th>Kalite</th>
-                            <th class="text-end">Islemler</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>ID</th><th>Doğum tarihi</th><th>Cinsiyet</th><th>İzlem</th><th>Sonraki kontrol</th><th>Kalite</th><th class="text-end">İşlemler</th></tr></thead>
                     <tbody>
                         @forelse ($forms as $form)
                             <tr>
                                 <td>#{{ $form->id }}</td>
                                 <td>{{ optional($form->dogum_tarihi)->format('d.m.Y') ?? '-' }}</td>
-                                <td>
-                                    <div>{{ $form->cinsiyet ?? '-' }}</div>
-                                    <div class="text-secondary small">{{ $form->termin_durumu ?? 'Termin yok' }}</div>
-                                </td>
+                                <td><div>{{ $form->cinsiyet ?? '-' }}</div><div class="text-secondary small">{{ $form->termin_durumu ?? 'Termin yok' }}</div></td>
                                 <td>{{ $form->izlem_sayisi ?? '-' }}</td>
                                 <td>
                                     @if ($form->suggested_follow_up_date)
@@ -109,9 +92,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr>
-                                <td colspan="7" class="text-center text-secondary py-5">Henüz bebek kaydı bulunmuyor.</td>
-                            </tr>
+                            <tr><td colspan="7" class="text-center text-secondary py-5">Henüz bebek kaydı bulunmuyor.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -122,6 +103,3 @@
     </div>
 </div>
 @endsection
-
-
-

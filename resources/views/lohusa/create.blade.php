@@ -5,22 +5,22 @@
 @section('content')
 @php
     $steps = [
-        1 => 'Temel bilgi',
-        2 => 'Es ve dogum',
-        3 => 'Lohusa durum',
-        4 => 'Aile ve sosyal',
-        5 => 'Menstruel',
-        6 => 'Obstetrik gecmis',
-        7 => 'Postpartum',
+        1 => 'Temel bilgiler',
+        2 => 'Eş ve doğum',
+        3 => 'Lohusa durumu',
+        4 => 'Aile ve sosyal yaşam',
+        5 => 'Menstrüel öykü',
+        6 => 'Obstetrik geçmiş',
+        7 => 'Postpartum dönem',
         8 => 'Fiziksel muayene',
-        9 => 'Psikolojik',
-        10 => 'Anne-bebek',
-        11 => 'Emzirme',
-        12 => 'Egitim ihtiyaci',
+        9 => 'Psikolojik değerlendirme',
+        10 => 'Anne-bebek ilişkisi',
+        11 => 'Emzirme değerlendirmesi',
+        12 => 'Eğitim ihtiyaçları',
         13 => 'Ebe yorumu',
         14 => 'Bebek bilgileri',
         15 => 'Vital bulgular',
-        16 => 'Diger bilgiler',
+        16 => 'Diğer bilgiler',
     ];
 @endphp
 <div class="container">
@@ -28,16 +28,11 @@
         <div>
             <span class="badge-soft mb-2">Çok adımlı form</span>
             <h1 class="h2 mb-1">Lohusa İzlem Formu</h1>
-            <p class="text-secondary mb-0">Artık zorunlu alanlar, veri tipi kontrolleri, adım bazlı ilerleme ve tarayıcı taslağı ile çalışır.</p>
+            <p class="text-secondary mb-0">Zorunlu alan kontrolleri, adım bazlı ilerleme ve tarayıcı taslağı ile saha kullanımına uygun hale getirildi.</p>
         </div>
         <div class="glass-panel p-3 p-lg-4" style="max-width: 420px;">
-            <div class="d-flex justify-content-between small text-secondary mb-2">
-                <span>Adım <strong id="currentStepNum">1</strong> / {{ count($steps) }}</span>
-                <span id="progressPercent">%0</span>
-            </div>
-            <div class="progress mb-3" style="height: 10px;">
-                <div id="formProgress" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
-            </div>
+            <div class="d-flex justify-content-between small text-secondary mb-2"><span>Adım <strong id="currentStepNum">1</strong> / {{ count($steps) }}</span><span id="progressPercent">%0</span></div>
+            <div class="progress mb-3" style="height: 10px;"><div id="formProgress" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div></div>
             <div class="d-flex flex-wrap gap-2">
                 @foreach ($steps as $number => $label)
                     <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 step-chip" data-step-target="{{ $number }}">{{ $number }}. {{ $label }}</button>
@@ -49,27 +44,19 @@
     @if ($errors->any())
         <div class="alert alert-danger glass-panel border-0 mb-4">
             <div class="fw-bold mb-2">Form kaydedilemedi.</div>
-            <ul class="mb-0 ps-3">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <ul class="mb-0 ps-3">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
         </div>
     @endif
 
     <div id="draftNotice" class="alert alert-info glass-panel border-0 mb-4 d-none">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
-            <div>
-                <strong>Taslak geri yüklendi.</strong>
-                <span class="small d-block text-secondary" id="draftTimestamp"></span>
-            </div>
+            <div><strong>Taslak geri yüklendi.</strong><span class="small d-block text-secondary" id="draftTimestamp"></span></div>
             <button type="button" class="btn btn-sm btn-outline-primary" id="clearDraftBtn">Taslağı temizle</button>
         </div>
     </div>
 
     <form id="lohusaForm" action="{{ route('lohusa.store') }}" method="POST" novalidate>
         @csrf
-
         <div id="step-1" class="step">@include('lohusa.steps.step1_tanitici')</div>
         <div id="step-2" class="step d-none">@include('lohusa.steps.step2_dogum')</div>
         <div id="step-3" class="step d-none">@include('lohusa.steps.step3_lohusa')</div>
@@ -101,29 +88,11 @@
 
 @push('styles')
 <style>
-    .step {
-        animation: fadeUp 0.25s ease;
-    }
-
-    .step-chip.active {
-        background: var(--brand-700);
-        color: #fff;
-        border-color: var(--brand-700);
-    }
-
-    .form-section .card-header {
-        font-size: 1rem;
-    }
-
-    .form-check-inline,
-    .form-check {
-        border-radius: 14px;
-    }
-
-    @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(8px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+    .step { animation: fadeUp 0.25s ease; }
+    .step-chip.active { background: var(--brand-700); color: #fff; border-color: var(--brand-700); }
+    .form-section .card-header { font-size: 1rem; }
+    .form-check-inline, .form-check { border-radius: 14px; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 @endpush
 
@@ -179,24 +148,10 @@
             });
         });
 
-        form.addEventListener('input', function () {
-            calculateProgress();
-            persistDraft();
-        });
-
-        form.addEventListener('change', function () {
-            calculateProgress();
-            persistDraft();
-        });
-
-        form.addEventListener('submit', function () {
-            localStorage.removeItem(draftKey);
-        });
-
-        clearDraftBtn.addEventListener('click', function () {
-            localStorage.removeItem(draftKey);
-            draftNotice.classList.add('d-none');
-        });
+        form.addEventListener('input', function () { calculateProgress(); persistDraft(); });
+        form.addEventListener('change', function () { calculateProgress(); persistDraft(); });
+        form.addEventListener('submit', function () { localStorage.removeItem(draftKey); });
+        clearDraftBtn.addEventListener('click', function () { localStorage.removeItem(draftKey); draftNotice.classList.add('d-none'); });
 
         if (errorFields.length > 0) {
             const firstField = document.querySelector('[name="' + errorFields[0] + '"]');
@@ -244,9 +199,7 @@
         }
 
         function calculateProgress() {
-            const fields = Array.from(form.querySelectorAll('input, select, textarea')).filter(function (el) {
-                return el.type !== 'hidden';
-            });
+            const fields = Array.from(form.querySelectorAll('input, select, textarea')).filter(function (el) { return el.type !== 'hidden'; });
             let filled = 0;
             const checkboxGroups = {};
 
@@ -274,26 +227,17 @@
 
         function showStep(stepNumber) {
             currentStep = stepNumber;
-            document.querySelectorAll('.step').forEach(function (step) {
-                step.classList.add('d-none');
-            });
-
+            document.querySelectorAll('.step').forEach(function (step) { step.classList.add('d-none'); });
             document.getElementById('step-' + stepNumber).classList.remove('d-none');
             document.getElementById('currentStepNum').textContent = stepNumber;
             document.getElementById('prevBtn').classList.toggle('d-none', stepNumber === 1);
             document.getElementById('nextBtn').classList.toggle('d-none', stepNumber === totalSteps);
             document.getElementById('submitBtn').classList.toggle('d-none', stepNumber !== totalSteps);
-
-            stepButtons.forEach(function (button) {
-                button.classList.toggle('active', Number(button.dataset.stepTarget) === stepNumber);
-            });
+            stepButtons.forEach(function (button) { button.classList.toggle('active', Number(button.dataset.stepTarget) === stepNumber); });
         }
 
         function persistDraft() {
-            const payload = {
-                savedAt: new Date().toISOString(),
-                values: {},
-            };
+            const payload = { savedAt: new Date().toISOString(), values: {} };
 
             form.querySelectorAll('input, select, textarea').forEach(function (field) {
                 if (!field.name || field.type === 'hidden' || field.name === '_token') {
@@ -361,5 +305,3 @@
     });
 </script>
 @endpush
-
-

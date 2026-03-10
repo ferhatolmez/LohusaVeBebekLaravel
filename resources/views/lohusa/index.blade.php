@@ -1,13 +1,13 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
-@section('title', 'Lohusa kayitlari')
+@section('title', 'Lohusa Kayıtları')
 
 @section('content')
 <div class="container">
     <section class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-center mb-4">
         <div>
             <span class="badge-soft mb-2">Lohusa takip listesi</span>
-            <h1 class="h2 mb-1">Lohusa kayitlari</h1>
+            <h1 class="h2 mb-1">Lohusa kayıtları</h1>
             <p class="text-secondary mb-0">Arama, takip filtreleri ve yaklaşan kontroller tek ekranda.</p>
         </div>
         <div class="d-flex flex-wrap gap-2">
@@ -30,7 +30,7 @@
                 <div class="col-lg-2">
                     <label for="dogum_yeri" class="form-label">Doğum yeri</label>
                     <select id="dogum_yeri" name="dogum_yeri" class="form-select">
-                        <option value="">Tümleri</option>
+                        <option value="">Tümü</option>
                         @foreach ($filterOptions['dogumYerleri'] as $dogumYeri)
                             <option value="{{ $dogumYeri }}" @selected(request('dogum_yeri') === $dogumYeri)>{{ $dogumYeri }}</option>
                         @endforeach
@@ -39,7 +39,7 @@
                 <div class="col-lg-2">
                     <label for="bebek_beslenmesi" class="form-label">Beslenme</label>
                     <select id="bebek_beslenmesi" name="bebek_beslenmesi" class="form-select">
-                        <option value="">Tümleri</option>
+                        <option value="">Tümü</option>
                         @foreach ($filterOptions['bebekBeslenmeSekilleri'] as $beslenme)
                             <option value="{{ $beslenme }}" @selected(request('bebek_beslenmesi') === $beslenme)>{{ $beslenme }}</option>
                         @endforeach
@@ -66,23 +66,13 @@
             <div class="table-responsive">
                 <table class="table align-middle mb-0">
                     <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Danışan</th>
-                            <th>Tarih</th>
-                            <th>Takip</th>
-                            <th>Kalite</th>
-                            <th class="text-end">Islemler</th>
-                        </tr>
+                        <tr><th>ID</th><th>Danışan</th><th>Tarih</th><th>Takip</th><th>Kalite</th><th class="text-end">İşlemler</th></tr>
                     </thead>
                     <tbody>
                         @forelse ($forms as $form)
                             <tr>
                                 <td>#{{ $form->id }}</td>
-                                <td>
-                                    <div class="fw-bold">{{ $form->ad_soyad }}</div>
-                                    <div class="text-secondary small">Yaş: {{ $form->yas ?? '-' }} | Doğum yeri: {{ $form->dogum_yeri ?? '-' }}</div>
-                                </td>
+                                <td><div class="fw-bold">{{ $form->ad_soyad }}</div><div class="text-secondary small">Yaş: {{ $form->yas ?? '-' }} | Doğum yeri: {{ $form->dogum_yeri ?? '-' }}</div></td>
                                 <td>{{ $form->created_at->format('d.m.Y') }}</td>
                                 <td>
                                     @if ($form->suggested_follow_up_date)
@@ -106,9 +96,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr>
-                                <td colspan="6" class="text-center text-secondary py-5">Henüz lohusa kaydı bulunmuyor.</td>
-                            </tr>
+                            <tr><td colspan="6" class="text-center text-secondary py-5">Henüz lohusa kaydı bulunmuyor.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -119,6 +107,3 @@
     </div>
 </div>
 @endsection
-
-
-

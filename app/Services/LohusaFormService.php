@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\LohusaForm;
 use App\Repositories\LohusaFormRepository;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class LohusaFormService
 {
@@ -33,7 +33,7 @@ class LohusaFormService
         $this->repository->delete($lohusaForm);
     }
 
-    public function export(LohusaForm $lohusaForm): BinaryFileResponse
+    public function export(LohusaForm $lohusaForm): Response
     {
         return $this->pdfService->download('lohusa.pdf', ['lohusa' => $lohusaForm], 'lohusa-izlem-formu.pdf');
     }

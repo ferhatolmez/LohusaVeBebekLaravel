@@ -9,7 +9,7 @@ use App\Services\BebekFormService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class BebekFormController extends Controller
 {
@@ -49,7 +49,7 @@ class BebekFormController extends Controller
         return view('bebek.show', compact('bebekForm'));
     }
 
-    public function exportPdf(BebekForm $bebekForm): BinaryFileResponse
+    public function exportPdf(BebekForm $bebekForm): Response
     {
         $this->authorize('export', $bebekForm);
 

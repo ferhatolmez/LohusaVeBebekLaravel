@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Giriş Yap')
 
@@ -13,8 +13,8 @@
             </div>
 
             <div class="card p-4">
-                <h2 class="h4 fw-bold mb-3">Oturum Ac</h2>
-                <p class="text-muted small mb-4">Demo kullanıcılar: `admin@example.com`, `ebe@example.com`, `student@example.com` - şifre: `password`</p>
+                <h2 class="h4 fw-bold mb-3">Oturum Aç</h2>
+                <p class="text-muted small mb-4">Demo kullanıcılar: <code>admin@example.com</code>, <code>ebe@example.com</code>, <code>student@example.com</code> · şifre: <code>password</code></p>
 
                 <form method="POST" action="{{ route('login.store') }}" class="d-grid gap-3">
                     @csrf
@@ -39,13 +39,3 @@
     </div>
 </div>
 @endsection
-
-
-
-
-
-
-
-
-
-

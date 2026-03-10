@@ -9,7 +9,7 @@ use App\Services\LohusaFormService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class LohusaFormController extends Controller
 {
@@ -50,7 +50,7 @@ class LohusaFormController extends Controller
         return view('lohusa.show', compact('lohusaForm'));
     }
 
-    public function exportPdf(LohusaForm $lohusaForm): BinaryFileResponse
+    public function exportPdf(LohusaForm $lohusaForm): Response
     {
         $this->authorize('export', $lohusaForm);
 

@@ -14,6 +14,8 @@ class BebekForm extends Model
     use CalculatesCompletionScore;
     use HasFactory;
 
+    protected $dateFormat = 'Y-m-d H:i:s';
+
     protected $fillable = [
         'created_by', 'updated_by',
         'dogum_tarihi', 'kac_haftalik', 'muayene_tarihi', 'izlem_sayisi',

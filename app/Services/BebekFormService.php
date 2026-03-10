@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\BebekForm;
 use App\Repositories\BebekFormRepository;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class BebekFormService
 {
@@ -33,7 +33,7 @@ class BebekFormService
         $this->repository->delete($bebekForm);
     }
 
-    public function export(BebekForm $bebekForm): BinaryFileResponse
+    public function export(BebekForm $bebekForm): Response
     {
         return $this->pdfService->download('bebek.pdf', ['bebekForm' => $bebekForm], 'bebek-izlem-formu.pdf');
     }

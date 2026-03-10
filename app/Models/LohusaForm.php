@@ -14,6 +14,8 @@ class LohusaForm extends Model
     use CalculatesCompletionScore;
     use HasFactory;
 
+    protected $dateFormat = 'Y-m-d H:i:s';
+
     protected $fillable = [
         'created_by', 'updated_by',
         'ad_soyad', 'yas', 'egitim_durumu', 'meslek', 'saglik_guvence', 'akraba_evliligi', 'evlilik_yili', 'kan_grubu',
@@ -35,10 +37,10 @@ class LohusaForm extends Model
         'muayene_tarihi', 'postpartum_hafta', 'gebelik_kilosu', 'mevcut_kilo', 'ates', 'nabiz', 'solunum', 'tansiyon',
         'bas_bulgular', 'sacli_deri_bulgular', 'yuz_bulgular', 'goz_bulgular', 'burun_bulgular', 'agiz_disfer_bulgular',
         'bogaz_bulgular', 'solunum_bulgular', 'gogus_bulgular', 'meme_ucu', 'emzirmeye_uygun', 'meme_bakimi', 'sutyen_kullanimi', 'fundus_palpe_ediliyor',
-        'losia_tipi', 'abdomen_bulgulari', 'uriner_bulgular', 'barsak_bulgular', 'alt_ekstremite',
-        'uykusuzluk', 'hemoglobin', 'diyet_var_mi', 'kilo_sorunu_tipi', 'istahsizlik', 'yeme_aliskanligi',
-        'vitamin_destegi', 'vitamin_icerigi', 'yiyemedigi_yiyecek', 'alinan_besin_gruplari', 'bebek_beslenmesi',
-        'psikolojik_belirtiler', 'anne_bebek_iliskisi', 'emzirme_bulgular', 'emzirme_suresi', 'sut_yeterliligi',
+        'losia_tipi', 'losia_bulgulari', 'abdomen_bulgulari', 'uriner_bulgular', 'barsak_bulgular', 'alt_ekstremite',
+        'uykusuzluk', 'hemoglobin', 'diyet_var_mi', 'kilo_sorunu_tipi', 'istahsizlik', 'yeme_aliskanligi', 'yeme_aliskanligi_aciklama',
+        'vitamin_destegi', 'vitamin_icerigi', 'yiyemedigi_yiyecek', 'yiyemedigi_yiyecek_aciklama', 'alinan_besin_gruplari', 'bebek_beslenmesi',
+        'psikolojik_belirtiler', 'psikolojik_diger_aciklama', 'anne_bebek_iliskisi', 'emzirme_bulgular', 'emzirme_suresi', 'sut_yeterliligi',
         'egitim_istekleri', 'ebenin_yorumu', 'dogum_tarihi', 'kac_haftalik', 'izlem_sayisi', 'termin_durumu', 'cinsiyet', 'kacinci_cocuk', 'bas_cevresi',
         'gogus_cevresi', 'kilo', 'boy', 'deri', 'bas', 'gozler', 'burun', 'agiz', 'kulak', 'boyun', 'gogus', 'abdomen', 'kasik', 'genital',
         'solunum_sistemi', 'kvs', 'gis', 'uriner', 'kas_iskelet', 'norolojik', 'fiziksel_muayene',
@@ -71,6 +73,7 @@ class LohusaForm extends Model
         'bogaz_bulgular' => 'array',
         'solunum_bulgular' => 'array',
         'gogus_bulgular' => 'array',
+        'losia_bulgulari' => 'array',
         'abdomen_bulgulari' => 'array',
         'uriner_bulgular' => 'array',
         'barsak_bulgular' => 'array',
@@ -191,3 +194,6 @@ class LohusaForm extends Model
         return $date->isPast() ? 'danger' : ($date->diffInDays(now()) <= 7 ? 'warning' : 'success');
     }
 }
+
+
+

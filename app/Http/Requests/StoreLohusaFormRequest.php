@@ -41,6 +41,7 @@ class StoreLohusaFormRequest extends FormRequest
             'bogaz_bulgular',
             'solunum_bulgular',
             'gogus_bulgular',
+            'losia_bulgulari',
             'abdomen_bulgulari',
             'uriner_bulgular',
             'barsak_bulgular',
@@ -199,6 +200,7 @@ class StoreLohusaFormRequest extends FormRequest
             'sutyen_kullanimi' => ['nullable', 'string', 'max:1000'],
             'fundus_palpe_ediliyor' => ['nullable', 'string', 'max:255'],
             'losia_tipi' => ['nullable', 'string', 'max:255'],
+            'losia_bulgulari' => ['nullable', 'array'],
             'abdomen_bulgulari' => ['nullable', 'array'],
             'uriner_bulgular' => ['nullable', 'array'],
             'barsak_bulgular' => ['nullable', 'array'],
@@ -209,12 +211,15 @@ class StoreLohusaFormRequest extends FormRequest
             'kilo_sorunu_tipi' => ['nullable', 'string', 'max:255'],
             'istahsizlik' => ['nullable', 'string', 'max:255'],
             'yeme_aliskanligi' => ['nullable', 'string', 'max:1000'],
+            'yeme_aliskanligi_aciklama' => ['nullable', 'string', 'max:1000'],
             'vitamin_destegi' => ['nullable', 'string', 'max:255'],
             'vitamin_icerigi' => ['nullable', 'string', 'max:255'],
             'yiyemedigi_yiyecek' => ['nullable', 'string', 'max:255'],
+            'yiyemedigi_yiyecek_aciklama' => ['nullable', 'string', 'max:1000'],
             'alinan_besin_gruplari' => ['nullable', 'string', 'max:1000'],
             'bebek_beslenmesi' => ['nullable', 'string', 'max:255'],
             'psikolojik_belirtiler' => ['nullable', 'array'],
+            'psikolojik_diger_aciklama' => ['nullable', 'string', 'max:1000'],
             'anne_bebek_iliskisi' => ['nullable', 'array'],
             'emzirme_bulgular' => ['nullable', 'array'],
             'emzirme_suresi' => ['nullable', 'integer', 'between:0,180'],
@@ -223,7 +228,7 @@ class StoreLohusaFormRequest extends FormRequest
             'ebenin_yorumu' => ['nullable', 'string', 'max:2000'],
             'dogum_tarihi' => ['nullable', 'date', 'before_or_equal:today'],
             'kac_haftalik' => ['nullable', 'integer', 'between:20,45'],
-            'izlem_sayısi' => ['nullable', 'integer', 'between:1,20'],
+            'izlem_sayisi' => ['nullable', 'integer', 'between:1,20'],
             'termin_durumu' => ['nullable', Rule::in($terms)],
             'cinsiyet' => ['nullable', Rule::in($genders)],
             'kacinci_cocuk' => ['nullable', 'integer', 'between:1,20'],
@@ -263,14 +268,14 @@ class StoreLohusaFormRequest extends FormRequest
             'egitim_durumu.required' => 'Eğitim durumu seçilmelidir.',
             'meslek.required' => 'Meslek alanı zorunludur.',
             'meslek.regex' => 'Meslek alanında sadece harf karakterleri kullanılabilir.',
-            'saglik_guvence.required' => 'Sağlık guvencesi seçilmelidir.',
+            'saglik_guvence.required' => 'Sağlık güvencesi seçilmelidir.',
             'gebelik_planlandimi.required' => 'Gebelik planlanma durumu seçilmelidir.',
             'dogum_yeri.required' => 'Doğum yeri zorunludur.',
             'dogum_yeri.regex' => 'Doğum yeri alanında yalnızca metin girilebilir.',
             'es_telefon.regex' => 'Telefon alanı geçerli bir formatta olmalı.',
-            'tansiyon.regex' => 'Tansiyon alanı 120/80 formatinda olmalı.',
+            'tansiyon.regex' => 'Tansiyon alanı 120/80 formatında olmalı.',
             '*.integer' => 'Bu alana sadece sayı girilebilir.',
-            '*.numeric' => 'Bu alana sadece sayısal deger girilebilir.',
+            '*.numeric' => 'Bu alana sadece sayısal değer girilebilir.',
         ];
     }
 
@@ -288,3 +293,7 @@ class StoreLohusaFormRequest extends FormRequest
         ];
     }
 }
+
+
+
+
