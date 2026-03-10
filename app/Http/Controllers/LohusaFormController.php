@@ -268,10 +268,7 @@ class LohusaFormController extends Controller
             ->setPaper('a4', 'portrait')
             ->setOptions(['defaultFont' => 'DejaVu Sans']);
 
-        return response($pdf->output(), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="lohusa-izlem-formu.pdf"',
-        ]);
+        return $pdf->download('lohusa-izlem-formu.pdf');
     }
 
     private function getFizikselMuayeneKeys()

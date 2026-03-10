@@ -1,4 +1,6 @@
-@php($defaults = $clinicalDefaults['lohusa'])
+@php
+    $defaults = $clinicalDefaults['lohusa'];
+@endphp
 <div class="form-section fade-in p-3 rounded card shadow-sm mb-4">
     <div class="card-header bg-primary text-white">G. Fiziksel Muayene</div>
     <div class="card-body">

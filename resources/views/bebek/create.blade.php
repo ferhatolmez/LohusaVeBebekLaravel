@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-@php($defaults = $clinicalDefaults['bebek'])
+@php
+    $defaults = $clinicalDefaults['bebek'];
+@endphp
 <div class="container py-4 form-page-bebek">
     <div class="form-header mb-4">
         <h1 class="h3 mb-1 fw-600">🍼 Bebek İzlem Formu (Evde)</h1>

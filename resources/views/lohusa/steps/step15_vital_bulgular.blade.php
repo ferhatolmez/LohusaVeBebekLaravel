@@ -1,4 +1,6 @@
-@php($defaults = $clinicalDefaults['bebek'])
+@php
+    $defaults = $clinicalDefaults['bebek'];
+@endphp
 <div class="form-section fade-in p-3 rounded card shadow-sm mb-4">
     <div class="card-header bg-primary text-white">Vital Bulgular</div>
     <div class="card-body">

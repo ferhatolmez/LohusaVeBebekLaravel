@@ -92,10 +92,7 @@ class BebekFormController extends Controller
             ->setPaper('a4', 'portrait')
             ->setOptions(['defaultFont' => 'DejaVu Sans']);
 
-        return response($pdf->output(), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="bebek-izlem-formu.pdf"',
-        ]);
+        return $pdf->download('bebek-izlem-formu.pdf');
     }
 
     public function edit(BebekForm $bebekForm)
