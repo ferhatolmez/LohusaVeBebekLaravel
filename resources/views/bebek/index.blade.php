@@ -1,13 +1,13 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
-@section('title', 'Bebek Kayıtları')
+@section('title', 'Bebek kayitlari')
 
 @section('content')
 <div class="container">
     <section class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-center mb-4">
         <div>
             <span class="badge-soft mb-2">Bebek takip listesi</span>
-            <h1 class="h2 mb-1">Bebek kayıtları</h1>
+            <h1 class="h2 mb-1">Bebek kayitlari</h1>
             <p class="text-secondary mb-0">Klinik filtreler, izlem seviyesi ve bir sonraki kontrol görünürlüğü eklendi.</p>
         </div>
         <div class="d-flex flex-wrap gap-2">
@@ -122,7 +122,6 @@
     </div>
 </div>
 @endsection
-
 
 
 

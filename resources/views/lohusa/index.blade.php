@@ -1,13 +1,13 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
-@section('title', 'Lohusa Kayıtları')
+@section('title', 'Lohusa kayitlari')
 
 @section('content')
 <div class="container">
     <section class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-center mb-4">
         <div>
             <span class="badge-soft mb-2">Lohusa takip listesi</span>
-            <h1 class="h2 mb-1">Lohusa kayıtları</h1>
+            <h1 class="h2 mb-1">Lohusa kayitlari</h1>
             <p class="text-secondary mb-0">Arama, takip filtreleri ve yaklaşan kontroller tek ekranda.</p>
         </div>
         <div class="d-flex flex-wrap gap-2">
@@ -119,7 +119,6 @@
     </div>
 </div>
 @endsection
-
 
 
 

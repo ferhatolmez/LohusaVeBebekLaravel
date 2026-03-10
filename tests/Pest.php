@@ -8,6 +8,9 @@ pest()->extend(Tests\TestCase::class)
     ->use(RefreshDatabase::class)
     ->in('Feature');
 
+pest()->extend(Tests\TestCase::class)
+    ->in('Unit');
+
 function signInAs(string $role = 'admin'): User
 {
     test()->seed(RolePermissionSeeder::class);

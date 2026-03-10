@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Lohusa ve Bebek Takip ana panel')
 
@@ -7,7 +7,7 @@
     <section class="hero-panel p-4 p-lg-5 mb-4 mb-lg-5">
         <div class="row align-items-center g-4">
             <div class="col-lg-7">
-                <span class="section-label mb-3">Klinik odaklı takip paneli</span>
+                <span class="section-label mb-3">Klinik odakli takip paneli</span>
                 <h1 class="display-5 fw-bold mb-3">Lohusa ve bebek izlemlerini daha görünür, filtrelenebilir ve takip edilebilir hale getiren ana panel</h1>
                 <p class="lead mb-4 text-white-50">Bu sürüm, yaklaşan kontrolleri öne çıkarıyor, klinik dağılımları özetliyor ve saha kullanımında veri kaybını azaltan bir taslak deneyimi sunuyor.</p>
                 <div class="d-flex flex-wrap gap-3">
@@ -224,7 +224,6 @@
     </section>
 </div>
 @endsection
-
 
 
 

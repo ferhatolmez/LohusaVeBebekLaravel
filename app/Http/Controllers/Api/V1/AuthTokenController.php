@@ -33,6 +33,7 @@ class AuthTokenController extends Controller
             'token' => $token,
             'token_type' => 'Bearer',
             'user' => UserResource::make($user),
-        ]);
+        ], 201);
     }
 }
+
