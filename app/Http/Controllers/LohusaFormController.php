@@ -40,7 +40,10 @@ class LohusaFormController extends Controller
         $this->authorize('create', LohusaForm::class);
         $this->service->store($request->validated(), $request->user()->id);
 
-        return redirect()->route('lohusa.index')->with('success', 'Form başarıyla kaydedildi.');
+        return redirect()
+            ->route('lohusa.index')
+            ->with('success', 'Form baÅŸarÄ±yla kaydedildi.')
+            ->with('clear_lohusa_draft', true);
     }
 
     public function show(LohusaForm $lohusaForm): View
@@ -62,6 +65,6 @@ class LohusaFormController extends Controller
         $this->authorize('delete', $lohusaForm);
         $this->service->destroy($lohusaForm);
 
-        return redirect()->route('lohusa.index')->with('success', 'Kayıt silindi.');
+        return redirect()->route('lohusa.index')->with('success', 'KayÄ±t silindi.');
     }
 }
