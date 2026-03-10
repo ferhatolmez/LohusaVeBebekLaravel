@@ -11,8 +11,16 @@ class FormCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public readonly string $formType;
+
     public function __construct(
         public readonly Model $form,
-        public readonly string $formType,
-    ) {}
+        ?string $formType = null,
+    ) {
+        $this->formType = $formType ?? match (true) {
+            $form instanceof \App\Models\BebekForm => 'bebek',
+            $form instanceof \App\Models\LohusaForm => 'lohusa',
+            default => 'unknown',
+        };
+    }
 }
