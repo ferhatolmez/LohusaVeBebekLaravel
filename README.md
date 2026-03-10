@@ -14,14 +14,14 @@
 # 🏥 Lohusa & Bebek İzlem Platformu
 
 **Doğum sonrası anne ve bebek takibini tek çatı altında toplayan,**
-**klinik akışına göre tasarlanmış modern sağlık yönetim sistemi.**
+**klinik akışına göre tasarlanmış modern, güvenli ve kapsamlı sağlık yönetim sistemi.**
 
 <br/>
 
 <a href="#-kurulum">Kurulum</a> ·
+<a href="#-sistem-mimarisi-ve-backend-örüntüleri">Mimari</a> ·
 <a href="#-api-kullanımı">API</a> ·
-<a href="#-test--kalite">Testler</a> ·
-<a href="#-dağıtım">Dağıtım</a>
+<a href="#-test--kalite">Testler</a>
 
 <br/>
 
@@ -33,31 +33,21 @@
 
 - [Proje Hakkında](#-proje-hakkında)
 - [Öne Çıkan Özellikler](#-öne-çıkan-özellikler)
-- [Sistem Mimarisi](#-sistem-mimarisi)
+- [Sistem Mimarisi ve Backend Örüntüleri](#-sistem-mimarisi-ve-backend-örüntüleri)
 - [Teknoloji Yığını](#-teknoloji-yığını)
 - [Modüller](#-modüller)
 - [Kurulum](#-kurulum)
 - [Kullanıma Başlama](#-kullanıma-başlama)
 - [API Kullanımı](#-api-kullanımı)
 - [Test & Kalite](#-test--kalite)
-- [Dağıtım](#-dağıtım)
-- [Dizin Yapısı](#-dizin-yapısı)
-- [Katkıda Bulunma](#-katkıda-bulunma)
-- [Lisans](#-lisans)
 
 <br/>
 
 ## 💡 Proje Hakkında
 
-Doğum sonrası dönem, hem anne hem bebek için kritik bir süreçtir — ancak çoğu klinik bu süreci hâlâ kağıt formlar veya dağınık spreadsheet'lerle yönetmektedir.
+Doğum sonrası dönem, hem anne hem bebek için kritik bir süreçtir. Geleneksel kliniklerde bu süreç genellikle kağıt formlar veya basit e-tablolar ile yönetilmektedir.
 
-**Lohusa & Bebek İzlem Platformu**, ebe ve klinisyenlerin bu süreci **dijital, ölçülebilir ve güvenli** biçimde yönetmesini sağlar:
-
-- 🔐 **Rol bazlı erişim** — admin, ebe, öğrenci rolleri ile yetkilendirme
-- 📊 **Akıllı dashboard** — yaklaşan kontroller, tamamlılık skoru, klinik metriklerin tümü tek ekranda
-- 📄 **PDF raporlama** — DomPDF ile Türkçe karakter destekli raporlar
-- 🔌 **REST API** — Sanctum korumalı, versiyonlu API çıktısı
-- 🧪 **Test altyapısı** — Pest framework ile kapsamlı test desteği
+**Lohusa & Bebek İzlem Platformu**, ebe ve klinisyenlerin bu hassas süreci **dijital, entegre, ölçülebilir ve son derece güvenli** bir biçimde yönetmesini sağlar. Sektör standartlarında Laravel mimarisi kullanılarak inşa edilmiş olan uygulama, sadece bir veri giriş aracı değil; riskleri öngören, hasta durumunu analiz eden ve kliniğe bütüncül bir bakış açısı sunan bir asistan görevi görür.
 
 <br/>
 
@@ -65,21 +55,31 @@ Doğum sonrası dönem, hem anne hem bebek için kritik bir süreçtir — ancak
 
 | Kategori | Özellik | Detay |
 |:---|:---|:---|
-| **Güvenlik** | Rol tabanlı yetkilendirme | Spatie Permission ile `admin`, `ebe`, `student` rolleri |
-| **Klinik** | Çok adımlı form sihirbazı | 16 adımlık kayıt akışı (klinik → psikolojik → sosyal) |
-| **Dashboard** | Akıllı metrikler | Yaklaşan kontroller, tamamlılık skoru, dağılım grafikleri |
-| **Raporlama** | PDF çıktı | DomPDF + Türkçe karakter desteği (DejaVu Sans) |
-| **API** | REST API v1 | Sanctum korumalı, JsonResource çıktılı, versiyonlu |
-| **Test** | Pest otomasyonu | Feature & Unit testler, CI entegrasyonu |
-| **DevOps** | Docker hazır | `docker compose up` ile tek komutla ayağa kalkma |
-| **UX** | Tarayıcı taslağı | Form verisi kaybını önleyen otomatik kaydetme |
-| **Takip** | Otomatik kontrol hesabı | Postpartum gün/hafta verisine göre takip tarihi önerisi |
+| **Klinik Analiz** | Hasta Risk Skoru | Hayati bulgular (ateş, tansiyon) ve psikolojik faktörlere göre otomatik risk (Düşük/Orta/Yüksek) hesaplama |
+| **İş Akışı** | Çok Adımlı Form Sihirbazı | 16 adımlık parçalı kayıt akışı (klinik → fiziksel muayene → sosyal durumlar) |
+| **Görselleştirme**| Dinamik Dashboard | Chart.js destekli aylık kayıt trendi, termin ve beslenme dağılımları, hızlı özet metrikler |
+| **Yönetim** | Admin ve Kullanıcı Paneli| Yöneticiler için takım yönetimi (Ebe, Öğrenci), rol atama, profil ve şifre güncellemeleri |
+| **UX & UI** | Dark Mode & Kısayollar | Göz yormayan yerel depolamalı Karanlık Tema, güç-kullanıcıları için klavye kısayolları (`N`, `B`, `?`) |
+| **Güvenlik** | Role-Based Access Control| Spatie Permission altyapısı ile `admin`, `ebe` ve `student` rolleriyle form okuma/yazma kısıtlamaları |
+| **Dışa Aktarım**| CSV ve PDF Çıktı | Formların detaylı PDF'ini oluşturma (DomPDF) veya toplu listeleri CSV formatında indirebilme |
+| **Altyapı** | İleri Backend Patternleri| Observer, Event/Listener, Type-Safe Enums, Soft Deletes, Rate Limiting gibi sektör pratikleri |
 
 <br/>
 
-## 🏗 Sistem Mimarisi
+## 🔧 Sistem Mimarisi ve Backend Örüntüleri
 
-```
+Bu proje, ölçeklenebilir ve test edilebilir modern bir Laravel uygulamasının nasıl tasarlanması gerektiğini göstermek üzere en güncel yazılım örüntüleri (Software Patterns) ile kodlanmıştır:
+
+- **Repository & Service Pattern:** İş mantığı (`Service`) ve veri tabanı erişimi (`Repository`) Controller'lardan tamamen ayrıştırılarak `SOLID` prensiplerine uygun mimari sağlanmıştır.
+- **Observer Pattern:** Modeller üzerindeki (Lohusa, Bebek) oluşturma, güncelleme ve silme eylemleri `ActivityLog` modeli vasıtasıyla eşzamanlı olarak veritabanına loglanır.
+- **Event-Driven Architecture (Event/Listener):** `FormCreated` olayı fırlatılarak sisteme eklenen yeni formların loglama işlemleri loosely coupled (gevşek bağlı) şekilde `LogFormCreation` dinleyicisi ile gerçekleşir.
+- **Type-Safe Enums (PHP 8.1+):** Rol yönetimi ve takip durumları, hatalı veri girişini önlemek ve state mantığını düzenlemek için `App\Enums` altında (renk, ikon metotları dahil) yapılandırılmıştır.
+- **Soft Deletes:** Klinik hasta verilerinin kalıcı olarak yok edilmesini engellemek için `deleted_at` mekanizması devreye alınmıştır.
+- **API Rate Limiting:** Servislere yönelik brute force saldırılarını önlemek adına `AppServiceProvider` üzerinden yapılandırılan dakikada 60 istekle sınırlı bir `throttle` tanımlanmıştır.
+- **Health Check Endpoint (`/api/health`):** Sunucu ve DB durumunu izleyen (Monitoring) üretim ortamlarına hazır sağlık test noktası oluşturulmuştur.
+- **Artisan Console Commands:** Sistem yöneticilerinin takip durumlarını görebilmesi için `php artisan report:daily` terminal komutu entegre edilmiştir.
+
+```text
 ┌──────────────────────────────────────────────────────────────────┐
 │                         İSTEK AKIŞI                              │
 ├──────────────────────┬───────────────────────────────────────────┤
@@ -105,14 +105,7 @@ Doğum sonrası dönem, hem anne hem bebek için kritik bir süreçtir — ancak
 │                    Repository Katmanı                             │
 │            Veri erişimi · Sorgular · Eloquent ORM                │
 └──────────────────────────────────────────────────────────────────┘
-                          │
-                          ▼
-           ┌─────────────────────────────────┐
-           │   MySQL · SQLite · PostgreSQL   │
-           └─────────────────────────────────┘
 ```
-
-> Proje, katmanlı mimari (Controller → Service → Repository) prensibiyle tasarlanmıştır. Bu yapı, iş mantığının test edilebilirliğini ve bakım kolaylığını artırır.
 
 <br/>
 
@@ -121,66 +114,49 @@ Doğum sonrası dönem, hem anne hem bebek için kritik bir süreçtir — ancak
 | Katman | Teknoloji |
 |:---|:---|
 | **Backend** | PHP 8.2 + Laravel 12 |
-| **Kimlik Doğrulama** | Laravel Sanctum (API) + Session (Web) |
+| **API Güvenliği** | Laravel Sanctum |
 | **Yetkilendirme** | Spatie Laravel Permission |
-| **PDF** | Barryvdh DomPDF (DejaVu Sans — Türkçe) |
-| **Test** | Pest (Feature + Unit) |
-| **Frontend** | Bootstrap 5 + Blade + Lucide Icons |
-| **Tasarım** | Glassmorphism + Outfit & Inter font ailesi |
-| **Veritabanı** | MySQL / SQLite / PostgreSQL |
-| **Container** | Docker Compose |
-| **CI/CD** | GitHub Actions |
+| **PDF & Raporlama**| Barryvdh DomPDF, League CSV |
+| **Test** | Pest Framework (Feature, Unit) |
+| **Frontend** | Blade, Bootstrap 5, Chart.js, Lucide Icons |
+| **Tema Özellikleri**| Glassmorphism, Native Dark Mode, Custom CSS Variables |
+| **Veritabanı** | MySQL / SQLite |
 
 <br/>
 
 ## 📦 Modüller
 
 <details>
-<summary><strong>📊 Dashboard</strong></summary>
+<summary><strong>📊 Dashboard & Analitik</strong></summary>
 <br/>
-
-- Toplam lohusa ve bebek kayıt sayısı
-- Yaklaşan takip tarihleri (bugün / bu hafta) ile renk kodlu uyarılar
-- Tamamlılık skoru ve kalite göstergeleri
-- Beslenme ve termin dağılımı özet grafikleri
-- Son eklenen kayıtların hızlı önizlemesi
-
+- Aktif ve toplam form sayılarının üst seviye özeti.<br/>
+- <strong>Chart.js Entegrasyonu:</strong> 6 aylık kayıt trend çubukları, yenidoğan bebek termin (zamanında/erken) dağılım pasta grafiği ve beslenme istatistiği.<br/>
+- Bugün ve bu hafta için aciliyet rengine göre sınıflandırılmış <strong>Takip Uyarıları</strong>.
 </details>
 
 <details>
 <summary><strong>🤱 Lohusa İzlem Modülü</strong></summary>
 <br/>
-
-- 16 adımlı çok adımlı kayıt sihirbazı (klinik → psikolojik → sosyal)
-- Otomatik takip önerisi ve postpartum gün/hafta bazlı hesaplama
-- Tarayıcı taslak kaydı ile form güvenliği (LocalStorage)
-- Gelişmiş filtreleme: doğum yeri, beslenme, postpartum hafta, tarih aralığı
-- PDF rapor çıktısı (DomPDF)
-
+- Çok adımlı form üzerinden anneye ait fizyolojik bulguların girilmesi.<br/>
+- `RiskCalculator` sınıfı ile annenin ateşi, tansiyonu veya psikolojik durumuna dayanarak "Düşük/Orta/Yüksek" risk seviyelerinin otomatik saptanması.<br/>
+- Tarayıcı kapanmasına kalsı veri kaybını önleyen "Taslak Kaydetme" (LocalStorage).<br/>
+- PDF Rapor ve Excel/CSV indirme.
 </details>
 
 <details>
 <summary><strong>👶 Bebek İzlem Modülü</strong></summary>
 <br/>
-
-- Klinik muayene ve gelişim alanları (16 fiziksel muayene kategorisi)
-- İzlem sayısına göre otomatik sonraki kontrol tarihi hesabı
-- Cinsiyet, termin durumu ve izlem seviyesine göre filtreleme
-- Düzenleme ve güncelleme desteği
-- PDF raporlama
-
+- Genişletilmiş muayene adımları (cilt, baş, göbek kordonu vs.)<br/>
+- Yenidoğanın doğum yeri, termin durumu ve beslenme modeline yönelik takibi.<br/>
+- Düzenleme (Update) desteği.<br/>
+- CSV olarak dışarı aktarım seçenekleri.
 </details>
 
 <details>
-<summary><strong>🔌 API Katmanı (v1)</strong></summary>
+<summary><strong>👥 Kullanıcı & Profil Yönetimi</strong></summary>
 <br/>
-
-- Token tabanlı kimlik doğrulama (Sanctum)
-- Lohusa ve bebek kaynakları için tam CRUD
-- JsonResource ile standart, sürümlü çıktı
-- `api/v1` prefix ile versiyonlama
-- Pagination ve filtreleme desteği
-
+- <strong>Profilim:</strong> Her kullanıcının e-postasını ve şifresini güvenle güncelleyebileceği sayfa.<br/>
+- <strong>Admin Paneli:</strong> Sistem yetkililerinin hesapları izlediği, yeni ebe veya öğrenci hesapları yaratıp silebildiği `UserController` tabanlı yönetim alanı.
 </details>
 
 <br/>
@@ -192,255 +168,77 @@ Doğum sonrası dönem, hem anne hem bebek için kritik bir süreçtir — ancak
 - PHP ≥ 8.2 (`pdo_sqlite` uzantısı testler için gerekli)
 - Composer
 - Node.js ≥ 18 + npm
-- MySQL, PostgreSQL veya SQLite
+- MySQL veya SQLite bağlantısı
 
-### Yerel Geliştirme
+### Adım Adım Kurulum
 
 ```bash
-# 1. Projeyi klonla
+# 1. Projeyi klonlayın
 git clone https://github.com/ferhatolmez/LohusaVeBebekLaravel.git
 cd LohusaVeBebekLaravel
 
-# 2. PHP bağımlılıklarını yükle
+# 2. Bağımlılıkları yükleyin
 composer install
-
-# 3. Node bağımlılıklarını yükle
 npm install
+npm run build
 
-# 4. Ortam dosyasını oluştur ve uygulama anahtarını üret
+# 3. Çevre değişkenlerini ayarlayın
 cp .env.example .env
 php artisan key:generate
 
-# 5. .env dosyasında veritabanı bağlantı bilgilerini düzenle
-# DB_CONNECTION=mysql
-# DB_HOST=127.0.0.1
-# DB_DATABASE=lohusa_izlem
-# DB_USERNAME=root
-# DB_PASSWORD=
+# 4. Veritabanını yapılandırın (SQLite varsayılan yapılabilir veya MySQL bilgilerinizi .env'ye girin)
+php artisan migrate:fresh --seed
 
-# 6. Veritabanını oluştur ve seed et
-php artisan migrate --seed
-
-# 7. Frontend varlıklarını derle ve sunucuyu başlat
-npm run build
+# 5. Sunucuyu başlatın
 php artisan serve
 ```
 
-> 🌐 Uygulama varsayılan olarak `http://localhost:8000` adresinde çalışır.
+## 👩‍⚕️ Kullanıma Başlama
 
-### Docker ile Çalıştırma
-
-```bash
-docker compose up --build
-```
-
-| Servis | Adres |
-|:---|:---|
-| Web Uygulaması | `http://localhost:8080` |
-| MySQL | `127.0.0.1:33060` |
-
-<br/>
-
-## 👤 Kullanıma Başlama
-
-### İlk Admin Hesabı
-
-Proje `migrate --seed` komutu ile çalıştırıldığında, varsayılan rolleri ve izinleri oluşturur. Admin kullanıcı oluşturmak için seed dosyasını kullanabilirsiniz:
+Sunucu çalışırken varsayılan admin hesabıyla panele girebilirsiniz (migration'da seed edilmişse). Aksi takdirde, Laravel Tinker üzerinden ilk ana kullanıcı hesabınızı şu şekilde oluşturabilirsiniz:
 
 ```bash
-php artisan db:seed
+php artisan tinker
+```
+```php
+$user = App\Models\User::create(['name' => 'Sistem Yöneticisi', 'email' => 'admin@clinic.com', 'password' => bcrypt('password123')]);
+$user->assignRole('admin');
 ```
 
-Varsayılan demo hesaplar aşağıdaki gibidir:
-
-| Rol | E-posta | Şifre | Yetkiler |
-|:---|:---|:---|:---|
-| **Admin** | `admin@example.com` | `password` | Tam yetki |
-| **Ebe** | `ebe@example.com` | `password` | Klinik modüller (CRUD) |
-| **Öğrenci** | `student@example.com` | `password` | Salt okunur erişim |
-
-### Test Yol Haritası
-
-1. **Dashboard** → Giriş yapın, metrikleri ve yaklaşan kontrolleri inceleyin
-2. **Lohusa Formu** → Yeni kayıt oluşturun, çok adımlı formu test edin
-3. **Bebek Formu** → Bebek kaydı oluşturun, düzenleme ve PDF çıktısını deneyin
-4. **Filtreleme** → Liste sayfalarında filtre kombinasyonlarını test edin
-5. **API** → Token alın, lohusa/bebek endpoint'lerini Postman ile test edin
-6. **Roller** → Farklı roller ile giriş yaparak yetki kontrolünü doğrulayın
+Bu bilgilerle giriş yaptıktan sonra:
+1. Sağ üst menüden **Kullanıcı Yönetimi**'ne gidip kliniğinizdeki diğer kişileri (*Ebe*, *Öğrenci*) oluşturun.
+2. Ana ekrandan veya klavyeden `N` tuşuna basarak ilk Lohusa kaydını yaratın.
 
 <br/>
 
 ## 🔌 API Kullanımı
 
-### Token Alma
+Sistemin sunduğu RESTful JSON API altyapısı mevcuttur. İstek yapmak için token gereklidir.
 
-```bash
-curl -X POST http://127.0.0.1:8000/api/v1/auth/token \
-  -H "Accept: application/json" \
-  -d "email=ebe@example.com" \
-  -d "password=password" \
-  -d "device_name=postman"
-```
+1. **Token Alma:** `POST /api/v1/tokens/create` (email ve password ile)
+2. **Kayıt Listeleme:** `GET /api/v1/lohusa?page=1` (Header: `Authorization: Bearer <token>`)
+3. **Sistem Durumu:** `GET /api/health`
 
-### Lohusa Kayıtlarını Listele
-
-```bash
-curl http://127.0.0.1:8000/api/v1/lohusa \
-  -H "Authorization: Bearer <TOKEN>" \
-  -H "Accept: application/json"
-```
-
-### Bebek Kaydı Oluştur
-
-```bash
-curl -X POST http://127.0.0.1:8000/api/v1/bebek \
-  -H "Authorization: Bearer <TOKEN>" \
-  -H "Accept: application/json" \
-  -d "dogum_tarihi=2025-01-15" \
-  -d "kac_haftalik=40" \
-  -d "muayene_tarihi=2025-01-20" \
-  -d "izlem_sayisi=1" \
-  -d "termin_durumu=Term" \
-  -d "cinsiyet=Erkek"
-```
-
-### API Endpoint Özeti
-
-| Metod | Endpoint | Açıklama |
-|:---|:---|:---|
-| `POST` | `/api/v1/auth/token` | Token üretme |
-| `GET` | `/api/v1/lohusa` | Lohusa listesi (paginated) |
-| `POST` | `/api/v1/lohusa` | Yeni lohusa kaydı |
-| `GET` | `/api/v1/lohusa/{id}` | Lohusa detayı |
-| `PUT` | `/api/v1/lohusa/{id}` | Lohusa güncelleme |
-| `DELETE` | `/api/v1/lohusa/{id}` | Lohusa silme |
-| `GET` | `/api/v1/bebek` | Bebek listesi (paginated) |
-| `POST` | `/api/v1/bebek` | Yeni bebek kaydı |
-| `GET` | `/api/v1/bebek/{id}` | Bebek detayı |
-| `PUT` | `/api/v1/bebek/{id}` | Bebek güncelleme |
-| `DELETE` | `/api/v1/bebek/{id}` | Bebek silme |
+Tüm API yanıtları `JsonResource` üzerinden düzenli formatta (data/meta) dönmektedir ve Rate Limiting ile limitlenmiştir.
 
 <br/>
 
 ## 🧪 Test & Kalite
 
-```bash
-# Testleri çalıştır
-composer test
-
-# Veya doğrudan Pest ile
-./vendor/bin/pest
-
-# Kod stili kontrolü (Laravel Pint)
-composer lint
-```
-
-> ⚠️ Testlerin tam çalışması için `pdo_sqlite` PHP uzantısı etkin olmalıdır.
-
-### CI Pipeline
-
-CI/CD süreci (GitHub Actions) sırasıyla şunları yapar:
-
-1. ✅ Composer bağımlılıklarını yükler ve cache'ler
-2. ✅ Frontend build alır (`npm ci && npm run build`)
-3. ✅ Laravel Pint ile kod stili doğrular
-4. ✅ Pest test süitini tetikler (SQLite in-memory)
-
-<br/>
-
-## 🌍 Dağıtım
-
-### Render
-
-Projenin kök dizinindeki `Dockerfile`, Render platformu için hazır yapılandırılmıştır. PostgreSQL tabanlı örnek servis tanımı için [`render.yaml`](render.yaml) dosyasını inceleyin.
-
-#### Gerekli Ortam Değişkenleri
-
-```env
-APP_KEY=base64:...
-APP_URL=https://your-app.onrender.com
-APP_ENV=production
-DB_CONNECTION=pgsql
-DATABASE_URL=postgresql://user:pass@host:5432/dbname
-```
-
-#### Dağıtım Sonrası
+Proje, iş mantığının hiç kırılmadığından emin olmak için **Pest PHP** framework'ü kullanılarak yazılmış kapsamlı test paketlerine sahiptir.
 
 ```bash
-# Render build betiği otomatik olarak çalıştırır:
-# 1. composer install --no-dev
-# 2. npm ci && npm run build
-# 3. php artisan migrate --force
-# 4. php artisan config:cache
-# 5. php artisan route:cache
+# Tüm test senaryolarını çalıştırmak için
+php artisan test
 ```
 
-<br/>
-
-## 📁 Dizin Yapısı
-
-```
-LohusaVeBebekLaravel/
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/         # Web & API controller'lar
-│   │   │   ├── Api/             # API v1 controller'ları
-│   │   │   └── Auth/            # Kimlik doğrulama
-│   │   ├── Requests/            # Form validasyon sınıfları
-│   │   └── Resources/           # API JsonResource çıktıları
-│   ├── Models/                  # Eloquent modelleri
-│   │   └── Concerns/            # Trait'ler (CompletionScore vb.)
-│   ├── Policies/                # Yetkilendirme policy'leri
-│   ├── Repositories/            # Veri erişim katmanı
-│   ├── Services/                # İş mantığı katmanı
-│   └── Support/                 # Yardımcı sınıflar
-├── config/                      # Laravel konfigürasyonları
-├── database/
-│   ├── factories/               # Model factory'leri (test)
-│   ├── migrations/              # Veritabanı migration'ları
-│   └── seeders/                 # Veri tohumlamaları
-├── docker/                      # Docker yapılandırma dosyaları
-├── resources/
-│   └── views/                   # Blade şablonları
-│       ├── auth/                # Giriş ekranı
-│       ├── bebek/               # Bebek izlem view'ları
-│       ├── layouts/             # Ana layout (Glassmorphism)
-│       └── lohusa/              # Lohusa izlem view'ları
-├── routes/                      # Web & API route tanımları
-├── tests/                       # Pest test süitleri
-├── .github/                     # CI/CD workflow dosyaları
-├── docker-compose.yml           # Docker Compose yapılandırması
-├── Dockerfile                   # Render için container tanımı
-├── render.yaml                  # Render platform yapılandırması
-└── vite.config.js               # Vite frontend yapılandırması
-```
-
-<br/>
-
-## 🤝 Katkıda Bulunma
-
-1. Bu repository'yi fork edin
-2. Feature branch oluşturun (`git checkout -b feature/yeni-ozellik`)
-3. Değişikliklerinizi commit edin (`git commit -m 'feat: yeni özellik eklendi'`)
-4. Branch'inizi push edin (`git push origin feature/yeni-ozellik`)
-5. Pull Request açın
-
-> Commit mesajlarında [Conventional Commits](https://www.conventionalcommits.org/) formatını kullanmanızı öneririz.
-
-<br/>
-
-## 📄 Lisans
-
-Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır.
-
-<br/>
+Testler in-memory SQLite kullanarak çalışır (Test sırasında veritabanına zarar gelmez):
+- `LohusaFormTest` — Erişilebilirlik, yaratma ve PDF indirme işlemleri
+- `BebekFormTest` — Validasyonlar, düzenleme ve listeleme testleri
+- `DashboardTest` — Rollerin doğru veriyi görüp görmediği
 
 ---
 
 <div align="center">
-
-**Geliştirici** · [Ferhat Ölmez](https://github.com/ferhatolmez)
-
-*Katkılara açıktır · Yıldız atmayı unutmayın ⭐*
-
+  <p>Lohusa & Bebek İzlem Platformu · 2026</p>
 </div>

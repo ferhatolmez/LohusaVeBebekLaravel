@@ -22,6 +22,9 @@
                 <p class="text-secondary mb-0">Aktif seçimler üstte görünür, tablo mobilde kart benzeri akışla okunabilir.</p>
             </div>
             <div class="d-flex flex-wrap gap-2">
+                @can('export', App\Models\BebekForm::class)
+                    <a href="{{ route('bebek.csv', request()->query()) }}" class="btn btn-outline-success d-flex align-items-center gap-2"><i data-lucide="download" style="width:16px;height:16px"></i> CSV İndir</a>
+                @endcan
                 @can('create', App\Models\BebekForm::class)
                     <a href="{{ route('bebek.create') }}" class="btn btn-primary d-flex align-items-center gap-2"><i data-lucide="plus" style="width:16px;height:16px"></i> Yeni kayıt</a>
                 @endcan

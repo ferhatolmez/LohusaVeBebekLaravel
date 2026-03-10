@@ -22,6 +22,9 @@
                 <p class="text-secondary mb-0">Filtreler, sonuç sayısı ve mobil okunabilirlik tek bakışta görülüyor.</p>
             </div>
             <div class="d-flex flex-wrap gap-2">
+                @can('export', App\Models\LohusaForm::class)
+                    <a href="{{ route('lohusa.csv', request()->query()) }}" class="btn btn-outline-success d-flex align-items-center gap-2"><i data-lucide="download" style="width:16px;height:16px"></i> CSV İndir</a>
+                @endcan
                 @can('create', App\Models\LohusaForm::class)
                     <a href="{{ route('lohusa.create') }}" class="btn btn-primary d-flex align-items-center gap-2"><i data-lucide="plus" style="width:16px;height:16px"></i> Yeni kayıt</a>
                 @endcan
@@ -113,7 +116,7 @@
             <div class="table-responsive">
                 <table class="table table-responsive-stack align-middle mb-0">
                     <thead>
-                        <tr><th>ID</th><th>Danışan</th><th>Tarih</th><th>Takip</th><th>Kalite</th><th class="text-end">İşlemler</th></tr>
+                        <tr><th>ID</th><th>Danışan</th><th>Tarih</th><th>Takip</th><th>Risk Skoru</th><th>Kalite</th><th class="text-end">İşlemler</th></tr>
                     </thead>
                     <tbody>
                         @forelse ($forms as $form)
@@ -129,6 +132,7 @@
                                         <span class="text-secondary small">Takip hedefi yok</span>
                                     @endif
                                 </td>
+                                <td data-label="Risk Skoru"><span class="badge text-bg-{{ $form->risk_badge }}">{{ $form->risk_level }} ({{ $form->risk_score }})</span></td>
                                 <td data-label="Kalite"><span class="badge text-bg-{{ $form->completion_tone }}">%{{ $form->completion_score }}</span></td>
                                 <td data-label="İşlemler">
                                     <div class="d-flex justify-content-end flex-wrap gap-2">

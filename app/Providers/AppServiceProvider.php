@@ -28,6 +28,13 @@ class AppServiceProvider extends ServiceProvider
         Gate::before(fn ($user, string $ability) => $user->hasRole('admin') ? true : null);
         Gate::define('viewDashboard', fn ($user) => $user->can('view dashboard'));
 
+        \App\Models\LohusaForm::observe(\App\Observers\LohusaFormObserver::class);
+        \App\Models\BebekForm::observe(\App\Observers\BebekFormObserver::class);
+
+        \Illuminate\Support\Facades\RateLimiter::for('api', function (\Illuminate\Http\Request $request) {
+            return \Illuminate\Cache\RateLimiting\Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
+
         Paginator::useBootstrapFive();
 
         if ($this->app->environment('production')) {

@@ -48,6 +48,29 @@ class DashboardService
             'upcomingBebekFollowUps' => $allBebekFollowUps->take(5),
             'termBreakdown' => $bebekForms->groupBy(fn (BebekForm $form) => $form->termin_durumu ?: 'Belirtilmedi')->map->count()->sortDesc(),
             'feedingBreakdown' => $lohusaForms->filter(fn (LohusaForm $form) => filled($form->bebek_beslenmesi))->groupBy('bebek_beslenmesi')->map->count()->sortDesc(),
+            'monthlyTrend' => $this->monthlyTrend(),
         ];
+    }
+
+    private function monthlyTrend(): array
+    {
+        $months = collect();
+        for ($i = 5; $i >= 0; $i--) {
+            $date = Carbon::today()->subMonths($i);
+            $label = $date->translatedFormat('M Y');
+            $months->push([
+                'label' => $label,
+                'lohusa' => LohusaForm::query()
+                    ->whereYear('created_at', $date->year)
+                    ->whereMonth('created_at', $date->month)
+                    ->count(),
+                'bebek' => BebekForm::query()
+                    ->whereYear('created_at', $date->year)
+                    ->whereMonth('created_at', $date->month)
+                    ->count(),
+            ]);
+        }
+
+        return $months->toArray();
     }
 }

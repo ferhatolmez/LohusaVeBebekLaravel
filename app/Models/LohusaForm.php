@@ -12,9 +12,14 @@ use Illuminate\Support\Carbon;
 class LohusaForm extends Model
 {
     use CalculatesCompletionScore;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
     use HasFactory;
 
     protected $dateFormat = 'Y-m-d H:i:s';
+
+    protected $dispatchesEvents = [
+        'created' => \App\Events\FormCreated::class,
+    ];
 
     protected $fillable = [
         'created_by', 'updated_by',
@@ -192,5 +197,20 @@ class LohusaForm extends Model
         }
 
         return $date->isPast() ? 'danger' : ($date->diffInDays(now()) <= 7 ? 'warning' : 'success');
+    }
+
+    public function getRiskScoreAttribute(): int
+    {
+        return \App\Support\RiskCalculator::calculateForLohusa($this);
+    }
+
+    public function getRiskLevelAttribute(): string
+    {
+        return \App\Support\RiskCalculator::getRiskLevel($this->risk_score);
+    }
+
+    public function getRiskBadgeAttribute(): string
+    {
+        return \App\Support\RiskCalculator::getRiskBadge($this->risk_score);
     }
 }

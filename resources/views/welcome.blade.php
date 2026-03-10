@@ -144,7 +144,24 @@
         </div>
     </section>
 
-    {{-- Distribution Charts --}}
+    {{-- Interactive Charts --}}
+    <section class="row g-4 mb-4 mb-lg-5">
+        <div class="col-12">
+            <div class="glass-panel p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="h5 mb-0 d-flex align-items-center gap-2">
+                        <i data-lucide="trending-up" style="width:20px;height:20px;color:var(--brand-700)"></i>
+                        Aylık kayıt trendi
+                    </h2>
+                    <span class="badge-soft">Son 6 ay</span>
+                </div>
+                <div style="position:relative;height:280px">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="row g-4 mb-4 mb-lg-5">
         <div class="col-lg-6">
             <div class="glass-panel h-100 p-4">
@@ -155,18 +172,13 @@
                     </h2>
                     <span class="badge-soft">Bebek</span>
                 </div>
-                <div class="d-grid gap-3">
-                    @forelse($termBreakdown as $label => $count)
-                        <div>
-                            <div class="d-flex justify-content-between small mb-1 fw-medium"><span>{{ $label }}</span><span class="fw-bold">{{ $count }}</span></div>
-                            <div class="progress" style="height:8px;border-radius:999px;background:rgba(0,0,0,0.04)">
-                                <div class="progress-bar" style="width:{{ max(8, $stats['total_bebek'] ? round(($count / $stats['total_bebek']) * 100) : 0) }}%;background:linear-gradient(90deg,#10b981,#34d399);border-radius:999px"></div>
-                            </div>
-                        </div>
-                    @empty
-                        <p class="text-secondary mb-0">Termin verisi yok.</p>
-                    @endforelse
-                </div>
+                @if(count($termBreakdown) > 0)
+                    <div style="position:relative;height:240px;max-width:320px;margin:0 auto">
+                        <canvas id="termChart"></canvas>
+                    </div>
+                @else
+                    <p class="text-secondary mb-0">Termin verisi yok.</p>
+                @endif
             </div>
         </div>
         <div class="col-lg-6">
@@ -178,18 +190,13 @@
                     </h2>
                     <span class="badge-soft">Lohusa</span>
                 </div>
-                <div class="d-grid gap-3">
-                    @forelse($feedingBreakdown as $label => $count)
-                        <div>
-                            <div class="d-flex justify-content-between small mb-1 fw-medium"><span>{{ $label }}</span><span class="fw-bold">{{ $count }}</span></div>
-                            <div class="progress" style="height:8px;border-radius:999px;background:rgba(0,0,0,0.04)">
-                                <div class="progress-bar" style="width:{{ max(8, $stats['total_lohusa'] ? round(($count / $stats['total_lohusa']) * 100) : 0) }}%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:999px"></div>
-                            </div>
-                        </div>
-                    @empty
-                        <p class="text-secondary mb-0">Beslenme dağılımı için yeterli veri yok.</p>
-                    @endforelse
-                </div>
+                @if(count($feedingBreakdown) > 0)
+                    <div style="position:relative;height:240px;max-width:320px;margin:0 auto">
+                        <canvas id="feedingChart"></canvas>
+                    </div>
+                @else
+                    <p class="text-secondary mb-0">Beslenme verisi yok.</p>
+                @endif
             </div>
         </div>
     </section>
@@ -261,3 +268,100 @@
     </section>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const fontFamily = "'Inter', sans-serif";
+    Chart.defaults.font.family = fontFamily;
+    Chart.defaults.font.size = 12;
+    Chart.defaults.color = '#64748b';
+
+    // Monthly Trend
+    const trendData = @json($monthlyTrend);
+    new Chart(document.getElementById('trendChart'), {
+        type: 'bar',
+        data: {
+            labels: trendData.map(d => d.label),
+            datasets: [
+                {
+                    label: 'Lohusa',
+                    data: trendData.map(d => d.lohusa),
+                    backgroundColor: 'rgba(59,130,246,0.7)',
+                    borderRadius: 8,
+                    borderSkipped: false,
+                },
+                {
+                    label: 'Bebek',
+                    data: trendData.map(d => d.bebek),
+                    backgroundColor: 'rgba(139,92,246,0.7)',
+                    borderRadius: 8,
+                    borderSkipped: false,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', labels: { usePointStyle: true, padding: 20 } },
+            },
+            scales: {
+                y: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: 'rgba(0,0,0,0.04)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // Term Doughnut
+    @if(count($termBreakdown) > 0)
+    const termLabels = @json($termBreakdown->keys());
+    const termValues = @json($termBreakdown->values());
+    new Chart(document.getElementById('termChart'), {
+        type: 'doughnut',
+        data: {
+            labels: termLabels,
+            datasets: [{
+                data: termValues,
+                backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'],
+                borderWidth: 0,
+                hoverOffset: 8,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '65%',
+            plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 16 } } }
+        }
+    });
+    @endif
+
+    // Feeding Doughnut
+    @if(count($feedingBreakdown) > 0)
+    const feedLabels = @json($feedingBreakdown->keys());
+    const feedValues = @json($feedingBreakdown->values());
+    new Chart(document.getElementById('feedingChart'), {
+        type: 'doughnut',
+        data: {
+            labels: feedLabels,
+            datasets: [{
+                data: feedValues,
+                backgroundColor: ['#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe', '#dbeafe'],
+                borderWidth: 0,
+                hoverOffset: 8,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '65%',
+            plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 16 } } }
+        }
+    });
+    @endif
+});
+</script>
+@endpush
+

@@ -12,9 +12,14 @@ use Illuminate\Support\Carbon;
 class BebekForm extends Model
 {
     use CalculatesCompletionScore;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
     use HasFactory;
 
     protected $dateFormat = 'Y-m-d H:i:s';
+
+    protected $dispatchesEvents = [
+        'created' => \App\Events\FormCreated::class,
+    ];
 
     protected $fillable = [
         'created_by', 'updated_by',

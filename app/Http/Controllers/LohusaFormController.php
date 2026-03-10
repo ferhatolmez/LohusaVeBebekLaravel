@@ -42,8 +42,29 @@ class LohusaFormController extends Controller
 
         return redirect()
             ->route('lohusa.index')
-            ->with('success', 'Form baÅŸarÄ±yla kaydedildi.')
+            ->with('success', 'Form başarıyla kaydedildi.')
             ->with('clear_lohusa_draft', true);
+    }
+
+    public function exportCsv(Request $request): \Symfony\Component\HttpFoundation\StreamedResponse
+    {
+        $this->authorize('viewAny', LohusaForm::class);
+
+        $forms = $this->repository->paginate($request->only(['q', 'dogum_yeri', 'bebek_beslenmesi', 'postpartum_hafta_min', 'created_from', 'created_to']))->items();
+
+        return response()->streamDownload(function () use ($forms) {
+            $handle = fopen('php://output', 'w');
+            fprintf($handle, chr(0xEF).chr(0xBB).chr(0xBF)); // UTF-8 BOM
+            fputcsv($handle, ['ID', 'Ad Soyad', 'Tarih', 'Risk Skoru', 'Risk Seviyesi', 'Kalite Skor', 'Takip Tarihi']);
+            foreach ($forms as $form) {
+                fputcsv($handle, [
+                    $form->id, $form->ad_soyad, $form->created_at->format('d.m.Y'),
+                    $form->risk_score, $form->risk_level, $form->completion_score,
+                    $form->suggested_follow_up_date?->format('d.m.Y') ?? '-',
+                ]);
+            }
+            fclose($handle);
+        }, 'lohusa_disa_aktarim_' . now()->format('YmdHis') . '.csv');
     }
 
     public function show(LohusaForm $lohusaForm): View

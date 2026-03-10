@@ -42,6 +42,29 @@
             --glass-blur: blur(20px);
         }
 
+        html[data-theme="dark"] {
+            --brand-900: #1e293b;
+            --brand-700: #60a5fa;
+            --brand-500: #3b82f6;
+            --brand-400: #2563eb;
+            --brand-100: #1e3a8a;
+            --brand-050: #172554;
+            --accent: #a78bfa;
+            --accent-light: #4c1d95;
+            --ink-900: #f8fafc;
+            --ink-600: #cbd5e1;
+            --ink-500: #94a3b8;
+            --ink-400: #64748b;
+            --surface: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.85);
+            --glass-border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* ─── Global Transitions ─── */
+        body, .card, .glass-panel, .navbar, .btn {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
         * { box-sizing: border-box; }
 
         body {
@@ -52,6 +75,11 @@
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+
+        html[data-theme="dark"] body {
+            background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%);
+            background-attachment: fixed;
         }
 
         h1, h2, h3, h4, h5, h6, .navbar-brand, .metric-value {
@@ -255,7 +283,6 @@
         }
         .filter-pill:hover { background: var(--brand-100); }
 
-        /* ─── Tables ─── */
         .table-card { overflow: hidden; }
         .table { margin-bottom: 0; }
         .table thead th {
@@ -267,7 +294,36 @@
         }
         .table tbody tr { transition: background 0.2s ease; border-bottom: 1px solid rgba(0,0,0,0.03); }
         .table tbody tr:hover { background: rgba(255,255,255,0.55); }
-        .table > :not(caption) > * > * { padding: 0.9rem 1.25rem; background: transparent; }
+        .table > :not(caption) > * > * { padding: 0.9rem 1.25rem; background: transparent; color: var(--ink-900); }
+
+        /* ─── Dark Mode Component Overrides ─── */
+        html[data-theme="dark"] .card, 
+        html[data-theme="dark"] .glass-panel,
+        html[data-theme="dark"] .status-chip,
+        html[data-theme="dark"] .filter-panel {
+            background: var(--card-bg);
+            border: var(--glass-border);
+            color: var(--ink-900);
+        }
+        html[data-theme="dark"] .form-control,
+        html[data-theme="dark"] .form-select {
+            background: rgba(15, 23, 42, 0.6);
+            border-color: rgba(255,255,255,0.1);
+            color: var(--ink-900);
+        }
+        html[data-theme="dark"] .table thead th {
+            background: rgba(15, 23, 42, 0.6);
+            border-bottom-color: rgba(255,255,255,0.1);
+        }
+        html[data-theme="dark"] .table tbody tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        html[data-theme="dark"] .table tbody tr {
+            border-bottom-color: rgba(255,255,255,0.05);
+        }
+        html[data-theme="dark"] .text-secondary {
+            color: var(--ink-400) !important;
+        }
 
         /* ─── Step Layout (Create form) ─── */
         .step-layout {
@@ -407,46 +463,57 @@
                                     </a>
                                 </li>
                             @endcan
-                            <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
-                                <span class="navbar-text small d-block">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="user-avatar">{{ substr(auth()->user()->name, 0, 1) }}</div>
-                                        <div>
-                                            <div class="fw-semibold text-white lh-1" style="font-size:0.88rem">{{ auth()->user()->name }}</div>
-                                            @php
-                                                $roleName = auth()->user()->getRoleNames()->first() ?? 'user';
-                                                $roleColors = [
-                                                    'admin' => 'background:#ef4444;color:#fff',
-                                                    'ebe' => 'background:#3b82f6;color:#fff',
-                                                    'student' => 'background:#f59e0b;color:#1e293b',
-                                                ];
-                                                $roleLabels = [
-                                                    'admin' => 'Yönetici',
-                                                    'ebe' => 'Ebe',
-                                                    'student' => 'Öğrenci',
-                                                ];
-                                                $roleIcons = [
-                                                    'admin' => 'shield',
-                                                    'ebe' => 'stethoscope',
-                                                    'student' => 'graduation-cap',
-                                                ];
-                                            @endphp
-                                            <span class="d-inline-flex align-items-center gap-1 rounded-pill px-2 mt-1"
-                                                  style="{{ $roleColors[$roleName] ?? 'background:#64748b;color:#fff' }};font-size:0.68rem;font-weight:700;letter-spacing:0.04em">
-                                                <i data-lucide="{{ $roleIcons[$roleName] ?? 'user' }}" style="width:10px;height:10px"></i>
-                                                {{ strtoupper($roleLabels[$roleName] ?? $roleName) }}
-                                            </span>
-                                        </div>
+                            <li class="nav-item dropdown ms-lg-3 mt-3 mt-lg-0">
+                                @php
+                                    $roleName = auth()->user()->getRoleNames()->first() ?? 'user';
+                                    $roleColors = [
+                                        'admin' => 'background:#ef4444;color:#fff',
+                                        'ebe' => 'background:#3b82f6;color:#fff',
+                                        'student' => 'background:#f59e0b;color:#1e293b',
+                                    ];
+                                    $roleLabels = [
+                                        'admin' => 'Yönetici',
+                                        'ebe' => 'Ebe',
+                                        'student' => 'Öğrenci',
+                                    ];
+                                @endphp
+                                <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding:0.25rem 0.5rem">
+                                    <div class="user-avatar" style="width:32px;height:32px;font-size:0.9rem">{{ substr(auth()->user()->name, 0, 1) }}</div>
+                                    <div class="d-none d-lg-block text-start lh-1">
+                                        <div class="fw-semibold text-white mb-1" style="font-size:0.85rem">{{ auth()->user()->name }}</div>
+                                        <span class="badge" style="{{ $roleColors[$roleName] ?? 'background:#64748b;color:#fff' }};font-size:0.6rem;padding:0.2em 0.4em">
+                                            {{ strtoupper($roleLabels[$roleName] ?? $roleName) }}
+                                        </span>
                                     </div>
-                                </span>
-                            </li>
-                            <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
-                                <form action="{{ route('logout', [], false) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-outline-light btn-sm rounded-pill d-flex align-items-center gap-1" style="font-size:0.82rem">
-                                        <i data-lucide="log-out" style="width:14px;height:14px"></i> Çıkış
-                                    </button>
-                                </form>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="userDropdown">
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center gap-2" href="{{ route('profile.edit') }}">
+                                            <i data-lucide="user" style="width:16px;height:16px"></i> Profilim
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center gap-2" href="#" id="themeToggleBtn">
+                                            <i data-lucide="moon" id="themeToggleIcon" style="width:16px;height:16px"></i> Temayı Değiştir
+                                        </a>
+                                    </li>
+                                    @role('admin')
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center gap-2" href="{{ route('users.index') }}">
+                                            <i data-lucide="users" style="width:16px;height:16px"></i> Kullanıcı Yönetimi
+                                        </a>
+                                    </li>
+                                    @endrole
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form action="{{ route('logout', [], false) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item text-danger d-flex align-items-center gap-2">
+                                                <i data-lucide="log-out" style="width:16px;height:16px"></i> Çıkış Yap
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     @endauth
@@ -470,6 +537,56 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof lucide !== 'undefined') lucide.createIcons();
+            
+            // Theme setup
+            const htmlEl = document.documentElement;
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const toggleIcon = document.getElementById('themeToggleIcon');
+            
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                htmlEl.setAttribute('data-theme', 'dark');
+                if (toggleIcon) toggleIcon.setAttribute('data-lucide', 'sun');
+            }
+
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (htmlEl.getAttribute('data-theme') === 'dark') {
+                        htmlEl.setAttribute('data-theme', 'light');
+                        localStorage.setItem('theme', 'light');
+                        toggleIcon.setAttribute('data-lucide', 'moon');
+                    } else {
+                        htmlEl.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                        toggleIcon.setAttribute('data-lucide', 'sun');
+                    }
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                });
+            }
+
+            // Keyboard Shortcuts
+            document.addEventListener('keydown', (e) => {
+                // Return if user is typing in an input or textarea
+                if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+
+                if (e.key === '?') {
+                    // Show shortcuts modal if it existed, for now just simple alert
+                    alert("Klavye Kısayolları:\n\n'?' : Bu menüyü gösterir\n'n' : Yeni lohusa kaydı\n'b' : Yeni bebek kaydı\n'd' : Ana panele dön\n't' : Tema değiştir");
+                }
+                if (e.key.toLowerCase() === 'n') {
+                    window.location.href = "{{ route('lohusa.create') }}";
+                }
+                if (e.key.toLowerCase() === 'b') {
+                    window.location.href = "{{ route('bebek.create') }}";
+                }
+                if (e.key.toLowerCase() === 'd') {
+                    window.location.href = "{{ route('home') }}";
+                }
+                if (e.key.toLowerCase() === 't') {
+                    if (themeToggleBtn) themeToggleBtn.click();
+                }
+            });
         });
     </script>
     @stack('scripts')
