@@ -1,59 +1,55 @@
-<div class="form-section fade-in p-3 rounded card shadow-sm mb-4">
-    <div class="card-header bg-primary text-white">Bu doğuma ait bebek bilgileri</div>
+@php
+    use App\Support\MedicalFormOptions;
+@endphp
+<div class="form-section card shadow-sm mb-4">
+    <div class="card-header">Bu doguma ait bebek bilgileri</div>
     <div class="card-body">
-
-        <div class="row">
+        <div class="row g-3">
             <div class="col-md-3">
-                <label>Doğum Tarihi</label>
-                <input type="date" name="dogum_tarihi" class="form-control">
+                <label class="form-label">Dogum tarihi</label>
+                <input type="date" name="dogum_tarihi" class="form-control @error('dogum_tarihi') is-invalid @enderror" value="{{ old('dogum_tarihi') }}">
             </div>
             <div class="col-md-3">
-                <label>Kaç Haftalık</label>
-                <input type="text" name="kac_haftalik" class="form-control" value="{{ old('kac_haftalik', $clinicalDefaults['bebek']['kac_haftalik']) }}">
+                <label class="form-label">Kac haftalik</label>
+                <input type="number" min="20" max="45" name="kac_haftalik" class="form-control @error('kac_haftalik') is-invalid @enderror" value="{{ old('kac_haftalik', $clinicalDefaults['bebek']['kac_haftalik']) }}">
             </div>
             <div class="col-md-3">
-                <label>Muayene Tarihi</label>
-                <input type="date" name="muayene_tarihi" class="form-control" value="{{ old('muayene_tarihi', now()->format('Y-m-d')) }}">
+                <label class="form-label">Muayene tarihi</label>
+                <input type="date" name="muayene_tarihi" class="form-control @error('muayene_tarihi') is-invalid @enderror" value="{{ old('muayene_tarihi', now()->format('Y-m-d')) }}">
             </div>
             <div class="col-md-3">
-                <label>İzlem Sayısı</label>
-                <input type="number" name="izlem_sayisi" class="form-control" value="{{ old('izlem_sayisi', $clinicalDefaults['bebek']['izlem_sayisi']) }}">
+                <label class="form-label">Izlem sayisi</label>
+                <input type="number" min="1" max="20" name="izlem_sayisi" class="form-control @error('izlem_sayisi') is-invalid @enderror" value="{{ old('izlem_sayisi', $clinicalDefaults['bebek']['izlem_sayisi']) }}">
             </div>
-        </div>
-
-        <div class="row mt-3">
             <div class="col-md-3">
-                <label>Termin Durumu</label>
-                <select name="termin_durumu" class="form-control">
-                    <option>Term</option>
-                    <option>Prematür</option>
-                    <option>Postmatür</option>
+                <label class="form-label">Termin durumu</label>
+                <select name="termin_durumu" class="form-select @error('termin_durumu') is-invalid @enderror">
+                    <option value="">Seciniz</option>
+                    @foreach (MedicalFormOptions::termOptions() as $option)
+                        <option value="{{ $option }}" @selected(old('termin_durumu', 'Term') === $option)>{{ $option }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-3">
-                <label>Cinsiyet</label>
-                <select name="cinsiyet" class="form-control">
-                    <option>Kız</option>
-                    <option>Erkek</option>
+                <label class="form-label">Cinsiyet</label>
+                <select name="cinsiyet" class="form-select @error('cinsiyet') is-invalid @enderror">
+                    <option value="">Seciniz</option>
+                    @foreach (MedicalFormOptions::genderOptions() as $option)
+                        <option value="{{ $option }}" @selected(old('cinsiyet') === $option)>{{ $option }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-3">
-                <label>Kaçıncı çocuk?</label>
-                <input type="number" name="kacinci_cocuk" class="form-control">
+                <label class="form-label">Kacinci cocuk?</label>
+                <input type="number" min="1" max="20" name="kacinci_cocuk" class="form-control @error('kacinci_cocuk') is-invalid @enderror" value="{{ old('kacinci_cocuk') }}">
             </div>
-
             <div class="col-md-3">
-                <label>Kan Grubu</label>
-                <select name="kan_grubu" class="form-control">
-                    <option value="">Seçiniz</option>
-                    <option value="A Rh+">A Rh+</option>
-                    <option value="A Rh-">A Rh-</option>
-                    <option value="B Rh+">B Rh+</option>
-                    <option value="B Rh-">B Rh-</option>
-                    <option value="AB Rh+">AB Rh+</option>
-                    <option value="AB Rh-">AB Rh-</option>
-                    <option value="0 Rh+">0 Rh+</option>
-                    <option value="0 Rh-">0 Rh-</option>
+                <label class="form-label">Kan grubu</label>
+                <select name="kan_grubu" class="form-select @error('kan_grubu') is-invalid @enderror">
+                    <option value="">Seciniz</option>
+                    @foreach (MedicalFormOptions::bloodGroups() as $option)
+                        <option value="{{ $option }}" @selected(old('kan_grubu') === $option)>{{ $option }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>

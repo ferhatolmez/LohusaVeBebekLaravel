@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\CalculatesCompletionScore;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class LohusaForm extends Model
 {
+    use CalculatesCompletionScore;
     use HasFactory;
 
     protected $fillable = [
@@ -27,20 +29,15 @@ class LohusaForm extends Model
         'ap_geleneksel_yontem_neden', 'su_an_ap_yontem', 'bebek_cinsiyet', 'anne_tercihi', 'cinsiyet_duygu',
         'bebek_dusunceleri', 'endise_var_mi', 'aile_yaklasim', 'dogum_sonrasi_cinsel_yasam', 'geleneksel_uygulamalar',
         'muayene_tarihi', 'postpartum_hafta', 'gebelik_kilosu', 'mevcut_kilo', 'ates', 'nabiz', 'solunum', 'tansiyon',
-        'bas_bulgular','sacli_deri_bulgular','yuz_bulgular','goz_bulgular','burun_bulgular','agiz_disfer_bulgular',
-        'bogaz_bulgular','solunum_bulgular','gogus_bulgular','meme_ucu', 'emzirmeye_uygun', 'meme_bakimi', 'sutyen_kullanimi', 'fundus_palpe_ediliyor',
+        'bas_bulgular', 'sacli_deri_bulgular', 'yuz_bulgular', 'goz_bulgular', 'burun_bulgular', 'agiz_disfer_bulgular',
+        'bogaz_bulgular', 'solunum_bulgular', 'gogus_bulgular', 'meme_ucu', 'emzirmeye_uygun', 'meme_bakimi', 'sutyen_kullanimi', 'fundus_palpe_ediliyor',
         'losia_tipi', 'abdomen_bulgulari', 'uriner_bulgular', 'barsak_bulgular', 'alt_ekstremite',
         'uykusuzluk', 'hemoglobin', 'diyet_var_mi', 'kilo_sorunu_tipi', 'istahsizlik', 'yeme_aliskanligi',
         'vitamin_destegi', 'vitamin_icerigi', 'yiyemedigi_yiyecek', 'alinan_besin_gruplari', 'bebek_beslenmesi',
         'psikolojik_belirtiler', 'anne_bebek_iliskisi', 'emzirme_bulgular', 'emzirme_suresi', 'sut_yeterliligi',
-        'egitim_istekleri', 'ebenin_yorumu',
-
-        'dogum_tarihi', 'kac_haftalik', 'izlem_sayisi', 'termin_durumu', 'cinsiyet', 'kacinci_cocuk', 'bas_cevresi',
-        'gogus_cevresi', 'kilo', 'boy',
-
-        'deri', 'bas', 'gozler', 'burun', 'agiz', 'kulak', 'boyun', 'gogus', 'abdomen', 'kasik', 'genital',
-        'solunum_sistemi', 'kvs', 'gis', 'uriner', 'kas_iskelet', 'norolojik',
-        'fiziksel_muayene',
+        'egitim_istekleri', 'ebenin_yorumu', 'dogum_tarihi', 'kac_haftalik', 'izlem_sayisi', 'termin_durumu', 'cinsiyet', 'kacinci_cocuk', 'bas_cevresi',
+        'gogus_cevresi', 'kilo', 'boy', 'deri', 'bas', 'gozler', 'burun', 'agiz', 'kulak', 'boyun', 'gogus', 'abdomen', 'kasik', 'genital',
+        'solunum_sistemi', 'kvs', 'gis', 'uriner', 'kas_iskelet', 'norolojik', 'fiziksel_muayene',
     ];
 
     protected $casts = [
@@ -74,7 +71,6 @@ class LohusaForm extends Model
         'uriner_bulgular' => 'array',
         'barsak_bulgular' => 'array',
         'alt_ekstremite' => 'array',
-
         'deri' => 'array',
         'bas' => 'array',
         'gozler' => 'array',
@@ -95,5 +91,13 @@ class LohusaForm extends Model
         'uykusuzluk' => 'array',
         'fiziksel_muayene' => 'array',
     ];
-}
 
+    protected function completionFields(): array
+    {
+        return [
+            'ad_soyad', 'yas', 'egitim_durumu', 'meslek', 'saglik_guvence', 'gebelik_planlandimi', 'dogum_yeri',
+            'postpartum_gun', 'muayene_tarihi', 'gebelik_kilosu', 'mevcut_kilo', 'ates', 'nabiz', 'solunum',
+            'emzirme_bulgular', 'psikolojik_belirtiler', 'egitim_istekleri', 'ebenin_yorumu', 'bebek_beslenmesi',
+        ];
+    }
+}

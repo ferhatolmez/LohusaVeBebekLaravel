@@ -1,8 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LohusaFormController;
 use App\Http\Controllers\BebekFormController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LohusaFormController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', DashboardController::class)->name('home');
 
 Route::get('/lohusa', [LohusaFormController::class, 'index'])->name('lohusa.index');
 Route::get('/lohusa/create', [LohusaFormController::class, 'create'])->name('lohusa.create');
@@ -22,5 +25,3 @@ Route::prefix('bebek')->name('bebek.')->group(function () {
     Route::delete('/{bebekForm}', [BebekFormController::class, 'destroy'])->name('destroy');
     Route::get('/{bebekForm}', [BebekFormController::class, 'show'])->name('show');
 });
-
-Route::get('/', [LohusaFormController::class, 'sonKayitlar'])->name('home');
