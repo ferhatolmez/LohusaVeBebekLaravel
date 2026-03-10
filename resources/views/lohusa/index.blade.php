@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Lohusa Kayıtları')
 
@@ -17,13 +17,13 @@
     <section class="page-header">
         <div class="page-header-row">
             <div>
-                <span class="badge-soft mb-2">Lohusa takip listesi</span>
+                <span class="badge-soft mb-2"><i data-lucide="users" style="width:14px;height:14px"></i> Lohusa takip listesi</span>
                 <h1 class="h2 mb-2">Lohusa kayıtları</h1>
-                <p class="text-secondary mb-0">Liste ekranı filtre yoğunluğunu azaltacak şekilde özetlendi; aktif filtreler, sonuç sayısı ve mobil okunabilirlik tek bakışta görülüyor.</p>
+                <p class="text-secondary mb-0">Filtreler, sonuç sayısı ve mobil okunabilirlik tek bakışta görülüyor.</p>
             </div>
             <div class="d-flex flex-wrap gap-2">
-                <a href="{{ route('lohusa.create') }}" class="btn btn-primary">Yeni kayıt</a>
-                <a href="{{ route('home') }}" class="btn btn-outline-primary">Ana panel</a>
+                <a href="{{ route('lohusa.create') }}" class="btn btn-primary d-flex align-items-center gap-2"><i data-lucide="plus" style="width:16px;height:16px"></i> Yeni kayıt</a>
+                <a href="{{ route('home') }}" class="btn btn-outline-primary d-flex align-items-center gap-2"><i data-lucide="layout-dashboard" style="width:16px;height:16px"></i> Ana panel</a>
             </div>
         </div>
 
@@ -51,8 +51,8 @@
         <div class="filter-panel">
             <div class="filter-toolbar">
                 <div>
-                    <h2 class="h5 mb-1">Filtreler</h2>
-                    <p class="text-secondary mb-0">Ara, daralt ve tek tıkla sıfırla. Tarih ve postpartum hafta birlikte kullanılabilir.</p>
+                    <h2 class="h5 mb-1 d-flex align-items-center gap-2"><i data-lucide="filter" style="width:18px;height:18px;color:var(--brand-700)"></i> Filtreler</h2>
+                    <p class="text-secondary mb-0">Ara, daralt ve tek tıkla sıfırla.</p>
                 </div>
                 <div class="text-secondary small">{{ $forms->total() }} kayıt bulundu</div>
             </div>
@@ -93,8 +93,8 @@
                     <input type="date" id="created_to" name="created_to" class="form-control" value="{{ request('created_to') }}">
                 </div>
                 <div class="col-lg-4 d-flex flex-wrap gap-2">
-                    <button type="submit" class="btn btn-primary">Filtrele</button>
-                    <a href="{{ route('lohusa.index') }}" class="btn btn-outline-primary">Sıfırla</a>
+                    <button type="submit" class="btn btn-primary d-flex align-items-center gap-2"><i data-lucide="search" style="width:15px;height:15px"></i> Filtrele</button>
+                    <a href="{{ route('lohusa.index') }}" class="btn btn-outline-primary d-flex align-items-center gap-2"><i data-lucide="x" style="width:15px;height:15px"></i> Sıfırla</a>
                 </div>
             </form>
 
