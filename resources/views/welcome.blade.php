@@ -9,7 +9,7 @@
         <div class="row align-items-center g-4">
             <div class="col-lg-7">
                 <span class="section-label mb-3" style="background:rgba(255,255,255,0.12);color:#93c5fd;border-color:transparent">
-                    <i data-lucide="heart-pulse" style="width:14px;height:14px"></i> Klinik takip paneli
+                    <i data-lucide="heart-pulse" style="width:14px;height:14px"></i> Klinik odaklı takip paneli
                 </span>
                 <h1 class="display-6 fw-bold mb-3" style="letter-spacing:-0.03em">
                     Lohusa ve bebek izlemlerini tek ekrandan yönetin

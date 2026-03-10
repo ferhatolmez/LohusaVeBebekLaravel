@@ -14,10 +14,11 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     sqlite3 \
     libsqlite3-dev \
-    nodejs \
-    npm \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_mysql pdo_pgsql pdo_sqlite gd zip intl mbstring
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql pdo_sqlite gd zip intl mbstring bcmath exif pcntl opcache \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Configure Apache DocumentRoot
 ENV APACHE_DOCUMENT_ROOT /var/www/public
