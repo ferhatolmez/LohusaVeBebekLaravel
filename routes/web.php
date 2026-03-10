@@ -14,7 +14,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/', DashboardController::class)->name('home');
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-    
+
     // Profile Routes
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');

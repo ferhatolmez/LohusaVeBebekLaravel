@@ -19,7 +19,7 @@ class RiskCalculator
         if (isset($form->ates) && (float) $form->ates >= 38.0) {
             $score += 25; // Fever is a significant risk factor postpartum
         }
-        
+
         if (isset($form->tansiyon)) {
             $systolic = (int) explode('/', $form->tansiyon)[0];
             if ($systolic >= 140) {
@@ -39,7 +39,7 @@ class RiskCalculator
 
         // 3. Clinical Findings (Lochia, Abdomen, Perineum)
         $problematicFindings = ['kötü kokulu', 'pürülan', 'aşırı kanama', 'hassasiyet', 'kızarıklık'];
-        
+
         if (isset($form->losia_bulgulari)) {
             foreach ($form->losia_bulgulari as $finding) {
                 if (in_array(strtolower($finding), $problematicFindings)) {
@@ -80,7 +80,7 @@ class RiskCalculator
         if ($score >= 30) {
             return 'Yüksek Risk';
         }
-        
+
         if ($score >= 15) {
             return 'Orta Risk';
         }
@@ -96,7 +96,7 @@ class RiskCalculator
         if ($score >= 30) {
             return 'danger';
         }
-        
+
         if ($score >= 15) {
             return 'warning';
         }

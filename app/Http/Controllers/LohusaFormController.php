@@ -52,7 +52,7 @@ class LohusaFormController extends Controller
 
         $forms = $this->repository->paginate($request->only(['q', 'dogum_yeri', 'bebek_beslenmesi', 'postpartum_hafta_min', 'created_from', 'created_to']))->items();
 
-        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\LohusaFormExport($forms), 'lohusa_disa_aktarim_' . now()->format('YmdHis') . '.xlsx');
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\LohusaFormExport($forms), 'lohusa_disa_aktarim_'.now()->format('YmdHis').'.xlsx');
     }
 
     public function show(LohusaForm $lohusaForm): View

@@ -48,7 +48,7 @@ class BebekFormController extends Controller
 
         $forms = $this->repository->paginate($request->only(['q', 'cinsiyet', 'termin_durumu', 'izlem_min', 'muayene_from', 'muayene_to']))->items();
 
-        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\BebekFormExport($forms), 'bebek_disa_aktarim_' . now()->format('YmdHis') . '.xlsx');
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\BebekFormExport($forms), 'bebek_disa_aktarim_'.now()->format('YmdHis').'.xlsx');
     }
 
     public function show(BebekForm $bebekForm): View

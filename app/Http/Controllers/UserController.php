@@ -109,7 +109,7 @@ class UserController extends Controller
 
     private function authorizeAdmin(): void
     {
-        if (!auth()->user()->hasRole('admin')) {
+        if (! auth()->user()->hasRole('admin')) {
             abort(403, 'Bu işlem için yetkiniz yok.');
         }
     }

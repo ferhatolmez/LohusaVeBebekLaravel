@@ -12,8 +12,8 @@ use Illuminate\Support\Carbon;
 class LohusaForm extends Model
 {
     use CalculatesCompletionScore;
-    use \Illuminate\Database\Eloquent\SoftDeletes;
     use HasFactory;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     protected $dateFormat = 'Y-m-d H:i:s';
 

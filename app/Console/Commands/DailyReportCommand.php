@@ -34,8 +34,8 @@ class DailyReportCommand extends Command
             [
                 ['Toplam Lohusa', $totalLohusa],
                 ['Toplam Bebek', $totalBebek],
-                ["Bugünkü kayıt (Lohusa)", $todayLohusa],
-                ["Bugünkü kayıt (Bebek)", $todayBebek],
+                ['Bugünkü kayıt (Lohusa)', $todayLohusa],
+                ['Bugünkü kayıt (Bebek)', $todayBebek],
             ]
         );
 

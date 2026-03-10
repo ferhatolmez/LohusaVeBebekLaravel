@@ -2,16 +2,15 @@
 
 namespace App\Exports;
 
-use App\Models\BebekForm;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class BebekFormExport implements FromCollection, WithHeadings, WithMapping, WithStyles, ShouldAutoSize
+class BebekFormExport implements FromCollection, ShouldAutoSize, WithHeadings, WithMapping, WithStyles
 {
     protected $forms;
 
@@ -29,8 +28,7 @@ class BebekFormExport implements FromCollection, WithHeadings, WithMapping, With
     }
 
     /**
-     * @param mixed $form
-     * @return array
+     * @param  mixed  $form
      */
     public function map($form): array
     {
@@ -46,9 +44,6 @@ class BebekFormExport implements FromCollection, WithHeadings, WithMapping, With
         ];
     }
 
-    /**
-     * @return array
-     */
     public function headings(): array
     {
         return [
@@ -59,19 +54,18 @@ class BebekFormExport implements FromCollection, WithHeadings, WithMapping, With
             'İzlem Sayısı',
             'Termin Durumu',
             'Kalite Skoru',
-            'Takip Tarihi'
+            'Takip Tarihi',
         ];
     }
 
     /**
-     * @param Worksheet $sheet
      * @return array
      */
     public function styles(Worksheet $sheet)
     {
         return [
             // Style the first row as bold text.
-            1    => ['font' => ['bold' => true], 'fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'DDEBF7']]],
+            1 => ['font' => ['bold' => true], 'fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'DDEBF7']]],
         ];
     }
 }
