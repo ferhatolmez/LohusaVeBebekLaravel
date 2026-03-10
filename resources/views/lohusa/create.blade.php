@@ -56,7 +56,7 @@
 
     <div class="step-layout">
         <div>
-            <form id="lohusaForm" action="{{ route('lohusa.store') }}" method="POST" novalidate>
+            <form id="lohusaForm" action="{{ route('lohusa.store', [], false) }}" method="POST" novalidate>
                 @csrf
                 <div id="step-1" class="step record-form-section">@include('lohusa.steps.step1_tanitici')</div>
                 <div id="step-2" class="step d-none record-form-section">@include('lohusa.steps.step2_dogum')</div>

@@ -16,7 +16,7 @@
                 <h2 class="h4 fw-bold mb-3">Oturum Aç</h2>
                 <p class="text-muted small mb-4">Demo kullanıcılar: <code>admin@example.com</code>, <code>ebe@example.com</code>, <code>student@example.com</code> · şifre: <code>password</code></p>
 
-                <form method="POST" action="{{ route('login.store') }}" class="d-grid gap-3">
+                <form method="POST" action="{{ route('login.store', [], false) }}" class="d-grid gap-3">
                     @csrf
                     <div>
                         <label for="email" class="form-label">E-posta</label>

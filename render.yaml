@@ -14,6 +14,10 @@ services:
         value: "false"
       - key: SESSION_DRIVER
         value: file
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
+      - key: SESSION_SAME_SITE
+        value: lax
       - key: CACHE_STORE
         value: file
       - key: DB_CONNECTION
@@ -28,3 +32,4 @@ databases:
   - name: lohusa-db
     plan: free
     databaseName: lohusa
+

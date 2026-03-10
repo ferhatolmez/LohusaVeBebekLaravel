@@ -282,7 +282,7 @@
                                 <span class="navbar-text small d-block">{{ auth()->user()->name }} · {{ auth()->user()->getRoleNames()->implode(', ') }}</span>
                             </li>
                             <li class="nav-item">
-                                <form action="{{ route('logout') }}" method="POST">
+                                <form action="{{ route('logout', [], false) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-outline-light rounded-pill">Çıkış</button>
                                 </form>

@@ -36,7 +36,7 @@
 
     <div class="step-layout">
         <div>
-            <form id="bebekForm" method="POST" action="{{ route('bebek.store') }}" novalidate>
+            <form id="bebekForm" method="POST" action="{{ route('bebek.store', [], false) }}" novalidate>
                 @csrf
 
                 <div class="card mb-4 record-form-section" id="section-temel">
