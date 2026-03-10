@@ -23,8 +23,8 @@ WORKDIR /var/www
 COPY . .
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction \
-    && chmod +x /render-build.sh \
+    && chmod +x /var/www/render-build.sh \
     && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 8080
-CMD ["/render-build.sh"]
+CMD ["/var/www/render-build.sh"]
