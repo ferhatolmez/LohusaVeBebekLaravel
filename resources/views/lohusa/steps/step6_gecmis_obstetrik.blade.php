@@ -2,10 +2,10 @@
     <div class="card-header bg-primary text-white">E. Geçmiş Obstetrik Öykü</div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-3"><label>Para</label><input type="number" name="para" class="form-control"></div>
-            <div class="col-md-3"><label>Abortus</label><input type="number" name="abortus" class="form-control"></div>
-            <div class="col-md-3"><label>Yaşayan</label><input type="number" name="yasayan" class="form-control"></div>
-            <div class="col-md-3"><label>Gravida</label><input type="number" name="gravida" class="form-control"></div>
+            <div class="col-md-3"><label>Gravida (gebelik sayısı)</label><input type="number" name="gravida" class="form-control" min="0" placeholder="0"></div>
+            <div class="col-md-3"><label>Parite (canlı doğum sayısı)</label><input type="number" name="para" class="form-control" min="0" placeholder="0"></div>
+            <div class="col-md-3"><label>Abortus sayısı</label><input type="number" name="abortus" class="form-control" min="0" placeholder="0"></div>
+            <div class="col-md-3"><label>Yaşayan çocuk sayısı</label><input type="number" name="yasayan" class="form-control" min="0" placeholder="0"></div>
         </div>
 
         <div class="mt-3">

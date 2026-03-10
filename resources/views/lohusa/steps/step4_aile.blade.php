@@ -9,9 +9,9 @@
         <p><strong>Kendisi İçin</strong></p>
         @php
         $conditions = [
-        'Operasyon', 'Cinsel yolla bulaşan hastalık', 'Kalp hastalığı', 'Romatik fever',
+        'Operasyon', 'Cinsel yolla bulaşan hastalık', 'Kalp hastalığı', 'Romatizmal ateş',
         'Hipertansiyon', 'Tüberküloz', 'Astım', 'Sarılık', 'Ülser', 'Diyabet', 'Varikoz venler',
-        'Tromboflebit', 'Troid problemleri', 'Depresyon veya gerginlik', 'Cinsel problemler',
+        'Tromboflebit', 'Tiroid problemleri', 'Depresyon veya gerginlik', 'Cinsel problemler',
         'İdrar yolları enfeksiyonu', 'Diğer problemler'
         ];
         @endphp

@@ -9,25 +9,26 @@
         </div>
 
         <div class="mt-3">
-            <label>Normal Menstrüel Periyotlar:</label><br>
+            <label>Menstrüel siklus süresi (normalden sapma varsa işaretleyin):</label><br>
             <div class="form-check">
-                <input type="checkbox" name="normal_sure_25_kisa" value="25 günden kısa" class="form-check-input" >
-                <label class="form-check-label" >25 günden kısa</label>
+                <input type="checkbox" name="normal_sure_25_kisa" value="25 günden kısa" class="form-check-input">
+                <label class="form-check-label">25 günden kısa</label>
             </div>
             <div class="form-check">
                 <input type="checkbox" name="normal_sure_35_uzun" value="35 günden uzun" class="form-check-input">
-                <label class="form-check-label" >35 günden uzun</label>
+                <label class="form-check-label">35 günden uzun</label>
             </div>
         </div>
 
         <div class="mt-3">
+            <label>Kanama süresi (normalden sapma varsa işaretleyin):</label><br>
             <div class="form-check">
-                <input type="checkbox" name="kanama_sure_3_kisa" value="3 günden kısa" class="form-check-input" >
-                <label class="form-check-label" >3 günden kısa</label>
+                <input type="checkbox" name="kanama_sure_3_kisa" value="3 günden kısa" class="form-check-input">
+                <label class="form-check-label">3 günden kısa</label>
             </div>
             <div class="form-check">
-                <input type="checkbox" name="kanama_sure_7_uzun" value="7 günden uzun" class="form-check-input" >
-                <label class="form-check-label" >7 günden uzun</label>
+                <input type="checkbox" name="kanama_sure_7_uzun" value="7 günden uzun" class="form-check-input">
+                <label class="form-check-label">7 günden uzun</label>
             </div>
         </div>
 
@@ -44,8 +45,8 @@
         </div>
 
         <div class="mt-3">
-            <label>Günde Kaç Ped(bez) Değiştiriyor?</label>
-            <input type="number" name="gunde_kac_ped" class="form-control">
+            <label>Adet döneminde günde kaç ped kullanıyordunuz?</label>
+            <input type="number" name="gunde_kac_ped" class="form-control" min="0" placeholder="Örn: 4">
         </div>
     </div>
 </div>

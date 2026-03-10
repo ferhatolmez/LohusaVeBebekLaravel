@@ -24,8 +24,8 @@
 
                 @php
                 $sut_bulgular = [
-                    'Bebek yeterli süt alıyor mu?', 'Günde en az 8 kez emzirme', 'Bebeğin gaitası sarı',
-                    'Bebek günde 6-8 kez idrar yapıyor mu (hazır bez 5-6)', 'Bebek günde 2-5 kez guitasını yapıyor mu', 'Bir göğüsten 4 dk az, yarım saatten fazla emiyor mu?'
+                    'Bebek yeterli süt alıyor', 'Günde en az 8 kez emzirme', 'Bebeğin gaitası sarı',
+                    'Bebek günde 6-8 kez idrar yapıyor (hazır bez 5-6)', 'Bebek günde 2-5 kez gaita yapıyor', 'Bir göğüsten 4 dk’dan az veya 30 dk’dan fazla emme (sorun göstergesi)'
                 ];
                 @endphp
 

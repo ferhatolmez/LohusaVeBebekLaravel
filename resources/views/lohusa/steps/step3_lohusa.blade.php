@@ -88,7 +88,7 @@
         </div>
 
         <div class="mb-3">
-            <label>Yaşanılan evin tipi:</label>
+            <label>11. Yaşanılan evin tipi:</label>
             <select name="ev_tipi" class="form-control">
                 <option value="">Seçiniz</option>
                 <option value="Konut">Konut</option>

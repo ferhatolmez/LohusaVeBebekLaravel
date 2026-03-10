@@ -4,7 +4,7 @@
 
                 @php
                 $psikolojik_belirtiler = [
-                    'Aşırı sağlama periyodları', 'Uykusuzluk', 'Anoreksia', 'Sinirlilik', 'Mutsuzluk',
+                    'Aşırı sağlama / kontrol periyodları', 'Uykusuzluk', 'Anoreksi', 'Sinirlilik', 'Mutsuzluk',
                     'Yerinde duramama', 'Aile üyelerine ve bebeğe öfke', 'Dikkat azlığı',
                     'Mood değişikliği', 'Sosyal izolasyon', 'Depresyon', 'Kendine güvensizlik',
                     'Aşırı yorulma', 'Sorumluluklarda artma', 'Enfeksiyon-ağrı', 'Bebek hakkında endişe',

@@ -1,6 +1,5 @@
-<h3>Bebek İzleme Formu</h3>
 <div class="form-section fade-in p-3 rounded card shadow-sm mb-4">
-    <div class="card-header bg-primary text-white">Bebeğe Ait Bilgiler</div>
+    <div class="card-header bg-primary text-white">Bu doğuma ait bebek bilgileri</div>
     <div class="card-body">
 
         <div class="row">

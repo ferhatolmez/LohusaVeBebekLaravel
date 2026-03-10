@@ -6,6 +6,7 @@ use App\Http\Controllers\BebekFormController;
 
 Route::get('/lohusa', [LohusaFormController::class, 'index'])->name('lohusa.index');
 Route::get('/lohusa/create', [LohusaFormController::class, 'create'])->name('lohusa.create');
+Route::get('/lohusa/csrf-refresh', fn () => response()->json(['token' => csrf_token()]))->name('lohusa.csrf-refresh');
 Route::post('/lohusa', [LohusaFormController::class, 'store'])->name('lohusa.store');
 Route::get('/lohusa/{lohusaForm}', [LohusaFormController::class, 'show'])->name('lohusa.show');
 Route::delete('/lohusa/{id}', [LohusaFormController::class, 'destroy'])->name('lohusa.destroy');

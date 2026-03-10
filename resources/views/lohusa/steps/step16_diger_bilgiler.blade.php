@@ -3,18 +3,18 @@
     <div class="card-body">
         @php
         $kategoriler = [
-            'deri' => ['Pembe', 'İşilik', 'Pişik', 'Sarılık', 'Siyanoz', 'Diğer'],
+            'deri' => ['Pembe', 'İsilik', 'Pişik', 'Sarılık', 'Siyanoz', 'Diğer'],
             'bas' => ['Fontanel açıklığı', 'Konak', 'Bit', 'Sefal hematom', 'Diğer'],
             'gozler' => ['Çapak', 'Kızarıklık', 'İltihap', 'Akıntı', 'Şaşılık', 'Ödem', 'Diğer'],
-            'burun' => ['Akıntı', 'Tıkanıklık', 'Burun kanadı solunuma katılıyor', 'Diğer'],
+            'burun' => ['Akıntı', 'Tıkanıklık', 'Burun kanallarının solunuma katılması', 'Diğer'],
             'agiz' => ['Pamukçuk', 'Yarık damak', 'Yarık dudak', 'Diğer'],
             'kulak' => ['Ağrı', 'Akıntı', 'Düşük kulak', 'Diğer'],
             'boyun' => ['Şişlik', 'Tortikolis', 'Diğer'],
             'gogus' => ['Şişlik', 'Süt akması', 'Diğer'],
-            'abdomen' => ['Kanama', 'Akıntı', 'Kızarıklık','Isı Artışı','Göbek Gronülomu','Göbek fıtığı', 'Distansiyon', 'Diğer'],
+            'abdomen' => ['Kanama', 'Akıntı', 'Kızarıklık', 'Isı artışı', 'Göbek granülomu', 'Göbek fıtığı', 'Distansiyon', 'Diğer'],
             'kasik' => ['Kasık fıtığı', 'Diğer'],
-            'genital' => ['Fimozis', 'İnmemiş testis', 'Hipospadias', 'Epispadias','Anuste açıklık','Vajinal akıntı', 'Diğer'],
-            'solunum_sistemi' => ['Solunum sıkıntısı', 'Siyanoz', 'Apne', 'Pnomoni', 'Diğer'],
+            'genital' => ['Fimozis', 'İnmemiş testis', 'Hipospadias', 'Epispadias', 'Anüste açıklık', 'Vajinal akıntı', 'Diğer'],
+            'solunum_sistemi' => ['Solunum sıkıntısı', 'Siyanoz', 'Apne', 'Pnömoni', 'Diğer'],
             'kvs' => ['Taşikardi', 'Bradikardi', 'Siyanoz', 'Diğer'],
             'gis' => ['Gaita yapma sıklığı','Kusma', 'Konstipasyon', 'Diare', 'Dehidratasyon', 'Diğer'],
             'uriner' => ['İdrar yapma sıklığı','Zor idrar', 'İdrar rengi değişik', 'Damla damla idrar', 'Diğer'],

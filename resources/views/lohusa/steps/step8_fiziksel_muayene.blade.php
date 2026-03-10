@@ -11,7 +11,7 @@
 
         <div class="row mt-3">
             <label class="fw-bold text-primary">Yaşam bulguları:</label>
-            <div class="col-md-3"><label>Ateş (°C)</label><input type="number" step="1" name="ates" class="form-control"></div>
+            <div class="col-md-3"><label>Ateş (°C)</label><input type="number" step="0.1" name="ates" class="form-control" placeholder="36.5"></div>
             <div class="col-md-3"><label>Nabız</label><input type="number" name="nabiz" class="form-control"></div>
             <div class="col-md-3"><label>Solunum</label><input type="number" name="solunum" class="form-control"></div>
             <div class="col-md-3"><label>TA</label><input type="text" name="tansiyon" class="form-control"></div>
@@ -37,7 +37,7 @@
         ];
 
         $gozlerFields = [
-            'Konjuktivads solukluk',
+            'Konjonktival solukluk',
             'Sulanma, akıntı, iltihap',
             'Çapaklanma',
             'Göz kapaklarında ödem',
@@ -58,7 +58,7 @@
         ];
 
         $bogazFields = [
-            'Hipertroidi',
+            'Hipertiroidi',
             'Lenf bezlerinde şişme',
             'Tonsillerde şişme',
         ];
@@ -78,7 +78,7 @@
             'Dolgunluk',
             'Meme ucu çatlağı',
             'Meme absesi',
-            'Meme ent',
+            'Meme enfeksiyonu / mastit',
             'Önceden geçirilmiş meme hastalığı',
         ];
         @endphp
@@ -134,7 +134,7 @@
         </div>
 
         <div class="mt-3">
-            <h5>Ağız / Disfer</h5>
+            <h5>Ağız / Dişler</h5>
             @foreach ($agizDisferFields as $field)
                 <div class="form-check form-check-inline">
                     <input type="checkbox" name="agiz_disfer_bulgular[]" value="{{ $field }}" class="form-check-input">
@@ -154,7 +154,7 @@
         </div>
 
         <div class="mt-3">
-            <h5>Solunum Sistemi / KYS</h5>
+            <h5>Solunum Sistemi / KVS</h5>
             @foreach ($solunumFields as $field)
                 <div class="form-check form-check-inline">
                     <input type="checkbox" name="solunum_bulgular[]" value="{{ $field }}" class="form-check-input">
@@ -221,7 +221,7 @@
         
 
         <div class="mt-3">
-            <label>Losia Tipi:</label>
+            <label>Loşia tipi:</label>
             <select name="losia_tipi" class="form-control">
                 <option value="Rubra">Rubra</option>
                 <option value="Seroze">Seroze</option>
