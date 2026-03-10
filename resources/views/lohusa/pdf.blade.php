@@ -66,7 +66,7 @@
         <h3>{{ $title }}</h3>
         <table>
             @foreach ($fields as $field)
-                @php($label = \Illuminate\Support\Str::of($field)->replace('_', ' ')->title())
+                @php($label = ucwords(str_replace('_', ' ', $field)))
                 <tr>
                     <th>{{ $label }}</th>
                     <td>{{ formatValue($lohusa->{$field} ?? null) }}</td>

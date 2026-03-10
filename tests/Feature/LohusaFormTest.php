@@ -8,7 +8,7 @@ it('lists lohusa records for authorized users', function () {
 
     $response = $this->get(route('lohusa.index'));
 
-    $response->assertOk()->assertSee('Lohusa kayitlari');
+    $response->assertOk()->assertSee('Lohusa Kayıtları', false);
 });
 
 it('filters lohusa records with clinical filters', function () {

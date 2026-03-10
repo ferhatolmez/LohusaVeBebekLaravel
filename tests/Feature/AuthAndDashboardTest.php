@@ -8,7 +8,7 @@ it('redirects guests to login from dashboard', function () {
 });
 
 it('shows login page', function () {
-    $this->get(route('login'))->assertOk()->assertSee('Oturum Ac');
+    $this->get(route('login'))->assertOk()->assertSee('Oturum Aç', false);
 });
 
 it('allows a valid user to login', function () {
@@ -34,6 +34,6 @@ it('shows dashboard metrics to authenticated users', function () {
 
     $this->get(route('home'))
         ->assertOk()
-        ->assertSee('Klinik odakli takip paneli')
+        ->assertSee('Klinik odaklı takip paneli', false)
         ->assertSee('Ayse Yilmaz');
 });

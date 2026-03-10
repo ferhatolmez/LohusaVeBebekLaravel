@@ -5,7 +5,7 @@ use App\Models\BebekForm;
 it('lists bebek records for authorized users', function () {
     signInAs('student');
 
-    $this->get(route('bebek.index'))->assertOk()->assertSee('Bebek kayitlari');
+    $this->get(route('bebek.index'))->assertOk()->assertSee('Bebek Kayıtları', false);
 });
 
 it('stores and updates bebek forms for ebe role', function () {
