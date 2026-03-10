@@ -194,6 +194,3 @@ class LohusaForm extends Model
         return $date->isPast() ? 'danger' : ($date->diffInDays(now()) <= 7 ? 'warning' : 'success');
     }
 }
-
-
-

@@ -36,4 +36,3 @@ class AuthTokenController extends Controller
         ], 201);
     }
 }
-
