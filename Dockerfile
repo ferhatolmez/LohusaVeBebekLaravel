@@ -35,7 +35,9 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction \
     && npm install \
     && npm run build \
     && chmod +x /var/www/render-build.sh \
-    && chmod -R 775 storage bootstrap/cache
+    && chmod -R 775 storage bootstrap/cache \
+    && mkdir -p /tmp/views \
+    && chmod -R 777 /tmp/views
 
 EXPOSE 8080
 CMD ["/var/www/render-build.sh"]
