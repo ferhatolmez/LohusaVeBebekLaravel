@@ -18,6 +18,11 @@ sed -i "s/80/$PORT/g" /etc/apache2/sites-available/000-default.conf /etc/apache2
 echo "Preparing storage and cache..."
 mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs
 chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
+
+echo "Clearing old caches..."
+php artisan view:clear
+php artisan cache:clear
 
 echo "Running migrations..."
 php artisan migrate --seed --force --no-interaction
@@ -26,7 +31,10 @@ echo "Optimizing application..."
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
-php artisan config:clear # Clear config cache after route/view to ensure runtime env is used for fresh boots if needed
+php artisan config:clear
+
+# Extra step for robustness if views are still problematic
+chmod -R 777 storage/framework/views || true
 
 # Clear and link storage
 php artisan storage:link || true
