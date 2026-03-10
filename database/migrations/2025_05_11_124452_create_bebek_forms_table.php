@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bebek_forms', function (Blueprint $table) {
-            
+
             $table->id();
             $table->date('dogum_tarihi')->nullable();
             $table->string('kac_haftalik')->nullable();

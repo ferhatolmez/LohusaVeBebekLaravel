@@ -1,151 +1,190 @@
-<p align="center">
-  <a href="https://laravel.com" target="_blank">
-    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel">
-  </a>
-</p>
+# Lohusa ve Bebek Izlem Platformu
 
-<p align="center">
-  <strong>Lohusa ve Bebek İzlem Uygulaması</strong>
-</p>
+[![CI](https://github.com/ferhatolmez/LohusaVeBebekLaravel/actions/workflows/tests.yml/badge.svg)](https://github.com/ferhatolmez/LohusaVeBebekLaravel/actions/workflows/tests.yml)
 
-<p align="center">
-  <em>Ebe ve sağlık profesyonelleri için çok adımlı formlar ve PDF rapor desteği sunan Laravel tabanlı sağlık takip uygulaması.</em>
-</p>
+Laravel 12 tabanli bu portfoy projesi, lohusa ve bebek izlemlerini tek panelde toplar. Uygulama artik sadece web formu sunan bir CRUD degil; rol bazli erisim kontrolu, Sanctum ile token tabanli REST API, Pest testleri, CI pipeline'i ve Docker gelistirme ortami ile birlikte gercek dunya Laravel uygulamasi formatina tasinmistir.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
-  <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
-  <img src="https://img.shields.io/badge/Bootstrap-5-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">
-  <img src="https://img.shields.io/badge/DomPDF-PDF-FF2D20?style=for-the-badge" alt="DomPDF">
-  <img src="https://img.shields.io/badge/Vite-6-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite">
-</p>
+## Canli Kullanim
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Atatürk%20Üniversitesi-Sağlık%20Bilimleri%20Fakültesi%20Ebelik%20Bölümü-0f766e?style=flat-square" alt="Atatürk Üniversitesi">
-</p>
+- Web paneli: Render deploy sonrasi servis URL'niz
+- API tabani: `https://<render-servis-url>/api/v1`
+- Demo kullanicilar:
+  - `admin@example.com` / `password`
+  - `ebe@example.com` / `password`
+  - `student@example.com` / `password`
 
----
+## Portfoyde One Cikanlar
 
-## Proje Hakkında
+- Laravel Sanctum ile versioned REST API: `POST /api/v1/auth/token`, `GET /api/v1/lohusa`, `POST /api/v1/bebek`
+- Spatie Laravel Permission ile `admin`, `ebe`, `student` rolleri
+- Policy + Gate + middleware birlikte kullanilan authorization katmani
+- Repository ve Service pattern ile inceltilmis controller yapisi
+- Pest ile web, API ve authorization odakli testler
+- GitHub Actions CI: asset build, Pint, migration, test, coverage gate
+- Docker Compose ile `app + nginx + mysql` gelistirme ortami
 
-**Atatürk Üniversitesi Sağlık Bilimleri Fakültesi Ebelik Bölümü** kapsamında geliştirilmiş bir **Lohusa ve Bebek İzlem Sistemi**dir. Lohusa (postpartum) ve yenidoğan bebek izlemlerini tek bir uygulamada toplar; çok adımlı formlar ve tek tıkla PDF rapor üretimi sunar.
+## Teknik Mimari
 
-- Klinik değerlendirmeleri standart formlarla toplama  
-- Veriyi düzenli saklama ve gerektiğinde PDF olarak indirme  
-- Laravel 12, PHP 8.2, Bootstrap 5 ile modern ve sade arayüz  
+```mermaid
+flowchart LR
+    UI[Web Paneli] --> WC[Web Controllers]
+    API[Sanctum API v1] --> AC[API Controllers]
+    WC --> SV[Services]
+    AC --> SV
+    SV --> RP[Repositories]
+    RP --> DB[(MySQL / SQLite / PostgreSQL)]
+    WC --> AU[Policies / Gates / Permissions]
+    AC --> AU
+```
 
----
+## Uygulama Modulleri
 
-## Özellikler
+### 1. Web paneli
+- Session auth ile korunan dashboard
+- Lohusa ve bebek kayit listeleri
+- PDF export, filtreleme, pagination
+- Rol bazli aksiyonlar: ogrenci sadece okuyabilir, ebe veri girebilir/guncelleyebilir, admin tum islemleri yapabilir
 
-| Modül | Açıklama |
-|-------|----------|
-| **Lohusa formu** | 16 adımlı form: tanıtıcı bilgiler, obstetrik öykü, aile/sosyal durum, konut ve hijyen, menstrüel geçmiş, postpartum durum, emzirme ve psikolojik değerlendirme, fizik muayene, ebe yorumu. JSON alanlarla esnek yapı. |
-| **Bebek formu** | Doğum/muayene tarihleri, termin durumu, vital bulgular, sistem bazlı fizik muayene (deri, baş, göz, solunum, KVS, GIS vb.). |
-| **PDF** | Lohusa ve bebek kayıtları için tek tıkla PDF (DomPDF, Türkçe karakter desteği). |
-| **Liste ve arama** | Lohusa: ad soyad araması; Bebek: cinsiyet ve metin araması. Sayfa başına 15 kayıt (pagination). |
-| **CRUD** | Lohusa: listele, oluştur, detay, PDF, sil. Bebek: listele, oluştur, düzenle, detay, PDF, sil. |
-| **Ana sayfa** | Form seçimi ve son Lohusa/Bebek kayıtları. |
+### 2. REST API
+- Token uretme: `POST /api/v1/auth/token`
+- Lohusa resource: `index`, `store`, `show`, `update`, `destroy`
+- Bebek resource: `index`, `store`, `show`, `update`, `destroy`
+- JsonResource ile standardize response yapisi
+- `auth:sanctum` ile korunan endpointler
 
----
+### 3. Authorization katmani
+- Middleware ile route korumasi
+- `App\Policies\LohusaFormPolicy`
+- `App\Policies\BebekFormPolicy`
+- `Gate::define('viewDashboard')`
+- Spatie permission seeder ile demo roller ve izinler
 
-## Ekran Akışı
+### 4. Mimari katmanlar
 
-| URL | Açıklama |
-|-----|----------|
-| `/` | Ana sayfa – form seçimi, son kayıtlar |
-| `/lohusa` | Lohusa listesi (arama, pagination, detay, PDF, sil) |
-| `/lohusa/create` | 16 adımlı Lohusa formu |
-| `/bebek` | Bebek listesi (arama, filtre, pagination, detay, düzenle, sil, PDF) |
-| `/bebek/create` | Bebek formu |
-| `/bebek/{id}/edit` | Bebek formu düzenleme |
+```text
+app/
+  Http/
+    Controllers/
+      Api/V1/
+      Auth/
+  Policies/
+  Repositories/
+  Services/
+  Models/
+```
 
----
+## API Ozet Dokumani
 
-## Teknolojiler
+### Token alma
+```bash
+curl -X POST http://127.0.0.1:8000/api/v1/auth/token \
+  -H "Accept: application/json" \
+  -d "email=ebe@example.com" \
+  -d "password=password" \
+  -d "device_name=postman"
+```
 
-- **Backend:** Laravel 12, PHP 8.2  
-- **Veritabanı:** MySQL / PostgreSQL / SQLite (Laravel ile uyumlu)  
-- **PDF:** barryvdh/laravel-dompdf  
-- **Frontend:** Bootstrap 5, Vite  
-- **Test:** Pest  
+### Lohusa listeleme
+```bash
+curl http://127.0.0.1:8000/api/v1/lohusa \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Accept: application/json"
+```
 
----
+### Bebek kaydi ekleme
+```bash
+curl -X POST http://127.0.0.1:8000/api/v1/bebek \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Accept: application/json" \
+  -d "dogum_tarihi=2025-01-15" \
+  -d "kac_haftalik=40" \
+  -d "muayene_tarihi=2025-01-20" \
+  -d "izlem_sayisi=1" \
+  -d "termin_durumu=Term" \
+  -d "cinsiyet=Erkek" \
+  -d "kacinci_cocuk=1" \
+  -d "kan_grubu=A Rh+" \
+  -d "ates=36.5" \
+  -d "nabiz=120" \
+  -d "solunum=40" \
+  -d "kilo=3.2" \
+  -d "boy=50" \
+  -d "bas_cevresi=34" \
+  -d "gogus_cevresi=32"
+```
 
 ## Kurulum
 
-**Gereksinimler:** PHP 8.2+, Composer, Node.js, MySQL 5.7+ (veya PostgreSQL / SQLite).
-
+### Lokal gelistirme
 ```bash
 git clone https://github.com/ferhatolmez/LohusaVeBebekLaravel.git
 cd LohusaVeBebekLaravel
-
 cp .env.example .env
-# .env içinde DB_CONNECTION, DB_DATABASE, DB_USERNAME, DB_PASSWORD ayarla
-
 composer install
 php artisan key:generate
-php artisan migrate
-
+php artisan migrate --seed
 npm install
+npm run build
+php artisan serve
 ```
 
-**Çalıştırma:**
+### Docker Compose
+```bash
+docker compose up --build
+```
+
+Docker ortaminda servisler:
+- App: PHP-FPM / Laravel
+- Nginx: `http://localhost:8080`
+- MySQL: `127.0.0.1:33060`
+
+## Kalite ve Test
 
 ```bash
-composer run dev
-# veya: php artisan serve  ve  npm run dev
+composer lint
+composer test
+php artisan test --coverage --min=80
 ```
 
----
+Kapsanan senaryolar:
+- Login ve dashboard erisim kontrolu
+- Web form create/update davranislari
+- Student/ebe/admin authorization farklari
+- Sanctum token issuance
+- API read/write yetki kontrolleri
+- Follow-up ve completion score unit testleri
 
-## Testler
+## Deploy
 
-```bash
-php artisan test
-```
+### Render
+- Root `Dockerfile` Render icin hazirdir
+- `render.yaml` PostgreSQL tabanli deploy tanimi icerir
+- Deploy sonrasi `APP_KEY`, `APP_URL` ve veritabani degiskenlerini Render ortaminda tanimlayin
 
-`LohusaFormTest` ve `BebekFormTest`: ana sayfa, form CRUD, doğrulama, PDF, silme.
+### GitHub Actions
+Pipeline sirasiyla su adimlari calistirir:
+1. Composer install
+2. NPM install ve production build
+3. SQLite migration
+4. Pint lint kontrolu
+5. Pest test suite
+6. Coverage raporu ve minimum coverage gate
 
----
+## Ekran Goruntuleri
 
-## Canlıya Alma (Herkesin Denemesi İçin)
+README'ye GitHub `assets/` veya `docs/` altina eklenecek ekran goruntuleriyle su bloklari koyabilirsiniz:
+- Login ekrani
+- Dashboard
+- Lohusa liste ekrani
+- Bebek formu
+- API response ornegi
 
-Projeyi internette yayınlamak için **DEPLOYMENT.md** dosyasındaki adımları izleyin.
+## Varsayimlar ve Notlar
 
-- **Render.com:** Ücretsiz PostgreSQL ile deploy; `render.yaml` ve `Dockerfile` hazır.  
-- **Veritabanı:** MySQL yerine PostgreSQL veya SQLite kullanılabilir; Laravel ikisini de destekler.
-
-Özet: [render.com](https://render.com) → GitHub bağla → PostgreSQL oluştur → Web Service (Docker) → Environment değişkenleri (`APP_KEY`, `APP_URL`, `DB_CONNECTION`, `DB_URL`) → Deploy.
-
----
-
-## Proje Yapısı (Özet)
-
-```
-app/Http/Controllers/
-  LohusaFormController.php   # Lohusa: index, create, store, show, destroy, exportPdf, sonKayitlar
-  BebekFormController.php    # Bebek: index, create, store, show, edit, update, destroy, exportPdf
-
-app/Models/
-  LohusaForm.php
-  BebekForm.php
-
-resources/views/
-  layouts/app.blade.php
-  welcome.blade.php
-  lohusa/  (index, create, show, pdf, steps/)
-  bebek/   (index, create, edit, show, pdf)
-```
-
----
+- Yerel makinede `pdo_sqlite` kurulu degilse testler calismayabilir; CI pipeline SQLite ile bunu dogrular.
+- `RolePermissionSeeder` demo kullanicilari olusturur.
+- Form validation ve API validation ayni request siniflari uzerinden ilerler.
 
 ## Lisans
 
-MIT.
-
----
-
-<p align="center">
-  <strong>Geliştiren:</strong> <a href="https://github.com/ferhatolmez">Ferhat ÖLMEZ</a>
-</p>
+MIT

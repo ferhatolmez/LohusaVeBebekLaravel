@@ -124,7 +124,7 @@ return [
     ],
 
     'aliases' => [
-    'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
     ],
 
 ];

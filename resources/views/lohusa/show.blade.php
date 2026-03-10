@@ -1,13 +1,39 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @php
     $showValue = function ($value) {
         if (is_array($value)) {
-            return count($value) ? implode(', ', array_filter($value)) : 'Kayit yok';
+            return count(array_filter($value)) ? implode(', ', array_filter($value)) : 'Kayıt yok';
         }
 
-        return filled($value) ? $value : 'Kayit yok';
+        return filled($value) ? $value : 'Kayıt yok';
     };
+
+    $formatDate = fn ($value) => $value?->format('d.m.Y') ?? 'Kayıt yok';
+
+    $valuePair = function ($first, $second, $separator = ' / ') use ($showValue) {
+        $firstValue = $showValue($first);
+        $secondValue = $showValue($second);
+
+        if ($firstValue === 'Kayıt yok' && $secondValue === 'Kayıt yok') {
+            return 'Kayıt yok';
+        }
+
+        return $firstValue . $separator . $secondValue;
+    };
+
+    $listSections = [
+        'Psikolojik belirtiler' => $lohusaForm->psikolojik_belirtiler,
+        'Anne-bebek iliskisi' => $lohusaForm->anne_bebek_iliskisi,
+        'Emzirme bulgulari' => $lohusaForm->emzirme_bulgular,
+        'Sut yeterliligi' => $lohusaForm->sut_yeterliligi,
+        'Egitim istekleri' => $lohusaForm->egitim_istekleri,
+        'Postpartum problemleri' => $lohusaForm->postpartum_problemleri,
+        'Karin bulgulari' => $lohusaForm->abdomen_bulgulari,
+        'Idrar bulgulari' => $lohusaForm->uriner_bulgular,
+        'Barsak bulgulari' => $lohusaForm->barsak_bulgular,
+        'Alt ekstremite' => $lohusaForm->alt_ekstremite,
+    ];
 @endphp
 
 @section('title', 'Lohusa Kaydi Detayi')
@@ -16,13 +42,43 @@
 <div class="container">
     <section class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-center mb-4">
         <div>
-            <span class="badge-soft mb-2">Kayit detayi</span>
+            <span class="badge-soft mb-2">Kayıt detayı</span>
             <h1 class="h2 mb-1">{{ $lohusaForm->ad_soyad }}</h1>
-            <p class="text-secondary mb-0">Lohusa kaydi ozet, vital ve bebek bilgileri tek ekranda sunulur.</p>
+            <p class="text-secondary mb-0">Temel bilgiler, izlemler ve klinik notlar düzenli bölümler halinde sunulur.</p>
         </div>
         <div class="d-flex flex-wrap gap-2">
-            <span class="badge text-bg-{{ $lohusaForm->completion_tone }} align-self-center">Tamamlilik %{{ $lohusaForm->completion_score }}</span>
+            <span class="badge text-bg-{{ $lohusaForm->completion_tone }} align-self-center">Tamamlılık %{{ $lohusaForm->completion_score }}</span>
             <a href="{{ route('lohusa.pdf', $lohusaForm->id) }}" class="btn btn-outline-primary">PDF indir</a>
+        </div>
+    </section>
+
+    <section class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="glass-panel p-3 h-100">
+                <div class="text-secondary small">Takip önerisi</div>
+                <div class="fw-bold mt-1">{{ $lohusaForm->suggested_follow_up_label ?? 'Takip hedefi yok' }}</div>
+                <div class="small mt-2">
+                    @if ($lohusaForm->suggested_follow_up_date)
+                        <span class="badge text-bg-{{ $lohusaForm->follow_up_tone }}">{{ $lohusaForm->suggested_follow_up_date->format('d.m.Y') }}</span>
+                    @else
+                        <span class="text-secondary">Yeni tarih hesaplanamadi.</span>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-panel p-3 h-100">
+                <div class="text-secondary small">Postpartum durum</div>
+                <div class="fw-bold mt-1">{{ $valuePair($lohusaForm->postpartum_gun, $lohusaForm->postpartum_hafta, ' gun / ') }}</div>
+                <div class="small text-secondary mt-2">Gun ve hafta bilgisi ayni blokta okunur hale getirildi.</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-panel p-3 h-100">
+                <div class="text-secondary small">Muayene tarihi</div>
+                <div class="fw-bold mt-1">{{ $formatDate($lohusaForm->muayene_tarihi) }}</div>
+                <div class="small text-secondary mt-2">Kaydın saha kullanımındaki zaman bilgisini gösterir.</div>
+            </div>
         </div>
     </section>
 
@@ -31,12 +87,12 @@
             <div class="card h-100">
                 <div class="card-header">Temel ozet</div>
                 <div class="card-body d-grid gap-3">
-                    <div><div class="text-secondary small">Yas</div><div class="fw-bold">{{ $showValue($lohusaForm->yas) }}</div></div>
-                    <div><div class="text-secondary small">Egitim / meslek</div><div class="fw-bold">{{ $showValue($lohusaForm->egitim_durumu) }} / {{ $showValue($lohusaForm->meslek) }}</div></div>
-                    <div><div class="text-secondary small">Saglik guvencesi</div><div class="fw-bold">{{ $showValue($lohusaForm->saglik_guvence) }}</div></div>
-                    <div><div class="text-secondary small">Gebelik planlandi mi?</div><div class="fw-bold">{{ $showValue($lohusaForm->gebelik_planlandimi) }}</div></div>
-                    <div><div class="text-secondary small">Dogum yeri</div><div class="fw-bold">{{ $showValue($lohusaForm->dogum_yeri) }}</div></div>
-                    <div><div class="text-secondary small">Muayene tarihi</div><div class="fw-bold">{{ optional($lohusaForm->muayene_tarihi)->format('d.m.Y') ?? 'Kayit yok' }}</div></div>
+                    <div><div class="text-secondary small">Yaş</div><div class="fw-bold">{{ $showValue($lohusaForm->yas) }}</div></div>
+                    <div><div class="text-secondary small">Eğitim / meslek</div><div class="fw-bold">{{ $valuePair($lohusaForm->egitim_durumu, $lohusaForm->meslek) }}</div></div>
+                    <div><div class="text-secondary small">Sağlık güvencesi</div><div class="fw-bold">{{ $showValue($lohusaForm->saglik_guvence) }}</div></div>
+                    <div><div class="text-secondary small">Gebelik planlandı mı?</div><div class="fw-bold">{{ $showValue($lohusaForm->gebelik_planlandimi) }}</div></div>
+                    <div><div class="text-secondary small">Doğum yeri</div><div class="fw-bold">{{ $showValue($lohusaForm->dogum_yeri) }}</div></div>
+                    <div><div class="text-secondary small">Muayene tarihi</div><div class="fw-bold">{{ $formatDate($lohusaForm->muayene_tarihi) }}</div></div>
                 </div>
             </div>
         </div>
@@ -44,8 +100,8 @@
             <div class="card h-100">
                 <div class="card-header">Vital bulgular</div>
                 <div class="card-body d-grid gap-3">
-                    <div><div class="text-secondary small">Ates</div><div class="fw-bold">{{ $showValue($lohusaForm->ates) }}</div></div>
-                    <div><div class="text-secondary small">Nabiz</div><div class="fw-bold">{{ $showValue($lohusaForm->nabiz) }}</div></div>
+                    <div><div class="text-secondary small">Ateş</div><div class="fw-bold">{{ $showValue($lohusaForm->ates) }}</div></div>
+                    <div><div class="text-secondary small">Nabız</div><div class="fw-bold">{{ $showValue($lohusaForm->nabiz) }}</div></div>
                     <div><div class="text-secondary small">Solunum</div><div class="fw-bold">{{ $showValue($lohusaForm->solunum) }}</div></div>
                     <div><div class="text-secondary small">Tansiyon</div><div class="fw-bold">{{ $showValue($lohusaForm->tansiyon) }}</div></div>
                     <div><div class="text-secondary small">Hemoglobin</div><div class="fw-bold">{{ $showValue($lohusaForm->hemoglobin) }}</div></div>
@@ -55,13 +111,13 @@
         </div>
         <div class="col-lg-4">
             <div class="card h-100">
-                <div class="card-header">Bebek ozet</div>
+                <div class="card-header">Bebek özeti</div>
                 <div class="card-body d-grid gap-3">
-                    <div><div class="text-secondary small">Dogum tarihi</div><div class="fw-bold">{{ optional($lohusaForm->dogum_tarihi)->format('d.m.Y') ?? 'Kayit yok' }}</div></div>
-                    <div><div class="text-secondary small">Kac haftalik / izlem</div><div class="fw-bold">{{ $showValue($lohusaForm->kac_haftalik) }} / {{ $showValue($lohusaForm->izlem_sayisi) }}</div></div>
-                    <div><div class="text-secondary small">Termin / cinsiyet</div><div class="fw-bold">{{ $showValue($lohusaForm->termin_durumu) }} / {{ $showValue($lohusaForm->cinsiyet) }}</div></div>
-                    <div><div class="text-secondary small">Kilo / boy</div><div class="fw-bold">{{ $showValue($lohusaForm->kilo) }} / {{ $showValue($lohusaForm->boy) }}</div></div>
-                    <div><div class="text-secondary small">Bas / gogus cevresi</div><div class="fw-bold">{{ $showValue($lohusaForm->bas_cevresi) }} / {{ $showValue($lohusaForm->gogus_cevresi) }}</div></div>
+                    <div><div class="text-secondary small">Doğum tarihi</div><div class="fw-bold">{{ $formatDate($lohusaForm->dogum_tarihi) }}</div></div>
+                    <div><div class="text-secondary small">Kaç haftalık / izlem</div><div class="fw-bold">{{ $valuePair($lohusaForm->kac_haftalik, $lohusaForm->izlem_sayisi) }}</div></div>
+                    <div><div class="text-secondary small">Termin / cinsiyet</div><div class="fw-bold">{{ $valuePair($lohusaForm->termin_durumu, $lohusaForm->cinsiyet) }}</div></div>
+                    <div><div class="text-secondary small">Kilo / boy</div><div class="fw-bold">{{ $valuePair($lohusaForm->kilo, $lohusaForm->boy) }}</div></div>
+                    <div><div class="text-secondary small">Bas / gogus cevresi</div><div class="fw-bold">{{ $valuePair($lohusaForm->bas_cevresi, $lohusaForm->gogus_cevresi) }}</div></div>
                     <div><div class="text-secondary small">Kan grubu</div><div class="fw-bold">{{ $showValue($lohusaForm->kan_grubu) }}</div></div>
                 </div>
             </div>
@@ -71,13 +127,22 @@
     <div class="row g-4 mt-1">
         <div class="col-lg-6">
             <div class="card h-100">
-                <div class="card-header">Psikolojik ve emzirme</div>
+                <div class="card-header">Belirti ve izlem alanlari</div>
                 <div class="card-body d-grid gap-3">
-                    <div><div class="text-secondary small">Psikolojik belirtiler</div><div>{{ $showValue($lohusaForm->psikolojik_belirtiler) }}</div></div>
-                    <div><div class="text-secondary small">Anne-bebek iliskisi</div><div>{{ $showValue($lohusaForm->anne_bebek_iliskisi) }}</div></div>
-                    <div><div class="text-secondary small">Emzirme bulgulari</div><div>{{ $showValue($lohusaForm->emzirme_bulgular) }}</div></div>
-                    <div><div class="text-secondary small">Sut yeterliligi</div><div>{{ $showValue($lohusaForm->sut_yeterliligi) }}</div></div>
-                    <div><div class="text-secondary small">Egitim istekleri</div><div>{{ $showValue($lohusaForm->egitim_istekleri) }}</div></div>
+                    @foreach (array_slice($listSections, 0, 5, true) as $label => $items)
+                        <div>
+                            <div class="text-secondary small mb-2">{{ $label }}</div>
+                            @if (is_array($items) && count(array_filter($items)))
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (array_filter($items) as $item)
+                                        <span class="badge-soft">{{ $item }}</span>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="text-secondary">Kayıt yok</div>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -85,13 +150,33 @@
             <div class="card h-100">
                 <div class="card-header">Klinik notlar</div>
                 <div class="card-body d-grid gap-3">
-                    <div><div class="text-secondary small">Postpartum problemleri</div><div>{{ $showValue($lohusaForm->postpartum_problemleri) }}</div></div>
-                    <div><div class="text-secondary small">Fiziksel muayene</div><div>{{ $showValue($lohusaForm->fiziksel_muayene) }}</div></div>
-                    <div><div class="text-secondary small">Vital-disi bulgular</div><div>{{ $showValue($lohusaForm->abdomen_bulgulari) }}</div></div>
-                    <div><div class="text-secondary small">Ebenin yorumu</div><div>{{ $showValue($lohusaForm->ebenin_yorumu) }}</div></div>
+                    @foreach (array_slice($listSections, 5, null, true) as $label => $items)
+                        <div>
+                            <div class="text-secondary small mb-2">{{ $label }}</div>
+                            @if (is_array($items) && count(array_filter($items)))
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (array_filter($items) as $item)
+                                        <span class="badge-soft">{{ $item }}</span>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="text-secondary">Kayıt yok</div>
+                            @endif
+                        </div>
+                    @endforeach
+                    <div>
+                        <div class="text-secondary small mb-2">Fiziksel muayene özeti</div>
+                        <div>{{ $showValue(collect($lohusaForm->fiziksel_muayene ?? [])->filter()->keys()->map(fn ($item) => str_replace('_', ' ', $item))->all()) }}</div>
+                    </div>
+                    <div>
+                        <div class="text-secondary small mb-2">Ebenin yorumu</div>
+                        <div>{{ $showValue($lohusaForm->ebenin_yorumu) }}</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+

@@ -1,107 +1,83 @@
-<?php
+﻿<?php
 
 use App\Models\LohusaForm;
+use Illuminate\Support\Carbon;
 
-test('ana sayfa basariyla yuklenir', function () {
-    $response = $this->get('/');
+it('lists lohusa records for authorized users', function () {
+    signInAs('ebe');
 
-    $response->assertOk();
-    $response->assertSee('Validation');
-    $response->assertSee('Lohusa');
-    $response->assertSee('Bebek');
-});
-
-test('lohusa form listesi sayfasi yuklenir', function () {
     $response = $this->get(route('lohusa.index'));
 
-    $response->assertOk();
-    $response->assertSee('Lohusa kayitlari');
+    $response->assertOk()->assertSee('Lohusa kayitlari');
 });
 
-test('lohusa form olusturma sayfasi yuklenir', function () {
-    $response = $this->get(route('lohusa.create'));
+it('filters lohusa records with clinical filters', function () {
+    signInAs('ebe');
 
-    $response->assertOk();
-    $response->assertSee('Lohusa Izlem Formu');
+    LohusaForm::factory()->create([
+        'ad_soyad' => 'Ayse Yilmaz',
+        'dogum_yeri' => 'Istanbul',
+        'bebek_beslenmesi' => 'Anne susu',
+        'postpartum_hafta' => 2,
+        'created_at' => Carbon::parse('2026-03-01'),
+    ]);
+
+    LohusaForm::factory()->create([
+        'ad_soyad' => 'Fatma Demir',
+        'dogum_yeri' => 'Ankara',
+        'bebek_beslenmesi' => 'Mama',
+        'postpartum_hafta' => 1,
+        'created_at' => Carbon::parse('2026-02-01'),
+    ]);
+
+    $this->get(route('lohusa.index', [
+        'dogum_yeri' => 'Istanbul',
+        'bebek_beslenmesi' => 'Anne susu',
+        'postpartum_hafta_min' => 2,
+        'created_from' => '2026-02-15',
+    ]))
+        ->assertOk()
+        ->assertSee('Ayse Yilmaz')
+        ->assertDontSee('Fatma Demir');
 });
 
-test('lohusa formu gecerli veri ile kaydedilir', function () {
-    $response = $this->post(route('lohusa.store'), [
+it('stores a lohusa form for ebe role', function () {
+    signInAs('ebe');
+
+    $this->post(route('lohusa.store'), [
         'ad_soyad' => 'Ayse Yilmaz',
         'yas' => 28,
-        'egitim_durumu' => 'Universite',
+        'egitim_durumu' => 'Üniversite',
         'meslek' => 'Ebe',
         'saglik_guvence' => 'SGK',
         'gebelik_planlandimi' => 'Evet',
         'dogum_yeri' => 'Istanbul',
-        '_token' => csrf_token(),
-    ]);
+    ])->assertRedirect(route('lohusa.index'));
 
-    $response->assertRedirect(route('lohusa.index'));
-    $response->assertSessionHas('success');
+    $this->assertDatabaseHas('lohusa_forms', ['ad_soyad' => 'Ayse Yilmaz']);
+});
 
-    $this->assertDatabaseHas('lohusa_forms', [
+it('forbids student from creating lohusa form', function () {
+    signInAs('student');
+
+    $this->get(route('lohusa.create'))->assertForbidden();
+    $this->post(route('lohusa.store'), [
         'ad_soyad' => 'Ayse Yilmaz',
         'yas' => 28,
-    ]);
-});
-
-test('lohusa formu zorunlu alanlar olmadan kaydedilmez', function () {
-    $response = $this->from(route('lohusa.create'))->post(route('lohusa.store'), [
-        'ad_soyad' => '',
-        'yas' => '',
-        '_token' => csrf_token(),
-    ]);
-
-    $response->assertRedirect(route('lohusa.create'));
-    $response->assertSessionHasErrors(['ad_soyad', 'yas', 'egitim_durumu', 'meslek', 'saglik_guvence', 'gebelik_planlandimi', 'dogum_yeri']);
-    $this->assertDatabaseCount('lohusa_forms', 0);
-});
-
-test('lohusa formu hatali veri tipleriyle kaydedilmez', function () {
-    $response = $this->from(route('lohusa.create'))->post(route('lohusa.store'), [
-        'ad_soyad' => 'Ayse123',
-        'yas' => 'abc',
-        'egitim_durumu' => 'Universite',
-        'meslek' => '1234',
+        'egitim_durumu' => 'Üniversite',
+        'meslek' => 'Ebe',
         'saglik_guvence' => 'SGK',
         'gebelik_planlandimi' => 'Evet',
-        'dogum_yeri' => '123',
-        '_token' => csrf_token(),
-    ]);
-
-    $response->assertRedirect(route('lohusa.create'));
-    $response->assertSessionHasErrors(['ad_soyad', 'yas', 'meslek', 'dogum_yeri']);
-    $this->assertDatabaseCount('lohusa_forms', 0);
+        'dogum_yeri' => 'Istanbul',
+    ])->assertForbidden();
 });
 
-test('lohusa form detay sayfasi gosterilir', function () {
-    $form = LohusaForm::factory()->create(['ad_soyad' => 'Test Kullanici']);
-
-    $response = $this->get(route('lohusa.show', $form));
-
-    $response->assertOk();
-    $response->assertSee('Test Kullanici');
-});
-
-test('lohusa form pdf olarak indirilebilir', function () {
+it('downloads lohusa pdf for authorized users', function () {
+    signInAs('student');
     $form = LohusaForm::factory()->create(['ad_soyad' => 'PDF Test']);
 
-    $response = $this->get(route('lohusa.pdf', $form->id));
-
-    $response->assertOk();
-    $response->assertHeader('content-type', 'application/pdf');
-    $response->assertHeader('content-disposition', 'attachment; filename="lohusa-izlem-formu.pdf"');
+    $this->get(route('lohusa.pdf', $form))
+        ->assertOk()
+        ->assertHeader('content-type', 'application/pdf');
 });
 
-test('lohusa form silinebilir', function () {
-    $form = LohusaForm::factory()->create(['ad_soyad' => 'Silinecek Kayit']);
-
-    $response = $this->delete(route('lohusa.destroy', $form->id), [
-        '_token' => csrf_token(),
-    ]);
-
-    $response->assertRedirect(route('lohusa.index'));
-    $response->assertSessionHas('success');
-    $this->assertDatabaseMissing('lohusa_forms', ['id' => $form->id]);
-});

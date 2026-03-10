@@ -66,32 +66,32 @@ class BebekFormRequest extends FormRequest
     {
         return [
             'required' => ':attribute zorunludur.',
-            'integer' => ':attribute sadece sayi olmali.',
-            'numeric' => ':attribute sayisal bir deger olmali.',
-            'after_or_equal' => ':attribute dogum tarihinden once olamaz.',
-            'before_or_equal' => ':attribute bugunden ileri bir tarih olamaz.',
-            'between' => ':attribute kabul edilen araligin disinda.',
+            'integer' => ':attribute sadece sayı olmalı.',
+            'numeric' => ':attribute sayısal bir değer olmalı.',
+            'after_or_equal' => ':attribute doğum tarihinden önce olamaz.',
+            'before_or_equal' => ':attribute bugünden ileri bir tarih olamaz.',
+            'between' => ':attribute kabul edilen aralığın dışındadır.',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'dogum_tarihi' => 'Dogum tarihi',
-            'kac_haftalik' => 'Haftalik bilgi',
+            'dogum_tarihi' => 'Doğum tarihi',
+            'kac_haftalik' => 'Haftalık bilgi',
             'muayene_tarihi' => 'Muayene tarihi',
-            'izlem_sayisi' => 'Izlem sayisi',
+            'izlem_sayisi' => 'İzlem sayısı',
             'termin_durumu' => 'Termin durumu',
             'cinsiyet' => 'Cinsiyet',
-            'kacinci_cocuk' => 'Kacinci cocuk',
+            'kacinci_cocuk' => 'Kaçıncı çocuk',
             'kan_grubu' => 'Kan grubu',
-            'ates' => 'Ates',
-            'nabiz' => 'Nabiz',
+            'ates' => 'Ateş',
+            'nabiz' => 'Nabız',
             'solunum' => 'Solunum',
             'kilo' => 'Kilo',
             'boy' => 'Boy',
-            'bas_cevresi' => 'Bas cevresi',
-            'gogus_cevresi' => 'Gogus cevresi',
+            'bas_cevresi' => 'Baş çevresi',
+            'gogus_cevresi' => 'Göğüs çevresi',
         ];
     }
 }

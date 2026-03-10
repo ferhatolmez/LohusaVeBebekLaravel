@@ -1,6 +1,6 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
-@section('title', 'Lohusa Izlem Formu')
+@section('title', 'Lohusa İzlem Formu')
 
 @section('content')
 @php
@@ -26,13 +26,13 @@
 <div class="container">
     <section class="d-flex flex-column flex-xl-row justify-content-between gap-4 mb-4">
         <div>
-            <span class="badge-soft mb-2">Multi-step workflow</span>
-            <h1 class="h2 mb-1">Lohusa Izlem Formu</h1>
-            <p class="text-secondary mb-0">Artik zorunlu alanlar, veri tipi kontrolleri ve adim bazli ilerleme dogrulamasi ile calisir.</p>
+            <span class="badge-soft mb-2">Çok adımlı form</span>
+            <h1 class="h2 mb-1">Lohusa İzlem Formu</h1>
+            <p class="text-secondary mb-0">Artık zorunlu alanlar, veri tipi kontrolleri, adım bazlı ilerleme ve tarayıcı taslağı ile çalışır.</p>
         </div>
         <div class="glass-panel p-3 p-lg-4" style="max-width: 420px;">
             <div class="d-flex justify-content-between small text-secondary mb-2">
-                <span>Adim <strong id="currentStepNum">1</strong> / {{ count($steps) }}</span>
+                <span>Adım <strong id="currentStepNum">1</strong> / {{ count($steps) }}</span>
                 <span id="progressPercent">%0</span>
             </div>
             <div class="progress mb-3" style="height: 10px;">
@@ -57,6 +57,16 @@
         </div>
     @endif
 
+    <div id="draftNotice" class="alert alert-info glass-panel border-0 mb-4 d-none">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+            <div>
+                <strong>Taslak geri yüklendi.</strong>
+                <span class="small d-block text-secondary" id="draftTimestamp"></span>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary" id="clearDraftBtn">Taslağı temizle</button>
+        </div>
+    </div>
+
     <form id="lohusaForm" action="{{ route('lohusa.store') }}" method="POST" novalidate>
         @csrf
 
@@ -78,11 +88,11 @@
         <div id="step-16" class="step d-none">@include('lohusa.steps.step16_diger_bilgiler')</div>
 
         <div class="glass-panel p-3 p-lg-4 mt-4 d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
-            <div class="text-secondary">Zorunlu alanlar tamamlanmadan bir sonraki adima gecilemez.</div>
+            <div class="text-secondary">Zorunlu alanlar tamamlanmadan bir sonraki adıma geçilemez. Form girişi otomatik olarak tarayıcı taslağı olarak saklanır.</div>
             <div class="d-flex flex-wrap gap-2">
                 <button type="button" class="btn btn-outline-primary" id="prevBtn">Geri</button>
-                <button type="button" class="btn btn-outline-primary" id="nextBtn">Ileri</button>
-                <button type="submit" class="btn btn-primary d-none" id="submitBtn">Kaydi olustur</button>
+                <button type="button" class="btn btn-outline-primary" id="nextBtn">İleri</button>
+                <button type="submit" class="btn btn-primary d-none" id="submitBtn">Kaydı oluştur</button>
             </div>
         </div>
     </form>
@@ -127,6 +137,10 @@
         const form = document.getElementById('lohusaForm');
         const progressBar = document.getElementById('formProgress');
         const stepButtons = document.querySelectorAll('.step-chip');
+        const draftNotice = document.getElementById('draftNotice');
+        const draftTimestamp = document.getElementById('draftTimestamp');
+        const clearDraftBtn = document.getElementById('clearDraftBtn');
+        const draftKey = 'lohusa-form-draft-v1';
         const patterns = {
             'only-letters': /^[\p{L}\s'.-]*$/u,
             'only-numbers': /^[0-9]*$/,
@@ -141,6 +155,8 @@
                 });
             });
         });
+
+        restoreDraft();
 
         document.getElementById('nextBtn').addEventListener('click', function () {
             if (validateCurrentStep() && currentStep < totalSteps) {
@@ -163,8 +179,24 @@
             });
         });
 
-        form.addEventListener('input', calculateProgress);
-        form.addEventListener('change', calculateProgress);
+        form.addEventListener('input', function () {
+            calculateProgress();
+            persistDraft();
+        });
+
+        form.addEventListener('change', function () {
+            calculateProgress();
+            persistDraft();
+        });
+
+        form.addEventListener('submit', function () {
+            localStorage.removeItem(draftKey);
+        });
+
+        clearDraftBtn.addEventListener('click', function () {
+            localStorage.removeItem(draftKey);
+            draftNotice.classList.add('d-none');
+        });
 
         if (errorFields.length > 0) {
             const firstField = document.querySelector('[name="' + errorFields[0] + '"]');
@@ -222,7 +254,7 @@
                 if (field.type === 'checkbox') {
                     checkboxGroups[field.name] = checkboxGroups[field.name] || [];
                     checkboxGroups[field.name].push(field);
-                } else if (String(field.value).trim() !== '') {
+                } else if ((field.type === 'radio' && field.checked) || (field.type !== 'radio' && String(field.value).trim() !== '')) {
                     filled += 1;
                 }
             });
@@ -233,7 +265,8 @@
                 }
             });
 
-            const total = fields.filter(function (field) { return field.type !== 'checkbox'; }).length + Object.keys(checkboxGroups).length;
+            const radios = new Set(fields.filter(function (field) { return field.type === 'radio'; }).map(function (field) { return field.name; }));
+            const total = fields.filter(function (field) { return field.type !== 'checkbox' && field.type !== 'radio'; }).length + Object.keys(checkboxGroups).length + radios.size;
             const percent = total === 0 ? 0 : Math.round((filled / total) * 100);
             progressBar.style.width = percent + '%';
             document.getElementById('progressPercent').textContent = '%' + percent;
@@ -255,6 +288,78 @@
                 button.classList.toggle('active', Number(button.dataset.stepTarget) === stepNumber);
             });
         }
+
+        function persistDraft() {
+            const payload = {
+                savedAt: new Date().toISOString(),
+                values: {},
+            };
+
+            form.querySelectorAll('input, select, textarea').forEach(function (field) {
+                if (!field.name || field.type === 'hidden' || field.name === '_token') {
+                    return;
+                }
+
+                if (field.type === 'checkbox') {
+                    payload.values[field.name] = payload.values[field.name] || [];
+                    if (field.checked) {
+                        payload.values[field.name].push(field.value);
+                    }
+                    return;
+                }
+
+                if (field.type === 'radio') {
+                    if (field.checked) {
+                        payload.values[field.name] = field.value;
+                    }
+                    return;
+                }
+
+                payload.values[field.name] = field.value;
+            });
+
+            localStorage.setItem(draftKey, JSON.stringify(payload));
+        }
+
+        function restoreDraft() {
+            if (errorFields.length > 0) {
+                return;
+            }
+
+            const raw = localStorage.getItem(draftKey);
+            if (!raw) {
+                return;
+            }
+
+            try {
+                const draft = JSON.parse(raw);
+
+                Object.entries(draft.values || {}).forEach(function (entry) {
+                    const name = entry[0];
+                    const value = entry[1];
+                    const fields = form.querySelectorAll('[name="' + CSS.escape(name) + '"]');
+
+                    fields.forEach(function (field) {
+                        if (field.type === 'checkbox') {
+                            field.checked = Array.isArray(value) && value.includes(field.value);
+                        } else if (field.type === 'radio') {
+                            field.checked = value === field.value;
+                        } else {
+                            field.value = value;
+                        }
+                    });
+                });
+
+                if (draft.savedAt) {
+                    draftNotice.classList.remove('d-none');
+                    draftTimestamp.textContent = 'Son taslak: ' + new Date(draft.savedAt).toLocaleString('tr-TR');
+                }
+            } catch (error) {
+                localStorage.removeItem(draftKey);
+            }
+        }
     });
 </script>
 @endpush
+
+

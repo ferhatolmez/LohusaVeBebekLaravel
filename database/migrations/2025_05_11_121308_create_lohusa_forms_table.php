@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('lohusa_forms', function (Blueprint $table) {
@@ -179,7 +180,7 @@ return new class extends Migration {
             $table->json('bogaz_bulgular')->nullable();
             $table->json('solunum_bulgular')->nullable();
             $table->json('gogus_bulgular')->nullable();
-           
+
             $table->string('meme_ucu')->nullable();
             $table->text('emzirmeye_uygun')->nullable();
             $table->text('meme_bakimi')->nullable();
@@ -211,4 +212,3 @@ return new class extends Migration {
         Schema::dropIfExists('lohusa_forms');
     }
 };
-

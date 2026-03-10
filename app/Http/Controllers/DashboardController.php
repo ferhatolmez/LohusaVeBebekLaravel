@@ -2,30 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BebekForm;
-use App\Models\LohusaForm;
-use Illuminate\Support\Carbon;
+use App\Services\DashboardService;
+use Illuminate\Contracts\View\View;
 
 class DashboardController extends Controller
 {
-    public function __invoke()
+    public function __construct(private readonly DashboardService $dashboardService) {}
+
+    public function __invoke(): View
     {
-        $last30Days = Carbon::now()->subDays(30);
-        $lohusaForms = LohusaForm::latest()->get();
-        $bebekForms = BebekForm::latest()->get();
+        $this->authorize('viewDashboard');
 
-        $stats = [
-            'total_lohusa' => $lohusaForms->count(),
-            'total_bebek' => $bebekForms->count(),
-            'last_30_days' => LohusaForm::where('created_at', '>=', $last30Days)->count() + BebekForm::where('created_at', '>=', $last30Days)->count(),
-            'avg_lohusa_completion' => (int) round($lohusaForms->avg('completion_score') ?? 0),
-            'avg_bebek_completion' => (int) round($bebekForms->avg('completion_score') ?? 0),
-        ];
-
-        return view('welcome', [
-            'stats' => $stats,
-            'sonLohusaKayitlar' => $lohusaForms->take(4),
-            'sonBebekKayitlar' => $bebekForms->take(4),
-        ]);
+        return view('welcome', $this->dashboardService->summary());
     }
 }

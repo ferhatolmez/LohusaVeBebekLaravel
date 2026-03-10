@@ -4,75 +4,80 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BebekFormRequest;
 use App\Models\BebekForm;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Repositories\BebekFormRepository;
+use App\Services\BebekFormService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class BebekFormController extends Controller
 {
-    public function index(Request $request)
+    public function __construct(
+        private readonly BebekFormRepository $repository,
+        private readonly BebekFormService $service,
+    ) {}
+
+    public function index(Request $request): View
     {
-        $query = BebekForm::orderBy('created_at', 'desc');
+        $this->authorize('viewAny', BebekForm::class);
 
-        if ($request->filled('q')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('cinsiyet', 'like', '%' . $request->q . '%')
-                    ->orWhere('termin_durumu', 'like', '%' . $request->q . '%')
-                    ->orWhere('kac_haftalik', 'like', '%' . $request->q . '%');
-            });
-        }
-
-        if ($request->filled('cinsiyet')) {
-            $query->where('cinsiyet', $request->cinsiyet);
-        }
-
-        $forms = $query->paginate(15)->withQueryString();
-
-        return view('bebek.index', compact('forms'));
+        return view('bebek.index', [
+            'forms' => $this->repository->paginate($request->only(['q', 'cinsiyet', 'termin_durumu', 'izlem_min', 'muayene_from', 'muayene_to'])),
+        ]);
     }
 
-    public function create()
+    public function create(): View
     {
+        $this->authorize('create', BebekForm::class);
+
         return view('bebek.create');
     }
 
-    public function store(BebekFormRequest $request)
+    public function store(BebekFormRequest $request): RedirectResponse
     {
-        BebekForm::create($request->validated());
+        $this->authorize('create', BebekForm::class);
+        $this->service->store($request->validated(), $request->user()->id);
 
         return redirect()->route('bebek.index')->with('success', 'Bebek formu kaydedildi.');
     }
 
-    public function show(BebekForm $bebekForm)
+    public function show(BebekForm $bebekForm): View
     {
+        $this->authorize('view', $bebekForm);
+
         return view('bebek.show', compact('bebekForm'));
     }
 
-    public function exportPdf($id)
+    public function exportPdf(BebekForm $bebekForm): BinaryFileResponse
     {
-        $bebekForm = BebekForm::findOrFail($id);
-        $pdf = Pdf::loadView('bebek.pdf', ['bebekForm' => $bebekForm])
-            ->setPaper('a4', 'portrait')
-            ->setOptions(['defaultFont' => 'DejaVu Sans']);
+        $this->authorize('export', $bebekForm);
 
-        return $pdf->download('bebek-izlem-formu.pdf');
+        return $this->service->export($bebekForm);
     }
 
-    public function edit(BebekForm $bebekForm)
+    public function edit(BebekForm $bebekForm): View
     {
+        $this->authorize('update', $bebekForm);
+
         return view('bebek.edit', compact('bebekForm'));
     }
 
-    public function update(BebekFormRequest $request, BebekForm $bebekForm)
+    public function update(BebekFormRequest $request, BebekForm $bebekForm): RedirectResponse
     {
-        $bebekForm->update($request->validated());
+        $this->authorize('update', $bebekForm);
+        $this->service->update($bebekForm, $request->validated(), $request->user()->id);
 
-        return redirect()->route('bebek.index')->with('success', 'Bebek formu guncellendi.');
+        return redirect()->route('bebek.index')->with('success', 'Bebek formu güncellendi.');
     }
 
-    public function destroy(BebekForm $bebekForm)
+    public function destroy(BebekForm $bebekForm): RedirectResponse
     {
-        $bebekForm->delete();
+        $this->authorize('delete', $bebekForm);
+        $this->service->destroy($bebekForm);
 
         return redirect()->route('bebek.index')->with('success', 'Bebek formu silindi.');
     }
 }
+
+

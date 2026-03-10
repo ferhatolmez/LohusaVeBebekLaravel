@@ -4,55 +4,67 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLohusaFormRequest;
 use App\Models\LohusaForm;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Repositories\LohusaFormRepository;
+use App\Services\LohusaFormService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class LohusaFormController extends Controller
 {
-    public function index(Request $request)
+    public function __construct(
+        private readonly LohusaFormRepository $repository,
+        private readonly LohusaFormService $service,
+    ) {}
+
+    public function index(Request $request): View
     {
-        $query = LohusaForm::orderBy('created_at', 'desc');
+        $this->authorize('viewAny', LohusaForm::class);
 
-        if ($request->filled('q')) {
-            $query->where('ad_soyad', 'like', '%' . $request->q . '%');
-        }
-
-        $forms = $query->paginate(15)->withQueryString();
-
-        return view('lohusa.index', compact('forms'));
+        return view('lohusa.index', [
+            'forms' => $this->repository->paginate($request->only(['q', 'dogum_yeri', 'bebek_beslenmesi', 'postpartum_hafta_min', 'created_from', 'created_to'])),
+            'filterOptions' => $this->repository->filterOptions(),
+        ]);
     }
 
-    public function create()
+    public function create(): View
     {
+        $this->authorize('create', LohusaForm::class);
+
         return view('lohusa.create');
     }
 
-    public function store(StoreLohusaFormRequest $request)
+    public function store(StoreLohusaFormRequest $request): RedirectResponse
     {
-        LohusaForm::create($request->validated());
+        $this->authorize('create', LohusaForm::class);
+        $this->service->store($request->validated(), $request->user()->id);
 
-        return redirect()->route('lohusa.index')->with('success', 'Form basariyla kaydedildi.');
+        return redirect()->route('lohusa.index')->with('success', 'Form başarıyla kaydedildi.');
     }
 
-    public function show(LohusaForm $lohusaForm)
+    public function show(LohusaForm $lohusaForm): View
     {
+        $this->authorize('view', $lohusaForm);
+
         return view('lohusa.show', compact('lohusaForm'));
     }
 
-    public function exportPdf($id)
+    public function exportPdf(LohusaForm $lohusaForm): BinaryFileResponse
     {
-        $lohusa = LohusaForm::findOrFail($id);
-        $pdf = Pdf::loadView('lohusa.pdf', compact('lohusa'))
-            ->setPaper('a4', 'portrait')
-            ->setOptions(['defaultFont' => 'DejaVu Sans']);
+        $this->authorize('export', $lohusaForm);
 
-        return $pdf->download('lohusa-izlem-formu.pdf');
+        return $this->service->export($lohusaForm);
     }
 
-    public function destroy($id)
+    public function destroy(LohusaForm $lohusaForm): RedirectResponse
     {
-        LohusaForm::destroy($id);
+        $this->authorize('delete', $lohusaForm);
+        $this->service->destroy($lohusaForm);
 
-        return redirect()->route('lohusa.index')->with('success', 'Kayit silindi.');
+        return redirect()->route('lohusa.index')->with('success', 'Kayıt silindi.');
     }
 }
+
+
+

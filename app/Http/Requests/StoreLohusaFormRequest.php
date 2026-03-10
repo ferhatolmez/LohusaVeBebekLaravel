@@ -97,7 +97,7 @@ class StoreLohusaFormRequest extends FormRequest
             'meslek' => ['required', 'string', 'min:2', 'max:100', 'regex:/^[\pL\s\'.-]+$/u'],
             'saglik_guvence' => ['required', Rule::in($insurances)],
             'akraba_evliligi' => ['nullable', Rule::in($yesNo)],
-            'evlilik_yili' => ['nullable', 'integer', 'min:1950', 'max:' . date('Y')],
+            'evlilik_yili' => ['nullable', 'integer', 'min:1950', 'max:'.date('Y')],
             'kan_grubu' => ['nullable', Rule::in($bloodGroups)],
             'gebelik_planlandimi' => ['required', Rule::in($yesNo)],
             'dogum_yeri' => ['required', 'string', 'min:2', 'max:100', 'regex:/^[\pL\s\'.-]+$/u'],
@@ -223,7 +223,7 @@ class StoreLohusaFormRequest extends FormRequest
             'ebenin_yorumu' => ['nullable', 'string', 'max:2000'],
             'dogum_tarihi' => ['nullable', 'date', 'before_or_equal:today'],
             'kac_haftalik' => ['nullable', 'integer', 'between:20,45'],
-            'izlem_sayisi' => ['nullable', 'integer', 'between:1,20'],
+            'izlem_sayısi' => ['nullable', 'integer', 'between:1,20'],
             'termin_durumu' => ['nullable', Rule::in($terms)],
             'cinsiyet' => ['nullable', Rule::in($genders)],
             'kacinci_cocuk' => ['nullable', 'integer', 'between:1,20'],
@@ -256,21 +256,21 @@ class StoreLohusaFormRequest extends FormRequest
     {
         return [
             'ad_soyad.required' => 'Ad soyad zorunludur.',
-            'ad_soyad.regex' => 'Ad soyad alaninda sadece harf, bosluk, nokta ve tire kullanilabilir.',
-            'yas.required' => 'Yas alani zorunludur.',
-            'yas.integer' => 'Yas sadece sayi olmali.',
-            'yas.between' => 'Yas 12 ile 60 arasinda olmali.',
-            'egitim_durumu.required' => 'Egitim durumu secilmelidir.',
-            'meslek.required' => 'Meslek alani zorunludur.',
-            'meslek.regex' => 'Meslek alaninda sadece harf karakterleri kullanilabilir.',
-            'saglik_guvence.required' => 'Saglik guvencesi secilmelidir.',
-            'gebelik_planlandimi.required' => 'Gebelik planlanma durumu secilmelidir.',
-            'dogum_yeri.required' => 'Dogum yeri zorunludur.',
-            'dogum_yeri.regex' => 'Dogum yeri alaninda yalnizca metin girilebilir.',
-            'es_telefon.regex' => 'Telefon alani gecerli bir formatta olmali.',
-            'tansiyon.regex' => 'Tansiyon alani 120/80 formatinda olmali.',
-            '*.integer' => 'Bu alana sadece sayi girilebilir.',
-            '*.numeric' => 'Bu alana sadece sayisal deger girilebilir.',
+            'ad_soyad.regex' => 'Ad soyad alanında sadece harf, boşluk, nokta ve tire kullanılabilir.',
+            'yas.required' => 'Yaş alanı zorunludur.',
+            'yas.integer' => 'Yaş sadece sayı olmalı.',
+            'yas.between' => 'Yaş 12 ile 60 arasında olmalı.',
+            'egitim_durumu.required' => 'Eğitim durumu seçilmelidir.',
+            'meslek.required' => 'Meslek alanı zorunludur.',
+            'meslek.regex' => 'Meslek alanında sadece harf karakterleri kullanılabilir.',
+            'saglik_guvence.required' => 'Sağlık guvencesi seçilmelidir.',
+            'gebelik_planlandimi.required' => 'Gebelik planlanma durumu seçilmelidir.',
+            'dogum_yeri.required' => 'Doğum yeri zorunludur.',
+            'dogum_yeri.regex' => 'Doğum yeri alanında yalnızca metin girilebilir.',
+            'es_telefon.regex' => 'Telefon alanı geçerli bir formatta olmalı.',
+            'tansiyon.regex' => 'Tansiyon alanı 120/80 formatinda olmalı.',
+            '*.integer' => 'Bu alana sadece sayı girilebilir.',
+            '*.numeric' => 'Bu alana sadece sayısal deger girilebilir.',
         ];
     }
 
@@ -288,3 +288,4 @@ class StoreLohusaFormRequest extends FormRequest
         ];
     }
 }
+

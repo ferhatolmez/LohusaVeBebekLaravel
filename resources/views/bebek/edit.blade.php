@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @php
     use App\Support\MedicalFormOptions;
@@ -7,17 +7,17 @@
     $options = MedicalFormOptions::bebekChecklistOptions();
 @endphp
 
-@section('title', 'Bebek Kaydi Duzenle')
+@section('title', 'Bebek Kaydı Düzenle')
 
 @section('content')
 <div class="container">
     <section class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-center mb-4">
         <div>
-            <span class="badge-soft mb-2">Edit flow</span>
-            <h1 class="h2 mb-1">Bebek kaydini duzenle</h1>
-            <p class="text-secondary mb-0">Ayni validation kurallari guncelleme akisinda da uygulanir.</p>
+            <span class="badge-soft mb-2">Düzenleme ekranı</span>
+            <h1 class="h2 mb-1">Bebek kaydını düzenle</h1>
+            <p class="text-secondary mb-0">Güncelleme sırasında da aynı doğrulama kuralları ve klinik alan yapısı korunur.</p>
         </div>
-        <a href="{{ route('bebek.index') }}" class="btn btn-outline-primary">Kayit listesine don</a>
+        <a href="{{ route('bebek.index') }}" class="btn btn-outline-primary">Kayıt listesine dön</a>
     </section>
 
     @if ($errors->any())
@@ -38,13 +38,13 @@
             <div class="card-header">Temel bilgiler</div>
             <div class="card-body">
                 <div class="row g-3">
-                    <div class="col-sm-6 col-xl-3"><label class="form-label">Dogum tarihi</label><input type="date" name="dogum_tarihi" class="form-control @error('dogum_tarihi') is-invalid @enderror" value="{{ old('dogum_tarihi', $bebekForm->dogum_tarihi?->format('Y-m-d')) }}"></div>
-                    <div class="col-sm-6 col-xl-3"><label class="form-label">Kac haftalik</label><input type="number" min="20" max="45" name="kac_haftalik" class="form-control @error('kac_haftalik') is-invalid @enderror" value="{{ old('kac_haftalik', $bebekForm->kac_haftalik) }}"></div>
+                    <div class="col-sm-6 col-xl-3"><label class="form-label">Doğum tarihi</label><input type="date" name="dogum_tarihi" class="form-control @error('dogum_tarihi') is-invalid @enderror" value="{{ old('dogum_tarihi', $bebekForm->dogum_tarihi?->format('Y-m-d')) }}"></div>
+                    <div class="col-sm-6 col-xl-3"><label class="form-label">Kaç haftalık</label><input type="number" min="20" max="45" name="kac_haftalik" class="form-control @error('kac_haftalik') is-invalid @enderror" value="{{ old('kac_haftalik', $bebekForm->kac_haftalik) }}"></div>
                     <div class="col-sm-6 col-xl-3"><label class="form-label">Muayene tarihi</label><input type="date" name="muayene_tarihi" class="form-control @error('muayene_tarihi') is-invalid @enderror" value="{{ old('muayene_tarihi', $bebekForm->muayene_tarihi?->format('Y-m-d')) }}"></div>
-                    <div class="col-sm-6 col-xl-3"><label class="form-label">Izlem sayisi</label><input type="number" min="1" max="20" name="izlem_sayisi" class="form-control @error('izlem_sayisi') is-invalid @enderror" value="{{ old('izlem_sayisi', $bebekForm->izlem_sayisi) }}"></div>
+                    <div class="col-sm-6 col-xl-3"><label class="form-label">İzlem sayısı</label><input type="number" min="1" max="20" name="izlem_sayisi" class="form-control @error('izlem_sayisi') is-invalid @enderror" value="{{ old('izlem_sayisi', $bebekForm->izlem_sayisi) }}"></div>
                     <div class="col-sm-6 col-xl-3"><label class="form-label">Termin durumu</label><select name="termin_durumu" class="form-select @error('termin_durumu') is-invalid @enderror">@foreach (MedicalFormOptions::termOptions() as $term)<option value="{{ $term }}" @selected(old('termin_durumu', $bebekForm->termin_durumu) === $term)>{{ $term }}</option>@endforeach</select></div>
                     <div class="col-sm-6 col-xl-3"><label class="form-label">Cinsiyet</label><select name="cinsiyet" class="form-select @error('cinsiyet') is-invalid @enderror">@foreach (MedicalFormOptions::genderOptions() as $gender)<option value="{{ $gender }}" @selected(old('cinsiyet', $bebekForm->cinsiyet) === $gender)>{{ $gender }}</option>@endforeach</select></div>
-                    <div class="col-sm-6 col-xl-3"><label class="form-label">Kacinci cocuk</label><input type="number" min="1" max="20" name="kacinci_cocuk" class="form-control @error('kacinci_cocuk') is-invalid @enderror" value="{{ old('kacinci_cocuk', $bebekForm->kacinci_cocuk) }}"></div>
+                    <div class="col-sm-6 col-xl-3"><label class="form-label">Kaçıncı çocuk</label><input type="number" min="1" max="20" name="kacinci_cocuk" class="form-control @error('kacinci_cocuk') is-invalid @enderror" value="{{ old('kacinci_cocuk', $bebekForm->kacinci_cocuk) }}"></div>
                     <div class="col-sm-6 col-xl-3"><label class="form-label">Kan grubu</label><select name="kan_grubu" class="form-select @error('kan_grubu') is-invalid @enderror">@foreach (MedicalFormOptions::bloodGroups() as $group)<option value="{{ $group }}" @selected(old('kan_grubu', $bebekForm->kan_grubu) === $group)>{{ $group }}</option>@endforeach</select></div>
                 </div>
             </div>
@@ -54,13 +54,13 @@
             <div class="card-header">Vital bulgular</div>
             <div class="card-body">
                 <div class="row g-3">
-                    <div class="col-6 col-md-4 col-xl"><label class="form-label">Ates</label><input type="number" step="0.1" name="ates" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates', $bebekForm->ates) }}"></div>
-                    <div class="col-6 col-md-4 col-xl"><label class="form-label">Nabiz</label><input type="number" name="nabiz" class="form-control @error('nabiz') is-invalid @enderror" value="{{ old('nabiz', $bebekForm->nabiz) }}"></div>
+                    <div class="col-6 col-md-4 col-xl"><label class="form-label">Ateş</label><input type="number" step="0.1" name="ates" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates', $bebekForm->ates) }}"></div>
+                    <div class="col-6 col-md-4 col-xl"><label class="form-label">Nabız</label><input type="number" name="nabiz" class="form-control @error('nabiz') is-invalid @enderror" value="{{ old('nabiz', $bebekForm->nabiz) }}"></div>
                     <div class="col-6 col-md-4 col-xl"><label class="form-label">Solunum</label><input type="number" name="solunum" class="form-control @error('solunum') is-invalid @enderror" value="{{ old('solunum', $bebekForm->solunum) }}"></div>
                     <div class="col-6 col-md-4 col-xl"><label class="form-label">Kilo</label><input type="number" step="0.01" name="kilo" class="form-control @error('kilo') is-invalid @enderror" value="{{ old('kilo', $bebekForm->kilo) }}"></div>
                     <div class="col-6 col-md-4 col-xl"><label class="form-label">Boy</label><input type="number" step="0.01" name="boy" class="form-control @error('boy') is-invalid @enderror" value="{{ old('boy', $bebekForm->boy) }}"></div>
-                    <div class="col-6 col-md-4 col-xl"><label class="form-label">Bas cevresi</label><input type="number" step="0.01" name="bas_cevresi" class="form-control @error('bas_cevresi') is-invalid @enderror" value="{{ old('bas_cevresi', $bebekForm->bas_cevresi) }}"></div>
-                    <div class="col-6 col-md-4 col-xl"><label class="form-label">Gogus cevresi</label><input type="number" step="0.01" name="gogus_cevresi" class="form-control @error('gogus_cevresi') is-invalid @enderror" value="{{ old('gogus_cevresi', $bebekForm->gogus_cevresi) }}"></div>
+                    <div class="col-6 col-md-4 col-xl"><label class="form-label">Baş çevresi</label><input type="number" step="0.01" name="bas_cevresi" class="form-control @error('bas_cevresi') is-invalid @enderror" value="{{ old('bas_cevresi', $bebekForm->bas_cevresi) }}"></div>
+                    <div class="col-6 col-md-4 col-xl"><label class="form-label">Göğüs çevresi</label><input type="number" step="0.01" name="gogus_cevresi" class="form-control @error('gogus_cevresi') is-invalid @enderror" value="{{ old('gogus_cevresi', $bebekForm->gogus_cevresi) }}"></div>
                 </div>
             </div>
         </div>
@@ -85,9 +85,11 @@
         </div>
 
         <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-md-center mt-4">
-            <a href="{{ route('bebek.index') }}" class="btn btn-outline-primary">Iptal</a>
-            <button type="submit" class="btn btn-primary btn-lg">Kaydi guncelle</button>
+            <a href="{{ route('bebek.index') }}" class="btn btn-outline-primary">İptal</a>
+            <button type="submit" class="btn btn-primary btn-lg">Kaydı güncelle</button>
         </div>
     </form>
 </div>
 @endsection
+
+
