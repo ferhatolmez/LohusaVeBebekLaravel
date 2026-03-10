@@ -108,7 +108,7 @@
         <div class="mt-3"><label>Annenin / ailenin cinsiyet tercihi:</label><select name="anne_tercihi" class="form-select"><option value="">Seçiniz</option>@foreach (MedicalFormOptions::genderPreferenceOptions() as $option)<option value="{{ $option }}" @selected(old('anne_tercihi') === $option)>{{ $option }}</option>@endforeach</select></div>
         <div class="mt-3"><label>Doğumda cinsiyeti öğrendiğinizde ne hissettiniz?</label><select name="cinsiyet_duygu" class="form-select"><option value="">Seçiniz</option>@foreach (MedicalFormOptions::feelingLevelOptions() as $option)<option value="{{ $option }}" @selected(old('cinsiyet_duygu') === $option)>{{ $option }}</option>@endforeach</select></div>
         <div class="mt-3"><label>Şu anda bebeğiniz hakkında ne düşünüyorsunuz?</label><select name="bebek_dusunceleri" class="form-select"><option value="">Seçiniz</option>@foreach (MedicalFormOptions::babyThoughtOptions() as $option)<option value="{{ $option }}" @selected(old('bebek_dusunceleri') === $option)>{{ $option }}</option>@endforeach</select></div>
-        <div class="mt-3"><label>Doğum sonrası kendiniz ya da bebeğiniz için endişe durumu:</label><select name="endise_var_mi" class="form-select"><option value="">Seçiniz</option>@foreach (MedicalFormOptions::concernLevelOptions() as $option)<option value="{{ $option }}" @selected(old('endise_var_mi') === $option)>{{ $option }}</option>@endforeach</select></div>
+        <div class="mt-3"><label>Doğum sonrası kendiniz ya da bebeğiniz için endişe durumu:</label><select name="endise_var_mi" class="form-select"><option value="">Seçiniz</option>@foreach (MedicalFormOptions::yesNoOptions() as $option)<option value="{{ $option }}" @selected(old('endise_var_mi') === $option)>{{ $option }}</option>@endforeach</select></div>
         <div class="mt-3"><label>Doğum sonrası babanın ve ailenin yaklaşımı:</label><select name="aile_yaklasim" class="form-select"><option value="">Seçiniz</option>@foreach (MedicalFormOptions::familyApproachOptions() as $option)<option value="{{ $option }}" @selected(old('aile_yaklasim') === $option)>{{ $option }}</option>@endforeach</select></div>
         <div class="mt-3"><label>Doğum sonrası cinsel yaşam:</label><select name="dogum_sonrasi_cinsel_yasam" class="form-select"><option value="">Seçiniz</option>@foreach (MedicalFormOptions::postpartumSexualLifeOptions() as $option)<option value="{{ $option }}" @selected(old('dogum_sonrasi_cinsel_yasam') === $option)>{{ $option }}</option>@endforeach</select></div>
 
@@ -124,3 +124,4 @@
         </div>
     </div>
 </div>
+
