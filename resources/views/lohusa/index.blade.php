@@ -22,7 +22,9 @@
                 <p class="text-secondary mb-0">Filtreler, sonuç sayısı ve mobil okunabilirlik tek bakışta görülüyor.</p>
             </div>
             <div class="d-flex flex-wrap gap-2">
-                <a href="{{ route('lohusa.create') }}" class="btn btn-primary d-flex align-items-center gap-2"><i data-lucide="plus" style="width:16px;height:16px"></i> Yeni kayıt</a>
+                @can('create', App\Models\LohusaForm::class)
+                    <a href="{{ route('lohusa.create') }}" class="btn btn-primary d-flex align-items-center gap-2"><i data-lucide="plus" style="width:16px;height:16px"></i> Yeni kayıt</a>
+                @endcan
                 <a href="{{ route('home') }}" class="btn btn-outline-primary d-flex align-items-center gap-2"><i data-lucide="layout-dashboard" style="width:16px;height:16px"></i> Ana panel</a>
             </div>
         </div>
@@ -131,12 +133,16 @@
                                 <td data-label="İşlemler">
                                     <div class="d-flex justify-content-end flex-wrap gap-2">
                                         <a href="{{ route('lohusa.show', $form) }}" class="btn btn-sm btn-outline-primary">Detay</a>
-                                        <a href="{{ route('lohusa.pdf', $form->id) }}" class="btn btn-sm btn-outline-secondary">PDF</a>
-                                        <form action="{{ route('lohusa.destroy', $form->id) }}" method="POST" onsubmit="return confirm('Bu kaydı silmek istiyor musunuz?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
-                                        </form>
+                                        @can('export', $form)
+                                            <a href="{{ route('lohusa.pdf', $form->id) }}" class="btn btn-sm btn-outline-secondary">PDF</a>
+                                        @endcan
+                                        @can('delete', $form)
+                                            <form action="{{ route('lohusa.destroy', $form->id) }}" method="POST" onsubmit="return confirm('Bu kaydı silmek istiyor musunuz?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                                            </form>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

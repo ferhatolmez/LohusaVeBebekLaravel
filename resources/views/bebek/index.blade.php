@@ -22,7 +22,9 @@
                 <p class="text-secondary mb-0">Aktif seçimler üstte görünür, tablo mobilde kart benzeri akışla okunabilir.</p>
             </div>
             <div class="d-flex flex-wrap gap-2">
-                <a href="{{ route('bebek.create') }}" class="btn btn-primary d-flex align-items-center gap-2"><i data-lucide="plus" style="width:16px;height:16px"></i> Yeni kayıt</a>
+                @can('create', App\Models\BebekForm::class)
+                    <a href="{{ route('bebek.create') }}" class="btn btn-primary d-flex align-items-center gap-2"><i data-lucide="plus" style="width:16px;height:16px"></i> Yeni kayıt</a>
+                @endcan
                 <a href="{{ route('home') }}" class="btn btn-outline-primary d-flex align-items-center gap-2"><i data-lucide="layout-dashboard" style="width:16px;height:16px"></i> Ana panel</a>
             </div>
         </div>
@@ -128,13 +130,19 @@
                                 <td data-label="İşlemler">
                                     <div class="d-flex justify-content-end flex-wrap gap-2">
                                         <a href="{{ route('bebek.show', $form) }}" class="btn btn-sm btn-outline-primary">Detay</a>
-                                        <a href="{{ route('bebek.edit', $form) }}" class="btn btn-sm btn-outline-secondary">Düzenle</a>
-                                        <a href="{{ route('bebek.pdf', $form->id) }}" class="btn btn-sm btn-outline-secondary">PDF</a>
-                                        <form action="{{ route('bebek.destroy', $form) }}" method="POST" onsubmit="return confirm('Bu kaydı silmek istiyor musunuz?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
-                                        </form>
+                                        @can('update', $form)
+                                            <a href="{{ route('bebek.edit', $form) }}" class="btn btn-sm btn-outline-secondary">Düzenle</a>
+                                        @endcan
+                                        @can('export', $form)
+                                            <a href="{{ route('bebek.pdf', $form->id) }}" class="btn btn-sm btn-outline-secondary">PDF</a>
+                                        @endcan
+                                        @can('delete', $form)
+                                            <form action="{{ route('bebek.destroy', $form) }}" method="POST" onsubmit="return confirm('Bu kaydı silmek istiyor musunuz?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                                            </form>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

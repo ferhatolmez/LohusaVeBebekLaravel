@@ -18,12 +18,21 @@
                     Yaklaşan kontroller, klinik dağılımlar ve kalite metrikleri — tüm izlem verileriniz bu panelde.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="{{ route('lohusa.create') }}" class="btn btn-light btn-lg rounded-pill px-4 fw-bold d-flex align-items-center gap-2">
-                        <i data-lucide="clipboard-plus" style="width:18px;height:18px"></i> Lohusa formu
-                    </a>
-                    <a href="{{ route('bebek.create') }}" class="btn btn-outline-light btn-lg rounded-pill px-4 fw-bold d-flex align-items-center gap-2">
-                        <i data-lucide="baby" style="width:18px;height:18px"></i> Bebek formu
-                    </a>
+                    @can('create', App\Models\LohusaForm::class)
+                        <a href="{{ route('lohusa.create') }}" class="btn btn-light btn-lg rounded-pill px-4 fw-bold d-flex align-items-center gap-2">
+                            <i data-lucide="clipboard-plus" style="width:18px;height:18px"></i> Lohusa formu
+                        </a>
+                    @endcan
+                    @can('create', App\Models\BebekForm::class)
+                        <a href="{{ route('bebek.create') }}" class="btn btn-outline-light btn-lg rounded-pill px-4 fw-bold d-flex align-items-center gap-2">
+                            <i data-lucide="baby" style="width:18px;height:18px"></i> Bebek formu
+                        </a>
+                    @endcan
+                    @cannot('create', App\Models\LohusaForm::class)
+                        <span class="badge text-bg-light align-self-center py-2 px-3">
+                            <i data-lucide="eye" style="width:14px;height:14px"></i> Salt okunur erişim
+                        </span>
+                    @endcannot
                 </div>
             </div>
             <div class="col-lg-5">

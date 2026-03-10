@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @php
     use App\Support\MedicalFormOptions;
@@ -19,7 +19,9 @@
         </div>
         <div class="d-flex flex-wrap gap-2">
             <span class="badge text-bg-{{ $bebekForm->completion_tone }} align-self-center">Tamamlilik %{{ $bebekForm->completion_score }}</span>
-            <a href="{{ route('bebek.pdf', $bebekForm->id) }}" class="btn btn-outline-primary">PDF indir</a>
+            @can('export', $bebekForm)
+                <a href="{{ route('bebek.pdf', $bebekForm->id) }}" class="btn btn-outline-primary">PDF indir</a>
+            @endcan
         </div>
     </section>
 

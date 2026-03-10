@@ -413,7 +413,29 @@
                                         <div class="user-avatar">{{ substr(auth()->user()->name, 0, 1) }}</div>
                                         <div>
                                             <div class="fw-semibold text-white lh-1" style="font-size:0.88rem">{{ auth()->user()->name }}</div>
-                                            <div class="opacity-75" style="font-size:0.72rem">{{ auth()->user()->getRoleNames()->implode(', ') }}</div>
+                                            @php
+                                                $roleName = auth()->user()->getRoleNames()->first() ?? 'user';
+                                                $roleColors = [
+                                                    'admin' => 'background:#ef4444;color:#fff',
+                                                    'ebe' => 'background:#3b82f6;color:#fff',
+                                                    'student' => 'background:#f59e0b;color:#1e293b',
+                                                ];
+                                                $roleLabels = [
+                                                    'admin' => 'Yönetici',
+                                                    'ebe' => 'Ebe',
+                                                    'student' => 'Öğrenci',
+                                                ];
+                                                $roleIcons = [
+                                                    'admin' => 'shield',
+                                                    'ebe' => 'stethoscope',
+                                                    'student' => 'graduation-cap',
+                                                ];
+                                            @endphp
+                                            <span class="d-inline-flex align-items-center gap-1 rounded-pill px-2 mt-1"
+                                                  style="{{ $roleColors[$roleName] ?? 'background:#64748b;color:#fff' }};font-size:0.68rem;font-weight:700;letter-spacing:0.04em">
+                                                <i data-lucide="{{ $roleIcons[$roleName] ?? 'user' }}" style="width:10px;height:10px"></i>
+                                                {{ strtoupper($roleLabels[$roleName] ?? $roleName) }}
+                                            </span>
                                         </div>
                                     </div>
                                 </span>

@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @php
     $showValue = function ($value) {
@@ -68,7 +68,9 @@
         </div>
         <div class="d-flex flex-wrap gap-2">
             <span class="badge text-bg-{{ $lohusaForm->completion_tone }} align-self-center">Tamamlılık %{{ $lohusaForm->completion_score }}</span>
-            <a href="{{ route('lohusa.pdf', $lohusaForm->id) }}" class="btn btn-outline-primary">PDF indir</a>
+            @can('export', $lohusaForm)
+                <a href="{{ route('lohusa.pdf', $lohusaForm->id) }}" class="btn btn-outline-primary">PDF indir</a>
+            @endcan
         </div>
     </section>
 
