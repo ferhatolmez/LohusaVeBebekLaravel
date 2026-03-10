@@ -82,4 +82,3 @@ it('downloads lohusa pdf for authorized users', function () {
         ->assertOk()
         ->assertHeader('content-type', 'application/pdf');
 });
-
