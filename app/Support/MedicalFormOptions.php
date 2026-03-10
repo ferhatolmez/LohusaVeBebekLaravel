@@ -37,17 +37,17 @@ class MedicalFormOptions
 
     public static function educationLevels(): array
     {
-        return ['Okuryazar DeÄŸil', 'Ä°lkokul', 'Ortaokul', 'Lise', 'Ãœniversite', 'YÃ¼ksek Lisans/Doktora'];
+        return ['Okuryazar Değil', 'İlkokul', 'Ortaokul', 'Lise', 'Üniversite', 'Yüksek Lisans/Doktora'];
     }
 
     public static function yesNoOptions(): array
     {
-        return ['Evet', 'HayÄ±r'];
+        return ['Evet', 'Hayır'];
     }
 
     public static function healthInsuranceOptions(): array
     {
-        return ['SGK', 'BaÄŸ-Kur', 'Ã–zel Sigorta', 'Yok'];
+        return ['SGK', 'Bağ-Kur', 'Özel Sigorta', 'Yok'];
     }
 
     public static function familyCurrentDiseaseOptions(): array
@@ -57,57 +57,57 @@ class MedicalFormOptions
 
     public static function midwifeExpectationOptions(): array
     {
-        return ['Bilgilendirme ve danÄ±ÅŸmanlÄ±k', 'Emzirme desteÄŸi', 'Bebek bakÄ±mÄ± desteÄŸi', 'Anne saÄŸlÄ±ÄŸÄ± takibi', 'Psikolojik destek', 'Ã–zel beklenti yok'];
+        return ['Bilgilendirme ve danışmanlık', 'Emzirme desteği', 'Bebek bakımı desteği', 'Anne sağlığı takibi', 'Psikolojik destek', 'Özel beklenti yok'];
     }
 
     public static function socioeconomicStatusOptions(): array
     {
-        return ['Ã‡ok kÃ¶tÃ¼', 'KÃ¶tÃ¼', 'Orta', 'Ä°yi', 'Ã‡ok iyi'];
+        return ['Çok kötü', 'Kötü', 'Orta', 'İyi', 'Çok iyi'];
     }
 
     public static function familyDecisionMakerOptions(): array
     {
-        return ['Anne', 'Baba', 'EÅŸler birlikte', 'Aile bÃ¼yÃ¼kleri', 'DiÄŸer'];
+        return ['Anne', 'Baba', 'Eşler birlikte', 'Aile büyükleri', 'Diğer'];
     }
 
     public static function expressionLevelOptions(): array
     {
-        return ['HiÃ§ ortaya koyamÄ±yor', 'KÄ±smen ortaya koyabiliyor', 'Ã‡oÄŸunlukla ortaya koyabiliyor', 'RahatÃ§a ortaya koyabiliyor'];
+        return ['Hiç ortaya koyamıyor', 'Kısmen ortaya koyabiliyor', 'Çoğunlukla ortaya koyabiliyor', 'Rahatça ortaya koyabiliyor'];
     }
 
     public static function childImportanceOptions(): array
     {
-        return ['DÃ¼ÅŸÃ¼k', 'Orta', 'YÃ¼ksek', 'Ã‡ok yÃ¼ksek'];
+        return ['Düşük', 'Orta', 'Yüksek', 'Çok yüksek'];
     }
 
     public static function adequacyLevelOptions(): array
     {
-        return ['Yetersiz', 'KÄ±smen yeterli', 'Yeterli'];
+        return ['Yetersiz', 'Kısmen yeterli', 'Yeterli'];
     }
 
     public static function cleanlinessLevelOptions(): array
     {
-        return ['KÃ¶tÃ¼', 'Orta', 'Ä°yi'];
+        return ['Kötü', 'Orta', 'İyi'];
     }
 
     public static function caregiverAvailabilityOptions(): array
     {
-        return ['Yok', 'Var - eÅŸ', 'Var - anneanne/babaanne', 'Var - diÄŸer aile bireyleri', 'Var - birden fazla kiÅŸi'];
+        return ['Yok', 'Var - eş', 'Var - anneanne/babaanne', 'Var - diğer aile bireyleri', 'Var - birden fazla kişi'];
     }
 
     public static function cookingImpactOptions(): array
     {
-        return ['Etkiliyor', 'KÄ±smen etkiliyor', 'Etkilemiyor', 'Bilinmiyor'];
+        return ['Etkiliyor', 'Kısmen etkiliyor', 'Etkilemiyor', 'Bilinmiyor'];
     }
 
     public static function storageConditionOptions(): array
     {
-        return ['Uygun deÄŸil', 'KÄ±smen uygun', 'Uygun', 'Bilinmiyor'];
+        return ['Uygun değil', 'Kısmen uygun', 'Uygun', 'Bilinmiyor'];
     }
 
     public static function homeTypeOptions(): array
     {
-        return ['Konut', 'Apartman', 'MÃ¼stakil', 'Gecekondu', 'DiÄŸer'];
+        return ['Konut', 'Apartman', 'Müstakil', 'Gecekondu', 'Diğer'];
     }
 
     public static function bathAvailabilityOptions(): array
@@ -117,152 +117,152 @@ class MedicalFormOptions
 
     public static function toiletLocationOptions(): array
     {
-        return ['Ä°Ã§eride', 'DÄ±ÅŸarÄ±da'];
+        return ['İçeride', 'Dışarıda'];
     }
 
     public static function childGenderSummaryOptions(): array
     {
-        return ['KÄ±z', 'Erkek', 'KÄ±z ve erkek', 'Belirtilmedi'];
+        return ['Kız', 'Erkek', 'Kız ve erkek', 'Belirtilmedi'];
     }
 
     public static function childHealthStatusOptions(): array
     {
-        return ['SaÄŸlÄ±klÄ±', 'Ä°zlem gerektiren Ã§ocuk var', 'Kronik hastalÄ±k var', 'Ã–zel gereksinimli Ã§ocuk var'];
+        return ['Sağlıklı', 'İzlem gerektiren çocuk var', 'Kronik hastalık var', 'Özel gereksinimli çocuk var'];
     }
 
     public static function birthHistorySummaryOptions(): array
     {
-        return ['Hastane - saÄŸlÄ±k personeli - normal doÄŸum', 'Hastane - saÄŸlÄ±k personeli - sezaryen', 'Ev - ebe/saÄŸlÄ±k personeli', 'DiÄŸer'];
+        return ['Hastane - sağlık personeli - normal doğum', 'Hastane - sağlık personeli - sezaryen', 'Ev - ebe/sağlık personeli', 'Diğer'];
     }
 
     public static function abortionHistorySummaryOptions(): array
     {
-        return ['Hastane - saÄŸlÄ±k personeli', 'Ã–zel klinik/doktor', 'Evde/dÄ±ÅŸ mÃ¼dahale yok', 'DiÄŸer'];
+        return ['Hastane - sağlık personeli', 'Özel klinik/doktor', 'Evde/dış müdahale yok', 'Diğer'];
     }
 
     public static function actionTakenOptions(): array
     {
-        return ['SaÄŸlÄ±k kuruluÅŸuna baÅŸvurdu', 'Ä°laÃ§ kullandÄ±', 'Evde istirahat etti', 'Bir ÅŸey yapmadÄ±', 'DiÄŸer'];
+        return ['Sağlık kuruluşuna başvurdu', 'İlaç kullandı', 'Evde istirahat etti', 'Bir şey yapmadı', 'Diğer'];
     }
 
     public static function familyPlanningDurationOptions(): array
     {
-        return ['KullanmadÄ±', '6 aydan az', '6-12 ay', '1-3 yÄ±l', '3 yÄ±ldan fazla'];
+        return ['Kullanmadı', '6 aydan az', '6-12 ay', '1-3 yıl', '3 yıldan fazla'];
     }
 
     public static function familyPlanningStopReasonOptions(): array
     {
-        return ['Yan etki', 'Gebelik isteÄŸi', 'Memnun kalmadÄ±', 'Unutma/uyumsuzluk', 'EriÅŸim sorunu', 'EÅŸ/aile istemedi', 'Hala kullanÄ±yor', 'DiÄŸer'];
+        return ['Yan etki', 'Gebelik isteği', 'Memnun kalmadı', 'Unutma/uyumsuzluk', 'Erişim sorunu', 'Eş/aile istemedi', 'Hala kullanıyor', 'Diğer'];
     }
 
     public static function familyPlanningMethodOptions(): array
     {
-        return ['Hap', 'RÄ°A', 'Kondom', 'Geleneksel yÃ¶ntem', 'YÃ¶ntem dÃ¼ÅŸÃ¼nmÃ¼yor', 'KararsÄ±z'];
+        return ['Hap', 'RİA', 'Kondom', 'Geleneksel yöntem', 'Yöntem düşünülmüyor', 'Kararsız'];
     }
 
     public static function genderPreferenceOptions(): array
     {
-        return ['KÄ±z', 'Erkek', 'Fark etmez'];
+        return ['Kız', 'Erkek', 'Fark etmez'];
     }
 
     public static function feelingLevelOptions(): array
     {
-        return ['Olumlu', 'KarÄ±ÅŸÄ±k', 'Olumsuz', 'KararsÄ±z'];
+        return ['Olumlu', 'Karışık', 'Olumsuz', 'Kararsız'];
     }
 
     public static function babyThoughtOptions(): array
     {
-        return ['Olumlu ve baÄŸlÄ±', 'EndiÅŸeli', 'KararsÄ±z', 'ZorlanÄ±yor'];
+        return ['Olumlu ve bağlı', 'Endişeli', 'Kararsız', 'Zorlanıyor'];
     }
 
     public static function familyApproachOptions(): array
     {
-        return ['Destekleyici', 'KÄ±smen destekleyici', 'Ä°lgisiz', 'Olumsuz'];
+        return ['Destekleyici', 'Kısmen destekleyici', 'İlgisiz', 'Olumsuz'];
     }
 
     public static function postpartumSexualLifeOptions(): array
     {
-        return ['HenÃ¼z baÅŸlamadÄ±', 'Sorun yok', 'Sorun var', 'Bilgi verilmedi'];
+        return ['Henüz başlamadı', 'Sorun yok', 'Sorun var', 'Bilgi verilmedi'];
     }
 
     public static function breastCareOptions(): array
     {
-        return ['DÃ¼zenli bakÄ±m yapÄ±yor', 'KÄ±smen bakÄ±m yapÄ±yor', 'BakÄ±m yapmÄ±yor', 'Bilgiye ihtiyacÄ± var'];
+        return ['Düzenli bakım yapıyor', 'Kısmen bakım yapıyor', 'Bakım yapmıyor', 'Bilgiye ihtiyacı var'];
     }
 
     public static function braUsageOptions(): array
     {
-        return ['Uygun sÃ¼tyen kullanÄ±yor', 'Ara sÄ±ra kullanÄ±yor', 'KullanmÄ±yor'];
+        return ['Uygun sütyen kullanıyor', 'Ara sıra kullanıyor', 'Kullanmıyor'];
     }
 
     public static function eatingPatternOptions(): array
     {
-        return ['DÃ¼zenli', 'DÃ¼zensiz'];
+        return ['Düzenli', 'Düzensiz'];
     }
 
     public static function supplementContentOptions(): array
     {
-        return ['Demir', 'D vitamini', 'Kalsiyum', 'Multivitamin', 'DiÄŸer'];
+        return ['Demir', 'D vitamini', 'Kalsiyum', 'Multivitamin', 'Diğer'];
     }
 
     public static function foodGroupOptions(): array
     {
-        return ['SÃ¼t ve sÃ¼t Ã¼rÃ¼nleri', 'Et-yumurta-kurubaklagil', 'Sebze', 'Meyve', 'TahÄ±l', 'YaÄŸlÄ±/ÅŸekerli gÄ±dalar'];
+        return ['Süt ve süt ürünleri', 'Et-yumurta-kurubaklagil', 'Sebze', 'Meyve', 'Tahıl', 'Yağlı/şekerli gıdalar'];
     }
 
     public static function genderOptions(): array
     {
-        return ['Erkek', 'KÄ±z'];
+        return ['Erkek', 'Kız'];
     }
 
     public static function termOptions(): array
     {
-        return ['Term', 'PrematÃ¼r', 'PostmatÃ¼r'];
+        return ['Term', 'Prematür', 'Postmatür'];
     }
 
     public static function bebekChecklistLabels(): array
     {
         return [
             'deri' => 'Deri',
-            'bas' => 'BaÅŸ',
-            'gozler' => 'GÃ¶zler',
+            'bas' => 'Baş',
+            'gozler' => 'Gözler',
             'burun' => 'Burun',
-            'agiz' => 'AÄŸÄ±z',
+            'agiz' => 'Ağız',
             'kulak' => 'Kulak',
             'boyun' => 'Boyun',
-            'gogus' => 'GÃ¶ÄŸÃ¼s',
+            'gogus' => 'Göğüs',
             'abdomen' => 'Abdomen',
-            'kasik' => 'KasÄ±k',
+            'kasik' => 'Kasık',
             'genital' => 'Genital',
             'solunum_sistemi' => 'Solunum Sistemi',
-            'kvs' => 'KardiyovaskÃ¼ler Sistem',
+            'kvs' => 'Kardiyovasküler Sistem',
             'gis' => 'Gastrointestinal Sistem',
-            'uriner' => 'Ãœriner Sistem',
-            'kas_iskelet' => 'Kas-Ä°skelet Sistemi',
-            'norolojik' => 'NÃ¶rolojik Sistem',
+            'uriner' => 'Üriner Sistem',
+            'kas_iskelet' => 'Kas-İskelet Sistemi',
+            'norolojik' => 'Nörolojik Sistem',
         ];
     }
 
     public static function bebekChecklistOptions(): array
     {
         return [
-            'deri' => ['Pembe, gergin, pÃ¼rÃ¼zsÃ¼z', 'Ä°silik', 'PiÅŸik', 'SarÄ±lÄ±k', 'Siyanoz', 'DiÄŸer'],
-            'bas' => ['Fontanellerde aÃ§Ä±klÄ±k', 'Konak', 'Bit', 'Sefal hematom', 'DiÄŸer'],
-            'gozler' => ['Ã‡apaklanma', 'KÄ±zarÄ±klÄ±k', 'Ä°ltihaplanma', 'AkÄ±ntÄ±', 'ÅaÅŸÄ±lÄ±k', 'Ã–dem', 'Sulanma', 'DiÄŸer'],
-            'burun' => ['AkÄ±ntÄ±', 'TÄ±kanÄ±klÄ±k', 'Burun kanallarÄ±nÄ±n solunuma katÄ±lmasÄ±', 'DiÄŸer'],
-            'agiz' => ['PamukÃ§uk', 'YarÄ±k damak', 'YarÄ±k dudak', 'DiÄŸer'],
-            'kulak' => ['AÄŸrÄ±', 'AkÄ±ntÄ±', 'DÃ¼ÅŸÃ¼k kulak', 'DiÄŸer'],
-            'boyun' => ['ÅiÅŸlik', 'Tortikolis', 'DiÄŸer'],
-            'gogus' => ['ÅiÅŸlik', 'SÃ¼t akmasÄ±', 'DiÄŸer'],
-            'abdomen' => ['Kanama', 'AkÄ±ntÄ±', 'KÄ±zarÄ±klÄ±k', 'IsÄ± artÄ±ÅŸÄ±', 'GÃ¶bek granÃ¼lomu', 'Distansiyon', 'GÃ¶bek fÄ±tÄ±ÄŸÄ±', 'DiÄŸer'],
-            'kasik' => ['KasÄ±k fÄ±tÄ±ÄŸÄ±', 'DiÄŸer'],
-            'genital' => ['Fimozis', 'Ä°nmemiÅŸ testis', 'Hipospadias', 'Epispadias', 'AnÃ¼ste aÃ§Ä±klÄ±k', 'Vajinal akÄ±ntÄ±', 'DiÄŸer'],
-            'solunum_sistemi' => ['Solunum sÄ±kÄ±ntÄ±sÄ±', 'Siyanoz', 'Apne', 'Pnomoni', 'DiÄŸer'],
-            'kvs' => ['TaÅŸikardi', 'Bradikardi', 'Siyanoz', 'DiÄŸer'],
-            'gis' => ['Gaita yapma sÄ±klÄ±ÄŸÄ±', 'Kusma', 'Konstipasyon', 'Diare', 'Dehidratasyon', 'DiÄŸer'],
-            'uriner' => ['Ä°drar yapma sÄ±klÄ±ÄŸÄ±', 'Ä°drar yaparken zorluk, sÄ±zlama, aÄŸlama', 'Ä°drar renginde deÄŸiÅŸiklik', 'Ä°drarÄ±n damla damla yapÄ±lmasÄ±', 'DiÄŸer'],
-            'kas_iskelet' => ['DKC', 'Ekstremite anomalisi', 'DiÄŸer'],
-            'norolojik' => ['KonvÃ¼lsiyon', 'DiÄŸer'],
+            'deri' => ['Pembe, gergin, pürüzsüz', 'İsilik', 'Pişik', 'Sarılık', 'Siyanoz', 'Diğer'],
+            'bas' => ['Fontanellerde açıklık', 'Konak', 'Bit', 'Sefal hematom', 'Diğer'],
+            'gozler' => ['Çapaklanma', 'Kızarıklık', 'İltihaplanma', 'Akıntı', 'Şaşılık', 'Ödem', 'Sulanma', 'Diğer'],
+            'burun' => ['Akıntı', 'Tıkanıklık', 'Burun kanallarının solunuma katılması', 'Diğer'],
+            'agiz' => ['Pamukçuk', 'Yarık damak', 'Yarık dudak', 'Diğer'],
+            'kulak' => ['Ağrı', 'Akıntı', 'Düşük kulak', 'Diğer'],
+            'boyun' => ['Şişlik', 'Tortikolis', 'Diğer'],
+            'gogus' => ['Şişlik', 'Süt akması', 'Diğer'],
+            'abdomen' => ['Kanama', 'Akıntı', 'Kızarıklık', 'Isı artışı', 'Göbek granülomu', 'Distansiyon', 'Göbek fıtığı', 'Diğer'],
+            'kasik' => ['Kasık fıtığı', 'Diğer'],
+            'genital' => ['Fimozis', 'İnmemiş testis', 'Hipospadias', 'Epispadias', 'Anüste açıklık', 'Vajinal akıntı', 'Diğer'],
+            'solunum_sistemi' => ['Solunum sıkıntısı', 'Siyanoz', 'Apne', 'Pnomoni', 'Diğer'],
+            'kvs' => ['Taşikardi', 'Bradikardi', 'Siyanoz', 'Diğer'],
+            'gis' => ['Gaita yapma sıklığı', 'Kusma', 'Konstipasyon', 'Diare', 'Dehidratasyon', 'Diğer'],
+            'uriner' => ['İdrar yapma sıklığı', 'İdrar yaparken zorluk, sızlama, ağlama', 'İdrar renginde değişiklik', 'İdrarın damla damla yapılması', 'Diğer'],
+            'kas_iskelet' => ['DKC', 'Ekstremite anomalisi', 'Diğer'],
+            'norolojik' => ['Konvülsiyon', 'Diğer'],
         ];
     }
 }
