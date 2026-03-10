@@ -91,7 +91,11 @@ class BebekFormController extends Controller
         $pdf = Pdf::loadView('bebek.pdf', ['bebekForm' => $bebekForm])
             ->setPaper('a4', 'portrait')
             ->setOptions(['defaultFont' => 'DejaVu Sans']);
-        return $pdf->download('bebek-izlem-formu.pdf');
+
+        return response($pdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="bebek-izlem-formu.pdf"',
+        ]);
     }
 
     public function edit(BebekForm $bebekForm)

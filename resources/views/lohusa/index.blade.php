@@ -54,7 +54,7 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Formu Sil">🗑️ Sil</button>
                                         </form>
-                                        <a href="{{ route('lohusa.pdf', $form->id) }}" class="btn btn-outline-primary btn-sm" target="_blank" data-bs-toggle="tooltip" title="PDF İndir">🖨️ PDF</a>
+                                        <a href="{{ route('lohusa.pdf', $form->id) }}" class="btn btn-outline-primary btn-sm" download data-bs-toggle="tooltip" title="PDF İndir">🖨️ PDF</a>
                                     </div>
                                 </td>
                             </tr>

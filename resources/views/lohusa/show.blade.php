@@ -197,7 +197,7 @@
 
     <div class="mt-3">
         <a href="{{ route('lohusa.index') }}" class="btn btn-secondary">⬅️ Geri</a>
-        <a href="{{ route('lohusa.pdf', $lohusaForm->id) }}" class="btn btn-outline-primary" target="_blank">
+        <a href="{{ route('lohusa.pdf', $lohusaForm->id) }}" class="btn btn-outline-primary" download>
             🖨️ PDF Olarak İndir
         </a>
     </div>

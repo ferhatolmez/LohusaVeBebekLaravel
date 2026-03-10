@@ -1,20 +1,22 @@
+@php($defaults = $clinicalDefaults['lohusa'])
 <div class="form-section fade-in p-3 rounded card shadow-sm mb-4">
     <div class="card-header bg-primary text-white">G. Fiziksel Muayene</div>
     <div class="card-body">
+        <p class="text-muted small mb-3">Klinik olculer ortalama degerlerle gelir; hastaya gore uzerine yazabilirsiniz.</p>
 
         <div class="row">
-            <div class="col-md-3"><label>Muayene Tarihi</label><input type="date" name="muayene_tarihi" class="form-control"></div>
-            <div class="col-md-3"><label>Postpartum Gün (hafta)</label><input type="number" name="postpartum_hafta" class="form-control"></div>
-            <div class="col-md-3"><label>Gebelik Kilosu</label><input type="number" step="1" name="gebelik_kilosu" class="form-control"></div>
-            <div class="col-md-3"><label>Mevcut Kilo</label><input type="number" step="1" name="mevcut_kilo" class="form-control"></div>
+            <div class="col-md-3"><label>Muayene Tarihi</label><input type="date" name="muayene_tarihi" class="form-control" value="{{ old('muayene_tarihi', now()->format('Y-m-d')) }}"></div>
+            <div class="col-md-3"><label>Postpartum Gün (hafta)</label><input type="number" name="postpartum_hafta" class="form-control" value="{{ old('postpartum_hafta') }}"></div>
+            <div class="col-md-3"><label>Gebelik Kilosu</label><input type="number" step="1" name="gebelik_kilosu" class="form-control" value="{{ old('gebelik_kilosu', $defaults['gebelik_kilosu']) }}"></div>
+            <div class="col-md-3"><label>Mevcut Kilo</label><input type="number" step="1" name="mevcut_kilo" class="form-control" value="{{ old('mevcut_kilo', $defaults['mevcut_kilo']) }}"></div>
         </div>
 
         <div class="row mt-3">
             <label class="fw-bold text-primary">Yaşam bulguları:</label>
-            <div class="col-md-3"><label>Ateş (°C)</label><input type="number" step="0.1" name="ates" class="form-control" placeholder="36.5"></div>
-            <div class="col-md-3"><label>Nabız</label><input type="number" name="nabiz" class="form-control"></div>
-            <div class="col-md-3"><label>Solunum</label><input type="number" name="solunum" class="form-control"></div>
-            <div class="col-md-3"><label>TA</label><input type="text" name="tansiyon" class="form-control"></div>
+            <div class="col-md-3"><label>Ateş (°C)</label><input type="number" step="0.1" name="ates" class="form-control" value="{{ old('ates', $defaults['ates']) }}" placeholder="36.5"></div>
+            <div class="col-md-3"><label>Nabız</label><input type="number" name="nabiz" class="form-control" value="{{ old('nabiz', $defaults['nabiz']) }}"></div>
+            <div class="col-md-3"><label>Solunum</label><input type="number" name="solunum" class="form-control" value="{{ old('solunum', $defaults['solunum']) }}"></div>
+            <div class="col-md-3"><label>TA</label><input type="text" name="tansiyon" class="form-control" value="{{ old('tansiyon', $defaults['tansiyon']) }}"></div>
         </div>
         <br>
         
@@ -331,7 +333,7 @@
 
         <div class="mt-3">
             <label>Hemoglobin:</label>
-            <input type="number" name="hemoglobin" class="form-control">
+            <input type="number" name="hemoglobin" class="form-control" value="{{ old('hemoglobin', $defaults['hemoglobin']) }}">
         </div>
 
         <div class="mt-3">

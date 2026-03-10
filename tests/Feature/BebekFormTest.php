@@ -59,6 +59,7 @@ test('bebek form pdf olarak indirilebilir', function () {
 
     $response->assertStatus(200);
     $response->assertHeader('content-type', 'application/pdf');
+    $response->assertHeader('content-disposition', 'attachment; filename="bebek-izlem-formu.pdf"');
 });
 
 test('bebek form düzenleme sayfası yüklenir', function () {

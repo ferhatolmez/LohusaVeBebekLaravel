@@ -48,7 +48,7 @@
                         @forelse ($forms as $form)
                             <tr>
                                 <td>{{ $form->id }}</td>
-                                <td>{{ $form->dogum_tarihi?->format('d.m.Y') }}</td>
+                                <td>{{ filled($form->dogum_tarihi) ? \Illuminate\Support\Carbon::parse($form->dogum_tarihi)->format('d.m.Y') : '-' }}</td>
                                 <td>{{ $form->cinsiyet }}</td>
                                 <td>{{ $form->kacinci_cocuk }}</td>
                                 <td class="text-center">
@@ -60,7 +60,7 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">🗑️ Sil</button>
                                         </form>
-                                        <a href="{{ route('bebek.pdf', $form->id) }}" class="btn btn-outline-primary btn-sm" target="_blank">🖨️ PDF</a>
+                                        <a href="{{ route('bebek.pdf', $form->id) }}" class="btn btn-outline-primary btn-sm" download>🖨️ PDF</a>
                                     </div>
                                 </td>
                             </tr>

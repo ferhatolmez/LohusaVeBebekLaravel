@@ -9,15 +9,15 @@
             </div>
             <div class="col-md-3">
                 <label>Kaç Haftalık</label>
-                <input type="text" name="kac_haftalik" class="form-control">
+                <input type="text" name="kac_haftalik" class="form-control" value="{{ old('kac_haftalik', $clinicalDefaults['bebek']['kac_haftalik']) }}">
             </div>
             <div class="col-md-3">
                 <label>Muayene Tarihi</label>
-                <input type="date" name="muayene_tarihi" class="form-control">
+                <input type="date" name="muayene_tarihi" class="form-control" value="{{ old('muayene_tarihi', now()->format('Y-m-d')) }}">
             </div>
             <div class="col-md-3">
                 <label>İzlem Sayısı</label>
-                <input type="number" name="izlem_sayisi" class="form-control">
+                <input type="number" name="izlem_sayisi" class="form-control" value="{{ old('izlem_sayisi', $clinicalDefaults['bebek']['izlem_sayisi']) }}">
             </div>
         </div>
 

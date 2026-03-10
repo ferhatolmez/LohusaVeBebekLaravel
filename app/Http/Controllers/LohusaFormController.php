@@ -264,8 +264,14 @@ class LohusaFormController extends Controller
     public function exportPdf($id)
     {
         $lohusa = LohusaForm::findOrFail($id);
-        $pdf = Pdf::loadView('lohusa.pdf', compact('lohusa'))->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'DejaVu Sans']);
-        return $pdf->download('lohusa-izlem-formu.pdf');
+        $pdf = Pdf::loadView('lohusa.pdf', compact('lohusa'))
+            ->setPaper('a4', 'portrait')
+            ->setOptions(['defaultFont' => 'DejaVu Sans']);
+
+        return response($pdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="lohusa-izlem-formu.pdf"',
+        ]);
     }
 
     private function getFizikselMuayeneKeys()

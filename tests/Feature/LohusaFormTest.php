@@ -64,6 +64,7 @@ test('lohusa form pdf olarak indirilebilir', function () {
 
     $response->assertStatus(200);
     $response->assertHeader('content-type', 'application/pdf');
+    $response->assertHeader('content-disposition', 'attachment; filename="lohusa-izlem-formu.pdf"');
 });
 
 test('lohusa form silinebilir', function () {

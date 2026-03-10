@@ -44,6 +44,8 @@ class LohusaForm extends Model
     ];
 
     protected $casts = [
+        'dogum_tarihi' => 'date',
+        'muayene_tarihi' => 'date',
         'sorun_paylasma' => 'array',
         'gecmis_tibbi_oyku_kendisi' => 'array',
         'gecmis_tibbi_oyku_ailesi' => 'array',

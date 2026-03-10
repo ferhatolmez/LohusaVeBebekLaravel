@@ -19,6 +19,8 @@ class BebekForm extends Model
     ];
 
     protected $casts = [
+        'dogum_tarihi' => 'date',
+        'muayene_tarihi' => 'date',
         
         'deri' => 'array',
         'bas' => 'array',

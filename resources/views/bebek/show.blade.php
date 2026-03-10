@@ -56,7 +56,10 @@
 
     </table>
 
-    <a href="{{ route('bebek.index') }}" class="btn btn-secondary">Geri</a>
+    <div class="d-flex gap-2">
+        <a href="{{ route('bebek.index') }}" class="btn btn-secondary">Geri</a>
+        <a href="{{ route('bebek.pdf', $bebekForm->id) }}" class="btn btn-outline-primary" download>PDF Indir</a>
+    </div>
 </div>
 @endsection
 

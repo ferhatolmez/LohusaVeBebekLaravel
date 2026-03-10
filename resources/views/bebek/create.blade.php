@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@php($defaults = $clinicalDefaults['bebek'])
 <div class="container py-4 form-page-bebek">
     <div class="form-header mb-4">
         <h1 class="h3 mb-1 fw-600">🍼 Bebek İzlem Formu (Evde)</h1>
@@ -32,15 +33,15 @@
                     </div>
                     <div class="col-md-3">
                         <label for="kac_haftalik" class="form-label">Kaç Haftalık</label>
-                        <input type="text" name="kac_haftalik" id="kac_haftalik" class="form-control form-control-lg" value="{{ old('kac_haftalik') }}" placeholder="Örn: 40">
+                        <input type="text" name="kac_haftalik" id="kac_haftalik" class="form-control form-control-lg" value="{{ old('kac_haftalik', $defaults['kac_haftalik']) }}" placeholder="Örn: 40">
                     </div>
                     <div class="col-md-3">
                         <label for="muayene_tarihi" class="form-label">Muayene Tarihi</label>
-                        <input type="date" name="muayene_tarihi" id="muayene_tarihi" class="form-control form-control-lg" value="{{ old('muayene_tarihi') }}">
+                        <input type="date" name="muayene_tarihi" id="muayene_tarihi" class="form-control form-control-lg" value="{{ old('muayene_tarihi', now()->format('Y-m-d')) }}">
                     </div>
                     <div class="col-md-3">
                         <label for="izlem_sayisi" class="form-label">İzlem Sayısı</label>
-                        <input type="number" name="izlem_sayisi" id="izlem_sayisi" class="form-control form-control-lg" value="{{ old('izlem_sayisi') }}" placeholder="0" min="0">
+                        <input type="number" name="izlem_sayisi" id="izlem_sayisi" class="form-control form-control-lg" value="{{ old('izlem_sayisi', $defaults['izlem_sayisi']) }}" placeholder="0" min="0">
                     </div>
                     <div class="col-md-3">
                         <label for="termin_durumu" class="form-label">Termin Durumu</label>
@@ -78,35 +79,35 @@
         <div class="card shadow-sm mb-4">
             <div class="card-header bg-success text-white">💓 Vital Bulgular</div>
             <div class="card-body">
-                <p class="text-muted small mb-4">Ölçüm değerlerini girin; boş bırakılabilir.</p>
+                <p class="text-muted small mb-4">Olcum degerleri tipik yenidogan ortalamalariyla gelir; muayene sonucuna gore degistirebilirsiniz.</p>
                 <div class="row g-3">
                     <div class="col-6 col-md-2">
                         <label for="ates" class="form-label">Ateş (°C)</label>
-                        <input type="number" step="0.1" name="ates" id="ates" class="form-control form-control-lg" value="{{ old('ates') }}" placeholder="36.5">
+                        <input type="number" step="0.1" name="ates" id="ates" class="form-control form-control-lg" value="{{ old('ates', $defaults['ates']) }}" placeholder="36.5">
                     </div>
                     <div class="col-6 col-md-2">
                         <label for="nabiz" class="form-label">Nabız</label>
-                        <input type="number" name="nabiz" id="nabiz" class="form-control form-control-lg" value="{{ old('nabiz') }}" placeholder="120">
+                        <input type="number" name="nabiz" id="nabiz" class="form-control form-control-lg" value="{{ old('nabiz', $defaults['nabiz']) }}" placeholder="120">
                     </div>
                     <div class="col-6 col-md-2">
                         <label for="solunum" class="form-label">Solunum</label>
-                        <input type="number" name="solunum" id="solunum" class="form-control form-control-lg" value="{{ old('solunum') }}" placeholder="40">
+                        <input type="number" name="solunum" id="solunum" class="form-control form-control-lg" value="{{ old('solunum', $defaults['solunum']) }}" placeholder="40">
                     </div>
                     <div class="col-6 col-md-2">
                         <label for="kilo" class="form-label">Kilo (kg)</label>
-                        <input type="number" step="0.01" name="kilo" id="kilo" class="form-control form-control-lg" value="{{ old('kilo') }}" placeholder="3.2">
+                        <input type="number" step="0.01" name="kilo" id="kilo" class="form-control form-control-lg" value="{{ old('kilo', $defaults['kilo']) }}" placeholder="3.2">
                     </div>
                     <div class="col-6 col-md-2">
                         <label for="boy" class="form-label">Boy (cm)</label>
-                        <input type="number" step="0.01" name="boy" id="boy" class="form-control form-control-lg" value="{{ old('boy') }}" placeholder="50">
+                        <input type="number" step="0.01" name="boy" id="boy" class="form-control form-control-lg" value="{{ old('boy', $defaults['boy']) }}" placeholder="50">
                     </div>
                     <div class="col-6 col-md-2">
                         <label for="bas_cevresi" class="form-label">Baş Çevresi (cm)</label>
-                        <input type="number" step="0.01" name="bas_cevresi" id="bas_cevresi" class="form-control form-control-lg" value="{{ old('bas_cevresi') }}" placeholder="34">
+                        <input type="number" step="0.01" name="bas_cevresi" id="bas_cevresi" class="form-control form-control-lg" value="{{ old('bas_cevresi', $defaults['bas_cevresi']) }}" placeholder="34">
                     </div>
                     <div class="col-6 col-md-2">
                         <label for="gogus_cevresi" class="form-label">Göğüs Çevresi (cm)</label>
-                        <input type="number" step="0.01" name="gogus_cevresi" id="gogus_cevresi" class="form-control form-control-lg" value="{{ old('gogus_cevresi') }}" placeholder="32">
+                        <input type="number" step="0.01" name="gogus_cevresi" id="gogus_cevresi" class="form-control form-control-lg" value="{{ old('gogus_cevresi', $defaults['gogus_cevresi']) }}" placeholder="32">
                     </div>
                 </div>
             </div>
