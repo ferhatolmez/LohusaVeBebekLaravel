@@ -48,7 +48,7 @@
 
         <div class="mt-3">
             <label for="gunde_kac_ped" class="form-label">Adet döneminde günde kaç ped kullanıyordunuz?</label>
-            <input type="number" name="gunde_kac_ped" id="gunde_kac_ped" class="form-control @error('gunde_kac_ped') is-invalid @enderror" value="{{ old('gunde_kac_ped') }}" min="0" placeholder="Örn: 4">
+            <input type="number" name="gunde_kac_ped" id="gunde_kac_ped" class="form-control @error('gunde_kac_ped') is-invalid @enderror" value="{{ old('gunde_kac_ped') }}" min="0">
             @error('gunde_kac_ped')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
     </div>

@@ -8,12 +8,12 @@
         <div class="row g-3">
             <div class="col-md-6">
                 <label for="ad_soyad" class="form-label">Ad soyad <span class="text-danger">*</span></label>
-                <input type="text" name="ad_soyad" id="ad_soyad" class="form-control form-control-lg only-letters @error('ad_soyad') is-invalid @enderror" value="{{ old('ad_soyad') }}" placeholder="Ad ve soyad" required>
+                <input type="text" name="ad_soyad" id="ad_soyad" class="form-control form-control-lg only-letters @error('ad_soyad') is-invalid @enderror" value="{{ old('ad_soyad') }}" required>
                 @error('ad_soyad')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-6">
                 <label for="yas" class="form-label">Yaş <span class="text-danger">*</span></label>
-                <input type="number" min="12" max="60" name="yas" id="yas" class="form-control form-control-lg only-numbers @error('yas') is-invalid @enderror" value="{{ old('yas') }}" placeholder="28" required>
+                <input type="number" min="12" max="60" name="yas" id="yas" class="form-control form-control-lg only-numbers @error('yas') is-invalid @enderror" value="{{ old('yas') }}" required>
                 @error('yas')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-6">
@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-6">
                 <label for="meslek" class="form-label">Meslek</label>
-                <input type="text" name="meslek" id="meslek" class="form-control form-control-lg only-letters @error('meslek') is-invalid @enderror" value="{{ old('meslek') }}" placeholder="Örn: Ebe">
+                <input type="text" name="meslek" id="meslek" class="form-control form-control-lg only-letters @error('meslek') is-invalid @enderror" value="{{ old('meslek') }}">
                 @error('meslek')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-6">
@@ -52,7 +52,7 @@
             </div>
             <div class="col-md-6">
                 <label for="evlilik_yili" class="form-label">Evlilik yılı</label>
-                <input type="number" name="evlilik_yili" id="evlilik_yili" class="form-control form-control-lg @error('evlilik_yili') is-invalid @enderror" value="{{ old('evlilik_yili') }}" min="1950" max="{{ date('Y') }}" placeholder="2020">
+                <input type="number" name="evlilik_yili" id="evlilik_yili" class="form-control form-control-lg @error('evlilik_yili') is-invalid @enderror" value="{{ old('evlilik_yili') }}" min="1950" max="{{ date('Y') }}">
                 @error('evlilik_yili')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-6">
@@ -76,7 +76,7 @@
             </div>
             <div class="col-md-6">
                 <label for="dogum_yeri" class="form-label">Doğum yeri</label>
-                <input type="text" name="dogum_yeri" id="dogum_yeri" class="form-control form-control-lg only-letters @error('dogum_yeri') is-invalid @enderror" value="{{ old('dogum_yeri') }}" placeholder="Örn: İstanbul">
+                <input type="text" name="dogum_yeri" id="dogum_yeri" class="form-control form-control-lg only-letters @error('dogum_yeri') is-invalid @enderror" value="{{ old('dogum_yeri') }}">
                 @error('dogum_yeri')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>

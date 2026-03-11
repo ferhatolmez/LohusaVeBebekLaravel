@@ -23,7 +23,7 @@
 
                 <div class="mt-3">
                     <label for="psikolojik_diger_aciklama">Diğer Belirtiler Açıklama:</label>
-                    <textarea name="psikolojik_diger_aciklama" id="psikolojik_diger_aciklama" class="form-control @error('psikolojik_diger_aciklama') is-invalid @enderror" rows="2" placeholder="Varsa açıklayınız...">{{ old('psikolojik_diger_aciklama') }}</textarea>
+                    <textarea name="psikolojik_diger_aciklama" id="psikolojik_diger_aciklama" class="form-control @error('psikolojik_diger_aciklama') is-invalid @enderror" rows="2">{{ old('psikolojik_diger_aciklama') }}</textarea>
                     @error('psikolojik_diger_aciklama')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
             </div>

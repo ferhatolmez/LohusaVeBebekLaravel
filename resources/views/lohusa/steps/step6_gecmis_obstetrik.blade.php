@@ -7,22 +7,22 @@
         <div class="row">
             <div class="col-md-3">
                 <label for="gravida" class="form-label">Gravida (gebelik sayısı)</label>
-                <input type="number" name="gravida" id="gravida" class="form-control @error('gravida') is-invalid @enderror" min="0" placeholder="0" value="{{ old('gravida') }}">
+                <input type="number" name="gravida" id="gravida" class="form-control @error('gravida') is-invalid @enderror" min="0" value="{{ old('gravida') }}">
                 @error('gravida')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="para" class="form-label">Parite (canlı doğum sayısı)</label>
-                <input type="number" name="para" id="para" class="form-control @error('para') is-invalid @enderror" min="0" placeholder="0" value="{{ old('para') }}">
+                <input type="number" name="para" id="para" class="form-control @error('para') is-invalid @enderror" min="0" value="{{ old('para') }}">
                 @error('para')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="abortus" class="form-label">Abortus sayısı</label>
-                <input type="number" name="abortus" id="abortus" class="form-control @error('abortus') is-invalid @enderror" min="0" placeholder="0" value="{{ old('abortus') }}">
+                <input type="number" name="abortus" id="abortus" class="form-control @error('abortus') is-invalid @enderror" min="0" value="{{ old('abortus') }}">
                 @error('abortus')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="yasayan" class="form-label">Yaşayan çocuk sayısı</label>
-                <input type="number" name="yasayan" id="yasayan" class="form-control @error('yasayan') is-invalid @enderror" min="0" placeholder="0" value="{{ old('yasayan') }}">
+                <input type="number" name="yasayan" id="yasayan" class="form-control @error('yasayan') is-invalid @enderror" min="0" value="{{ old('yasayan') }}">
                 @error('yasayan')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>

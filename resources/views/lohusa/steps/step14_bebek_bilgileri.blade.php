@@ -12,7 +12,7 @@
             </div>
             <div class="col-md-3">
                 <label for="kac_haftalik" class="form-label">Kaç haftalık</label>
-                <input type="number" min="20" max="45" name="kac_haftalik" id="kac_haftalik" class="form-control @error('kac_haftalik') is-invalid @enderror" value="{{ old('kac_haftalik') }}" placeholder="40">
+                <input type="number" min="20" max="45" name="kac_haftalik" id="kac_haftalik" class="form-control @error('kac_haftalik') is-invalid @enderror" value="{{ old('kac_haftalik') }}">
                 @error('kac_haftalik')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
@@ -22,7 +22,7 @@
             </div>
             <div class="col-md-3">
                 <label for="izlem_sayisi" class="form-label">İzlem sayısı</label>
-                <input type="number" min="1" max="20" name="izlem_sayisi" id="izlem_sayisi" class="form-control @error('izlem_sayisi') is-invalid @enderror" value="{{ old('izlem_sayisi') }}" placeholder="1">
+                <input type="number" min="1" max="20" name="izlem_sayisi" id="izlem_sayisi" class="form-control @error('izlem_sayisi') is-invalid @enderror" value="{{ old('izlem_sayisi') }}">
                 @error('izlem_sayisi')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">

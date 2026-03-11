@@ -18,7 +18,7 @@
 
         <div class="mb-3">
             <label for="ailenin_hastalik_durumu">1. Aile üyelerinden birinin geçirdiği hastalık, operasyon, hastane deneyimi, ölüm, boşanma, işsizlik olmuş mu? Bu kriz durumlarını nasıl geçirmişler?</label>
-            <textarea name="ailenin_hastalik_durumu" id="ailenin_hastalik_durumu" class="form-control @error('ailenin_hastalik_durumu') is-invalid @enderror" rows="4" placeholder="Açıklayınız...">{{ old('ailenin_hastalik_durumu') }}</textarea>
+            <textarea name="ailenin_hastalik_durumu" id="ailenin_hastalik_durumu" class="form-control @error('ailenin_hastalik_durumu') is-invalid @enderror" rows="4">{{ old('ailenin_hastalik_durumu') }}</textarea>
             @error('ailenin_hastalik_durumu')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
 

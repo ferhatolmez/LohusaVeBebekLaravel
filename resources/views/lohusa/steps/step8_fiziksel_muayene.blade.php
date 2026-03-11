@@ -18,12 +18,12 @@
             </div>
             <div class="col-md-3">
                 <label for="gebelik_kilosu" class="form-label">Gebelik kilosu</label>
-                <input type="number" step="1" min="30" max="250" name="gebelik_kilosu" id="gebelik_kilosu" class="form-control @error('gebelik_kilosu') is-invalid @enderror" value="{{ old('gebelik_kilosu') }}" placeholder="70">
+                <input type="number" step="1" min="30" max="250" name="gebelik_kilosu" id="gebelik_kilosu" class="form-control @error('gebelik_kilosu') is-invalid @enderror" value="{{ old('gebelik_kilosu') }}">
                 @error('gebelik_kilosu')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="mevcut_kilo" class="form-label">Mevcut kilo <span class="text-danger">*</span></label>
-                <input type="number" step="1" min="30" max="250" name="mevcut_kilo" id="mevcut_kilo" class="form-control @error('mevcut_kilo') is-invalid @enderror" value="{{ old('mevcut_kilo') }}" placeholder="65" required>
+                <input type="number" step="1" min="30" max="250" name="mevcut_kilo" id="mevcut_kilo" class="form-control @error('mevcut_kilo') is-invalid @enderror" value="{{ old('mevcut_kilo') }}" required>
                 @error('mevcut_kilo')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>
@@ -31,17 +31,17 @@
             <label class="fw-bold text-primary">Yaşam bulguları:</label>
             <div class="col-md-3">
                 <label for="ates" class="form-label">Ateş (°C) <span class="text-danger">*</span></label>
-                <input type="number" step="0.1" min="34" max="42" name="ates" id="ates" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates') }}" placeholder="36.6" required>
+                <input type="number" step="0.1" min="34" max="42" name="ates" id="ates" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates') }}" required>
                 @error('ates')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="nabiz" class="form-label">Nabız</label>
-                <input type="number" step="1" min="40" max="250" name="nabiz" id="nabiz" class="form-control @error('nabiz') is-invalid @enderror" value="{{ old('nabiz') }}" placeholder="80">
+                <input type="number" step="1" min="40" max="250" name="nabiz" id="nabiz" class="form-control @error('nabiz') is-invalid @enderror" value="{{ old('nabiz') }}">
                 @error('nabiz')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="solunum" class="form-label">Solunum</label>
-                <input type="number" step="1" min="8" max="60" name="solunum" id="solunum" class="form-control @error('solunum') is-invalid @enderror" value="{{ old('solunum') }}" placeholder="16">
+                <input type="number" step="1" min="8" max="60" name="solunum" id="solunum" class="form-control @error('solunum') is-invalid @enderror" value="{{ old('solunum') }}">
                 @error('solunum')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
