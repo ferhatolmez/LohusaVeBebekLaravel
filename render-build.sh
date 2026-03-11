@@ -14,9 +14,10 @@ PORT="${PORT:-8080}"
 sed -i "s/80/$PORT/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 
 echo "Preparing storage and cache..."
-mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs
+mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache/data storage/logs
 mkdir -p /tmp/views
 chmod -R 777 /tmp/views
+chmod -R 777 storage/framework/cache
 chmod -R 775 storage bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache
 
