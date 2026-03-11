@@ -4,7 +4,7 @@ namespace App\Exports;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class BebekFormExport implements FromCollection, ShouldAutoSize, WithHeadings, WithMapping, WithStyles, WithEvents
+class BebekFormExport implements FromCollection, WithColumnWidths, WithHeadings, WithMapping, WithStyles, WithEvents
 {
     protected $forms;
 
@@ -55,6 +55,29 @@ class BebekFormExport implements FromCollection, ShouldAutoSize, WithHeadings, W
             is_array($form->norolojik) ? implode(', ', $form->norolojik) : $form->norolojik,
         ];
     }
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 6,   // ID
+            'B' => 12,  // Cinsiyet
+            'C' => 12,  // Doğum Tarihi
+            'D' => 12,  // Muayene Tarihi
+            'E' => 12,  // İzlem Sayısı
+            'F' => 15,  // Termin Durumu
+            'G' => 12,  // Tamamlanma %
+            'H' => 12,  // Takip Tarihi
+            'I' => 8,   // Hafta
+            'J' => 10,  // Kilo
+            'K' => 10,  // Boy
+            'L' => 10,  // Baş Çevresi
+            'M' => 8,   // Ateş
+            'N' => 8,   // Nabız
+            'O' => 8,   // Solunum
+            'P' => 30,  // Solunum Sistemi (Wrap)
+            'Q' => 30,  // Kas İskelet (Wrap)
+            'R' => 30,  // Nörolojik (Wrap)
+        ];
+    }
 
     public function headings(): array
     {
@@ -92,9 +115,16 @@ class BebekFormExport implements FromCollection, ShouldAutoSize, WithHeadings, W
         $sheet->getStyle('A1:' . $lastColumn . $lastRow)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
         // Center alignment for specific columns (ID, Dates, Numbers)
-        $centerColumns = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'];
+        $centerColumns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'];
         foreach ($centerColumns as $col) {
             $sheet->getStyle($col . '1:' . $col . $lastRow)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        }
+
+        // Enable Wrap Text for diagnostic columns
+        $wrapColumns = ['P', 'Q', 'R'];
+        foreach ($wrapColumns as $col) {
+            $sheet->getStyle($col . '2:' . $col . $lastRow)->getAlignment()->setWrapText(true);
+            $sheet->getStyle($col . '2:' . $col . $lastRow)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
         }
 
         // Add subtle borders to all data
@@ -141,11 +171,9 @@ class BebekFormExport implements FromCollection, ShouldAutoSize, WithHeadings, W
                 $lastRow = count($this->forms) + 1;
                 $sheet->setAutoFilter('A1:' . $lastColumn . '1');
 
-                // Adjust row heights
-                for ($i = 1; $i <= $lastRow; $i++) {
-                    $sheet->getRowDimension($i)->setRowHeight(25);
-                }
+                // Set row height - auto height for rows with wrapped text
                 $sheet->getRowDimension(1)->setRowHeight(35);
+                $sheet->getDefaultRowDimension()->setRowHeight(-1);
             },
         ];
     }

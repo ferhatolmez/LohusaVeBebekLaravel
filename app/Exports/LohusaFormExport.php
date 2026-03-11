@@ -4,7 +4,7 @@ namespace App\Exports;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class LohusaFormExport implements FromCollection, ShouldAutoSize, WithHeadings, WithMapping, WithStyles, WithEvents
+class LohusaFormExport implements FromCollection, WithColumnWidths, WithHeadings, WithMapping, WithStyles, WithEvents
 {
     protected $forms;
 
@@ -59,6 +59,33 @@ class LohusaFormExport implements FromCollection, ShouldAutoSize, WithHeadings, 
             $form->ebenin_yorumu,
         ];
     }
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 6,   // ID
+            'B' => 20,  // Ad Soyad
+            'C' => 6,   // Yaş
+            'D' => 12,  // Kayıt Tarihi
+            'E' => 12,  // Risk Skoru
+            'F' => 15,  // Risk Seviyesi
+            'G' => 12,  // Tamamlanma %
+            'H' => 12,  // Takip Tarihi
+            'I' => 12,  // Doğum Tarihi
+            'J' => 15,  // Doğum Yeri
+            'K' => 15,  // Eğitim Durumu
+            'L' => 15,  // Meslek
+            'M' => 8,   // PP Gün
+            'N' => 8,   // Ateş
+            'O' => 8,   // Nabız
+            'P' => 8,   // Solunum
+            'Q' => 12,  // Tansiyon
+            'R' => 8,   // Kilo
+            'S' => 30,  // Psikolojik Belirtiler (Wrap)
+            'T' => 30,  // Emzirme Bulguları (Wrap)
+            'U' => 15,  // Bebek Beslenmesi
+            'V' => 40,  // Ebenin Yorumu (Wrap)
+        ];
+    }
 
     public function headings(): array
     {
@@ -103,6 +130,13 @@ class LohusaFormExport implements FromCollection, ShouldAutoSize, WithHeadings, 
         $centerColumns = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'M', 'N', 'O', 'P', 'Q', 'R'];
         foreach ($centerColumns as $col) {
             $sheet->getStyle($col . '1:' . $col . $lastRow)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        }
+
+        // Enable Wrap Text for long text columns
+        $wrapColumns = ['S', 'T', 'V'];
+        foreach ($wrapColumns as $col) {
+            $sheet->getStyle($col . '2:' . $col . $lastRow)->getAlignment()->setWrapText(true);
+            $sheet->getStyle($col . '2:' . $col . $lastRow)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
         }
 
         // Add subtle borders to all data
@@ -170,11 +204,12 @@ class LohusaFormExport implements FromCollection, ShouldAutoSize, WithHeadings, 
                 $lastRow = count($this->forms) + 1;
                 $sheet->setAutoFilter('A1:' . $lastColumn . '1');
 
-                // Adjust row heights for a more "breathable" design
-                for ($i = 1; $i <= $lastRow; $i++) {
-                    $sheet->getRowDimension($i)->setRowHeight(25);
-                }
-                $sheet->getRowDimension(1)->setRowHeight(35); // taller header
+                // Set row height - auto height for rows with wrapped text
+                // Header taller
+                $sheet->getRowDimension(1)->setRowHeight(35);
+                
+                // Set default row height but let wrap text expand it
+                $sheet->getDefaultRowDimension()->setRowHeight(-1);
             },
         ];
     }
