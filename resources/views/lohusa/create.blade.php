@@ -166,6 +166,21 @@
             });
         });
 
+        // Debounce block to fix mobile freeze
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                const context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), wait);
+            };
+        }
+
+        const debouncedSaveAndProgress = debounce(function() {
+            calculateProgress();
+            persistDraft();
+        }, 500);
+
         restoreDraft();
 
         document.getElementById('nextBtn').addEventListener('click', function () {
@@ -189,8 +204,8 @@
             });
         });
 
-        form.addEventListener('input', function () { calculateProgress(); persistDraft(); });
-        form.addEventListener('change', function () { calculateProgress(); persistDraft(); });
+        form.addEventListener('input', debouncedSaveAndProgress);
+        form.addEventListener('change', debouncedSaveAndProgress);
         form.addEventListener('submit', function () { localStorage.removeItem(draftKey); });
         
         @if(session('success'))

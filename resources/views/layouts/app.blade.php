@@ -82,6 +82,28 @@
             background-attachment: fixed;
         }
 
+        /* ─── Mobile Performance Overrides ─── */
+        @media (max-width: 767.98px) {
+            body, html[data-theme="dark"] body {
+                background-attachment: scroll; /* fixes background repaint lag on iOS */
+            }
+            .form-control, .form-select, textarea.form-control {
+                font-size: 16px; /* stops iOS auto-zoom on inputs */
+            }
+            .navbar, .glass-panel, .card, .status-chip {
+                /* backdrop-filter destroys FPS on some mobile browsers during scroll */
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                background: rgba(255, 255, 255, 0.95);
+            }
+            html[data-theme="dark"] .navbar, 
+            html[data-theme="dark"] .glass-panel, 
+            html[data-theme="dark"] .card, 
+            html[data-theme="dark"] .status-chip {
+                background: rgba(30, 41, 59, 0.98);
+            }
+        }
+
         h1, h2, h3, h4, h5, h6, .navbar-brand, .metric-value {
             font-family: 'Outfit', sans-serif;
             font-weight: 700;
@@ -567,6 +589,12 @@
 
             // Keyboard Shortcuts
             document.addEventListener('keydown', (e) => {
+                // Disable on mobile completely to prevent virtual keyboard shift triggers
+                if (window.innerWidth < 768) return;
+
+                // Ignore if modifying keys are pressed
+                if (e.ctrlKey || e.altKey || e.metaKey) return;
+
                 // Return if user is typing in an input or textarea
                 if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
 

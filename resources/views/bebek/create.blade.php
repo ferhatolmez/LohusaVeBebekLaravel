@@ -223,6 +223,16 @@
         const restoreDraftBtn = document.getElementById('restoreDraftBtn');
         const clearDraftBtn = document.getElementById('clearDraftBtn');
 
+        // Debounce helper to prevent freezing on mobile while typing
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                const context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), wait);
+            };
+        }
+
         function refreshProgress() {
             const completed = requiredFields.filter(function (field) {
                 return String(field.value || '').trim() !== '';
@@ -302,9 +312,14 @@
             }
         });
 
-        // Auto-save draft on changes
-        form.addEventListener('input', function() { saveDraft(); refreshProgress(); });
-        form.addEventListener('change', function() { saveDraft(); refreshProgress(); });
+        const debouncedSaveAndProgress = debounce(function() {
+            saveDraft();
+            refreshProgress();
+        }, 500);
+
+        // Auto-save draft on changes (debounced to drastically improve mobile FPS)
+        form.addEventListener('input', debouncedSaveAndProgress);
+        form.addEventListener('change', debouncedSaveAndProgress);
 
         // Clear draft on successful submission
         form.addEventListener('submit', function() {
