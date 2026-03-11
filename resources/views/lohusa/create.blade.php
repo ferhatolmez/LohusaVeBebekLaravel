@@ -327,11 +327,8 @@
                     const fields = form.querySelectorAll('[name="' + CSS.escape(name) + '"]');
 
                     fields.forEach(function (field) {
-                        // If validation errors exist, don't overwrite fields that have "old" values
-                        // Actually, in Blade we already use value="{{ old(...) }}". 
-                        // But if we restore via JS, we might overwrite the old value.
-                        // Let's only restore if the field currently is empty or has a default (like clinical defaults)
-                        // Or simpler: if there are errors, only restore fields that DON'T have errors.
+                        // If validation errors exist, don't overwrite fields that have "old" values.
+                        // We prioritize server-side old() values, then fall back to draft if field is empty.
                         
                         if (hasErrors && errorFields.includes(name)) {
                             return;
