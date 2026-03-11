@@ -124,6 +124,3 @@
         </div>
     </div>
 </div>
-ass="form-check-label">{{ $problem }}</label></div>@endforeach</div>
-    </div>
-</div>

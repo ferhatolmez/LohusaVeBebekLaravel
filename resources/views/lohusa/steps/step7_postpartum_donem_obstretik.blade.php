@@ -203,11 +203,3 @@
         </div>
     </div>
 </div>
-">
-                    <label class="form-check-label">{{ $uygulama }}</label>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</div>
-

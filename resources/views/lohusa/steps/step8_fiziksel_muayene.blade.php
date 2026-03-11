@@ -381,6 +381,3 @@
         </div>
     </div>
 </div>
-sıl besliyorsunuz?</label><select name="bebek_beslenmesi" class="form-control"><option>Emzirme</option><option>Ticari mama</option><option>Süt</option><option>Diğer</option></select></div>
-    </div>
-</div>

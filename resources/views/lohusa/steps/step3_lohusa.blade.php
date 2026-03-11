@@ -13,6 +13,7 @@
             $caregiverAvailabilityOptions = \App\Support\MedicalFormOptions::caregiverAvailabilityOptions();
             $cookingImpactOptions = \App\Support\MedicalFormOptions::cookingImpactOptions();
             $storageConditionOptions = \App\Support\MedicalFormOptions::storageConditionOptions();
+            $homeTypeOptions = \App\Support\MedicalFormOptions::homeTypeOptions();
         @endphp
 
         <div class="mb-3">
