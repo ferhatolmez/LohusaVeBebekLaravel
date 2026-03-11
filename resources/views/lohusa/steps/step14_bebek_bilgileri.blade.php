@@ -16,9 +16,9 @@
                 @error('kac_haftalik')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
-                <label for="muayene_tarihi" class="form-label">Muayene tarihi</label>
-                <input type="date" name="muayene_tarihi" id="muayene_tarihi" class="form-control @error('muayene_tarihi') is-invalid @enderror" value="{{ old('muayene_tarihi') }}">
-                @error('muayene_tarihi')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                <label for="bebek_muayene_tarihi" class="form-label">Muayene tarihi</label>
+                <input type="date" name="bebek_muayene_tarihi" id="bebek_muayene_tarihi" class="form-control @error('bebek_muayene_tarihi') is-invalid @enderror" value="{{ old('bebek_muayene_tarihi') }}">
+                @error('bebek_muayene_tarihi')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="izlem_sayisi" class="form-label">İzlem sayısı</label>
@@ -51,14 +51,14 @@
                 @error('kacinci_cocuk')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
-                <label for="kan_grubu" class="form-label">Kan grubu</label>
-                <select name="kan_grubu" id="kan_grubu" class="form-select @error('kan_grubu') is-invalid @enderror">
+                <label for="bebek_kan_grubu" class="form-label">Kan grubu</label>
+                <select name="bebek_kan_grubu" id="bebek_kan_grubu" class="form-select @error('bebek_kan_grubu') is-invalid @enderror">
                     <option value="">Seçiniz</option>
                     @foreach (MedicalFormOptions::bloodGroups() as $option)
-                        <option value="{{ $option }}" @selected(old('kan_grubu') === $option)>{{ $option }}</option>
+                        <option value="{{ $option }}" @selected(old('bebek_kan_grubu') === $option)>{{ $option }}</option>
                     @endforeach
                 </select>
-                @error('kan_grubu')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                @error('bebek_kan_grubu')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>
     </div>

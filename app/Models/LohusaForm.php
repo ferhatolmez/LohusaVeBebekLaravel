@@ -46,7 +46,7 @@ class LohusaForm extends Model
         'uykusuzluk', 'hemoglobin', 'diyet_var_mi', 'kilo_sorunu_tipi', 'istahsizlik', 'yeme_aliskanligi', 'yeme_aliskanligi_aciklama',
         'vitamin_destegi', 'vitamin_icerigi', 'yiyemedigi_yiyecek', 'yiyemedigi_yiyecek_aciklama', 'alinan_besin_gruplari', 'bebek_beslenmesi',
         'psikolojik_belirtiler', 'psikolojik_diger_aciklama', 'anne_bebek_iliskisi', 'emzirme_bulgular', 'emzirme_suresi', 'sut_yeterliligi',
-        'egitim_istekleri', 'ebenin_yorumu', 'dogum_tarihi', 'kac_haftalik', 'izlem_sayisi', 'termin_durumu', 'cinsiyet', 'kacinci_cocuk', 'bas_cevresi',
+        'egitim_istekleri', 'ebenin_yorumu', 'dogum_tarihi', 'kac_haftalik', 'izlem_sayisi', 'termin_durumu', 'cinsiyet', 'kacinci_cocuk', 'bebek_muayene_tarihi', 'bebek_kan_grubu', 'bas_cevresi',
         'gogus_cevresi', 'kilo', 'boy', 'ates', 'nabiz', 'solunum', 'bebek_ates', 'bebek_nabiz', 'bebek_solunum', 'deri', 'bas', 'gozler', 'burun', 'agiz', 'kulak', 'boyun', 'gogus', 'abdomen', 'kasik', 'genital',
         'solunum_sistemi', 'kvs', 'gis', 'uriner', 'kas_iskelet', 'norolojik', 'fiziksel_muayene',
     ];

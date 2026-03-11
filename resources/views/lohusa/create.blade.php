@@ -113,6 +113,16 @@
     .step-chip.completed { border-color: rgba(20, 108, 99, 0.45); background: rgba(31, 157, 143, 0.08); }
     .form-section .card-header { font-size: 1rem; }
     .form-check-inline, .form-check { border-radius: 14px; }
+    .form-label .text-danger {
+        font-weight: bold;
+        margin-left: 2px;
+        font-size: 1.1em;
+    }
+
+    .is-invalid-field {
+        border: 2px solid #dc3545 !important;
+        background-color: #fff8f8 !important;
+    }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 @endpush
