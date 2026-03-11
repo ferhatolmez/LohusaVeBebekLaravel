@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="col-lg-5">
-                <div class="glass-panel p-4 text-dark h-100" style="background:rgba(255,255,255,0.92);">
+                <div class="glass-panel p-4 h-100">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h2 class="h5 mb-0">Platform özellikleri</h2>
                         <span class="badge-soft"><i data-lucide="sparkles" style="width:12px;height:12px"></i> Güncel</span>

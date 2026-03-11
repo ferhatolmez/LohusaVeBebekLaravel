@@ -329,7 +329,9 @@
 
         // Scroll to errors if any exist
         if (document.querySelector('.alert-danger')) {
-            document.querySelector('.alert-danger').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const alertEl = document.querySelector('.alert-danger');
+            const y = alertEl.getBoundingClientRect().top + window.scrollY - 100;
+            window.scrollTo({top: y, behavior: 'smooth'});
         }
 
         refreshProgress();

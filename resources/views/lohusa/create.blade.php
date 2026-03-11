@@ -277,8 +277,10 @@
                 }
             });
 
-            if (!valid) {
-                firstInvalid?.focus();
+            if (!valid && firstInvalid) {
+                firstInvalid.focus();
+                const y = firstInvalid.getBoundingClientRect().top + window.scrollY - 100;
+                window.scrollTo({top: y, behavior: 'smooth'});
             }
 
             return valid;

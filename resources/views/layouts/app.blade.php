@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', 'Lohusa İzlem Platformu')</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Rol bazlı erişim, API ve test altyapısı olan lohusa ve bebek izlem uygulaması.">
+    <meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -130,7 +134,7 @@
             -webkit-backdrop-filter: var(--glass-blur);
             background: rgba(15, 23, 42, 0.88);
             border-bottom: 1px solid rgba(255,255,255,0.08);
-            padding: 0.75rem 0;
+            padding: calc(0.75rem + env(safe-area-inset-top)) 0 0.75rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.12);
         }
         .navbar-brand {
@@ -147,6 +151,9 @@
             border-radius: 999px; padding: 0.5rem 0.9rem !important;
             font-weight: 500; font-size: 0.92rem;
             transition: all 0.2s ease;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
         }
         .nav-link:hover, .nav-link.active {
             background: rgba(255,255,255,0.14); color: #fff !important;
@@ -160,7 +167,7 @@
         }
 
         /* ─── Page Wrap ─── */
-        .page-wrap { flex: 1; padding: 36px 0 60px; }
+        .page-wrap { flex: 1; padding: 36px 0 calc(60px + env(safe-area-inset-bottom)); }
 
         /* ─── Glassmorphism Cards ─── */
         .glass-panel, .card {
@@ -204,6 +211,10 @@
             letter-spacing: 0.01em;
             box-shadow: 0 6px 16px rgba(59,130,246,0.28);
             transition: all 0.25s ease;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-primary:hover {
             transform: translateY(-2px);
@@ -216,6 +227,10 @@
             font-weight: 600; padding: 0.7rem 1.4rem;
             box-shadow: var(--shadow-xs); backdrop-filter: blur(4px);
             transition: all 0.25s ease;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-outline-primary:hover, .btn-outline-primary:focus {
             background: var(--brand-100); color: var(--brand-900);
@@ -327,6 +342,15 @@
             border: var(--glass-border);
             color: var(--ink-900);
         }
+        html[data-theme="dark"] .metric-value,
+        html[data-theme="dark"] .card-header,
+        html[data-theme="dark"] .status-chip strong {
+            color: var(--ink-900);
+        }
+        html[data-theme="dark"] .card-header {
+            background: rgba(15, 23, 42, 0.45);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
         html[data-theme="dark"] .form-control,
         html[data-theme="dark"] .form-select {
             background: rgba(15, 23, 42, 0.6);
@@ -404,7 +428,7 @@
         }
 
         /* ─── Footer ─── */
-        .footer { padding: 28px 0 40px; color: var(--ink-500); font-size: 0.9rem; }
+        .footer { padding: 28px 0 calc(40px + env(safe-area-inset-bottom)); color: var(--ink-500); font-size: 0.9rem; }
         .footer p { margin-bottom: 0.35rem; }
 
         /* ─── Alert enhancements ─── */
@@ -438,7 +462,7 @@
                 color: var(--ink-500); margin-bottom: 0.3rem;
             }
             .table-responsive-stack td[data-label="İşlemler"]::before { display: none; }
-            .form-actions { left: 0.75rem; right: 0.75rem; bottom: 0.75rem; }
+            .form-actions { left: 0.75rem; right: 0.75rem; bottom: max(0.75rem, env(safe-area-inset-bottom)); }
             .navbar-brand { font-size: 1.05rem; }
         }
     </style>

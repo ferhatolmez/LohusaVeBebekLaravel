@@ -4,8 +4,8 @@
 
 @section('content')
 <div class="container-fluid py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800 d-flex align-items-center gap-2">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+        <h1 class="h3 mb-0 d-flex align-items-center gap-2">
             <i data-lucide="users" style="color:var(--brand-700)"></i>
             Kullanıcı Yönetimi
         </h1>
