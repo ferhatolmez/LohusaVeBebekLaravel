@@ -39,7 +39,10 @@ class BebekFormController extends Controller
         $this->authorize('create', BebekForm::class);
         $this->service->store($request->validated(), $request->user()->id);
 
-        return redirect()->route('bebek.index')->with('success', 'Bebek formu kaydedildi.');
+        return redirect()
+            ->route('bebek.index')
+            ->with('success', 'Bebek formu kaydedildi.')
+            ->with('clear_bebek_draft', true);
     }
 
     public function exportCsv(Request $request): \Symfony\Component\HttpFoundation\BinaryFileResponse

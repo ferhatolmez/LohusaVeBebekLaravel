@@ -23,6 +23,12 @@
         </div>
     </section>
 
+    @if(session('clear_bebek_draft'))
+        <script>
+            localStorage.removeItem('bebek-form-draft-v2');
+        </script>
+    @endif
+
     @if ($errors->any())
         <div class="alert alert-danger glass-panel border-0 mb-4">
             <div class="fw-bold mb-2">Form kaydedilemedi.</div>
@@ -321,10 +327,10 @@
         form.addEventListener('input', debouncedSaveAndProgress);
         form.addEventListener('change', debouncedSaveAndProgress);
 
-        // Clear draft on successful submission
-        form.addEventListener('submit', function() {
-            localStorage.removeItem(draftKey);
-        });
+        // Scroll to errors if any exist
+        if (document.querySelector('.alert-danger')) {
+            document.querySelector('.alert-danger').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
 
         refreshProgress();
     });
