@@ -23,16 +23,16 @@
                 @error('gebelik_kilosu')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
-                <label for="mevcut_kilo" class="form-label">Mevcut kilo</label>
-                <input type="number" step="1" name="mevcut_kilo" id="mevcut_kilo" class="form-control @error('mevcut_kilo') is-invalid @enderror" value="{{ old('mevcut_kilo', $defaults['mevcut_kilo']) }}">
+                <label for="mevcut_kilo" class="form-label">Mevcut kilo <span class="text-danger">*</span></label>
+                <input type="number" step="1" name="mevcut_kilo" id="mevcut_kilo" class="form-control @error('mevcut_kilo') is-invalid @enderror" value="{{ old('mevcut_kilo', $defaults['mevcut_kilo']) }}" required>
                 @error('mevcut_kilo')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>
         <div class="row mt-3">
             <label class="fw-bold text-primary">Yaşam bulguları:</label>
             <div class="col-md-3">
-                <label for="ates" class="form-label">Ateş (°C)</label>
-                <input type="number" step="0.1" name="ates" id="ates" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates', $defaults['ates']) }}" placeholder="36.5">
+                <label for="ates" class="form-label">Ateş (°C) <span class="text-danger">*</span></label>
+                <input type="number" step="0.1" name="ates" id="ates" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates', $defaults['ates']) }}" placeholder="36.5" required>
                 @error('ates')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
@@ -46,8 +46,8 @@
                 @error('solunum')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
-                <label for="tansiyon" class="form-label">Tansiyon</label>
-                <input type="text" name="tansiyon" id="tansiyon" class="form-control @error('tansiyon') is-invalid @enderror" value="{{ old('tansiyon', $defaults['tansiyon']) }}">
+                <label for="tansiyon" class="form-label">Tansiyon <span class="text-danger">*</span></label>
+                <input type="text" name="tansiyon" id="tansiyon" class="form-control @error('tansiyon') is-invalid @enderror" value="{{ old('tansiyon', $defaults['tansiyon']) }}" placeholder="120/80" required>
                 @error('tansiyon')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>

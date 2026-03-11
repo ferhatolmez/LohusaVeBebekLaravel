@@ -27,7 +27,7 @@ class BebekFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dogum_tarihi' => ['nullable', 'date', 'before_or_equal:today'],
+            'dogum_tarihi' => ['required', 'date', 'before_or_equal:today'],
             'kac_haftalik' => ['nullable', 'integer', 'between:20,45'],
             'muayene_tarihi' => ['required', 'date', 'after_or_equal:dogum_tarihi', 'before_or_equal:today'],
             'izlem_sayisi' => ['required', 'integer', 'between:1,20'],
@@ -38,9 +38,9 @@ class BebekFormRequest extends FormRequest
             'ates' => ['nullable', 'numeric', 'between:34,42'],
             'nabiz' => ['nullable', 'integer', 'between:60,220'],
             'solunum' => ['nullable', 'integer', 'between:10,120'],
-            'kilo' => ['nullable', 'numeric', 'between:0.5,10'],
-            'boy' => ['nullable', 'numeric', 'between:20,100'],
-            'bas_cevresi' => ['nullable', 'numeric', 'between:10,80'],
+            'kilo' => ['required', 'numeric', 'between:0.5,10'],
+            'boy' => ['required', 'numeric', 'between:20,100'],
+            'bas_cevresi' => ['required', 'numeric', 'between:10,80'],
             'gogus_cevresi' => ['nullable', 'numeric', 'between:10,80'],
             'deri' => ['nullable', 'array'],
             'bas' => ['nullable', 'array'],

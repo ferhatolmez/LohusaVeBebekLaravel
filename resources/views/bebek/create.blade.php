@@ -47,8 +47,8 @@
                     <div class="card-body">
                         <div class="row g-3">
                             <div class="col-sm-6 col-xl-3">
-                                <label for="dogum_tarihi" class="form-label">Doğum tarihi</label>
-                                <input type="date" name="dogum_tarihi" id="dogum_tarihi" class="form-control @error('dogum_tarihi') is-invalid @enderror" value="{{ old('dogum_tarihi') }}">
+                                <label for="dogum_tarihi" class="form-label">Bebeğin Doğum Tarihi <span class="text-danger">*</span></label>
+                                <input type="date" name="dogum_tarihi" id="dogum_tarihi" class="form-control @error('dogum_tarihi') is-invalid @enderror" value="{{ old('dogum_tarihi') }}" required>
                                 @error('dogum_tarihi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-sm-6 col-xl-3">
@@ -128,18 +128,18 @@
                                 @error('solunum')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
-                                <label for="kilo" class="form-label">Kilo (kg)</label>
-                                <input type="number" step="0.01" min="0.5" max="10" name="kilo" id="kilo" class="form-control @error('kilo') is-invalid @enderror" value="{{ old('kilo', $defaults['kilo']) }}">
+                                <label for="kilo" class="form-label">Kilo (kg) <span class="text-danger">*</span></label>
+                                <input type="number" step="0.01" name="kilo" id="kilo" class="form-control @error('kilo') is-invalid @enderror" value="{{ old('kilo', $defaults['kilo']) }}" required>
                                 @error('kilo')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
-                                <label for="boy" class="form-label">Boy (cm)</label>
-                                <input type="number" step="0.01" min="20" max="100" name="boy" id="boy" class="form-control @error('boy') is-invalid @enderror" value="{{ old('boy', $defaults['boy']) }}">
+                                <label for="boy" class="form-label">Boy (cm) <span class="text-danger">*</span></label>
+                                <input type="number" step="1" name="boy" id="boy" class="form-control @error('boy') is-invalid @enderror" value="{{ old('boy', $defaults['boy']) }}" required>
                                 @error('boy')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
-                                <label for="bas_cevresi" class="form-label">Baş çevresi</label>
-                                <input type="number" step="0.01" min="10" max="80" name="bas_cevresi" id="bas_cevresi" class="form-control @error('bas_cevresi') is-invalid @enderror" value="{{ old('bas_cevresi', $defaults['bas_cevresi']) }}">
+                                <label for="bas_cevresi" class="form-label">Baş Çevresi (cm) <span class="text-danger">*</span></label>
+                                <input type="number" step="0.1" name="bas_cevresi" id="bas_cevresi" class="form-control @error('bas_cevresi') is-invalid @enderror" value="{{ old('bas_cevresi', $defaults['bas_cevresi']) }}" required>
                                 @error('bas_cevresi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">

@@ -6,8 +6,8 @@
     <div class="card-body">
         <div class="row g-3">
             <div class="col-md-3">
-                <label for="dogum_tarihi" class="form-label">Doğum tarihi</label>
-                <input type="date" name="dogum_tarihi" id="dogum_tarihi" class="form-control @error('dogum_tarihi') is-invalid @enderror" value="{{ old('dogum_tarihi') }}">
+                <label for="dogum_tarihi" class="form-label">Doğum tarihi <span class="text-danger">*</span></label>
+                <input type="date" name="dogum_tarihi" id="dogum_tarihi" class="form-control @error('dogum_tarihi') is-invalid @enderror" value="{{ old('dogum_tarihi') }}" required>
                 @error('dogum_tarihi')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
