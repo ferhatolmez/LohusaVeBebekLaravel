@@ -40,25 +40,24 @@ class RiskCalculator
         // 3. Clinical Findings (Lochia, Abdomen, Perineum)
         $problematicFindings = ['kötü kokulu', 'pürülan', 'aşırı kanama', 'hassasiyet', 'kızarıklık'];
 
-        if (isset($form->losia_bulgulari)) {
-            foreach ($form->losia_bulgulari as $finding) {
-                if (in_array(strtolower($finding), $problematicFindings)) {
-                    $score += 10;
-                }
+        $losiaFindings = (array) ($form->losia_bulgulari ?? []);
+        foreach ($losiaFindings as $finding) {
+            if (is_string($finding) && in_array(strtolower($finding), $problematicFindings)) {
+                $score += 10;
             }
         }
 
-        if (isset($form->abdomen_bulgulari)) {
-            foreach ($form->abdomen_bulgulari as $finding) {
-                if (in_array(strtolower($finding), $problematicFindings)) {
-                    $score += 10;
-                }
+        $abdomenFindings = (array) ($form->abdomen_bulgulari ?? []);
+        foreach ($abdomenFindings as $finding) {
+            if (is_string($finding) && in_array(strtolower($finding), $problematicFindings)) {
+                $score += 10;
             }
         }
 
         // 4. Psychological / Emotional
-        if (isset($form->psikolojik_belirtiler)) {
-            $psychSigns = array_map('strtolower', $form->psikolojik_belirtiler);
+        $psychSignsRaw = (array) ($form->psikolojik_belirtiler ?? []);
+        if (!empty($psychSignsRaw)) {
+            $psychSigns = array_map('strtolower', $psychSignsRaw);
             if (in_array('ağlama nöbetleri', $psychSigns) || in_array('depresif duygu durum', $psychSigns)) {
                 $score += 15; // PPD risk
             }
