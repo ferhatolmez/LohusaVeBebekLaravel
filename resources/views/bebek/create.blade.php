@@ -53,17 +53,17 @@
                             </div>
                             <div class="col-sm-6 col-xl-3">
                                 <label for="kac_haftalik" class="form-label">Kaç haftalık</label>
-                                <input type="number" min="20" max="45" name="kac_haftalik" id="kac_haftalik" class="form-control @error('kac_haftalik') is-invalid @enderror" value="{{ old('kac_haftalik', $defaults['kac_haftalik']) }}">
+                                <input type="number" min="20" max="45" name="kac_haftalik" id="kac_haftalik" class="form-control @error('kac_haftalik') is-invalid @enderror" value="{{ old('kac_haftalik') }}" placeholder="40">
                                 @error('kac_haftalik')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-sm-6 col-xl-3">
                                 <label for="muayene_tarihi" class="form-label">Muayene tarihi <span class="text-danger">*</span></label>
-                                <input type="date" name="muayene_tarihi" id="muayene_tarihi" class="form-control @error('muayene_tarihi') is-invalid @enderror" value="{{ old('muayene_tarihi', now()->format('Y-m-d')) }}" required>
+                                <input type="date" name="muayene_tarihi" id="muayene_tarihi" class="form-control @error('muayene_tarihi') is-invalid @enderror" value="{{ old('muayene_tarihi') }}" required>
                                 @error('muayene_tarihi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-sm-6 col-xl-3">
                                 <label for="izlem_sayisi" class="form-label">İzlem sayısı <span class="text-danger">*</span></label>
-                                <input type="number" min="1" max="20" name="izlem_sayisi" id="izlem_sayisi" class="form-control @error('izlem_sayisi') is-invalid @enderror" value="{{ old('izlem_sayisi', $defaults['izlem_sayisi']) }}" required>
+                                <input type="number" min="1" max="20" name="izlem_sayisi" id="izlem_sayisi" class="form-control @error('izlem_sayisi') is-invalid @enderror" value="{{ old('izlem_sayisi') }}" placeholder="1" required>
                                 @error('izlem_sayisi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-sm-6 col-xl-3">
@@ -71,7 +71,7 @@
                                 <select name="termin_durumu" id="termin_durumu" class="form-select @error('termin_durumu') is-invalid @enderror">
                                     <option value="">Seçiniz</option>
                                     @foreach (MedicalFormOptions::termOptions() as $term)
-                                        <option value="{{ $term }}" @selected(old('termin_durumu', 'Term') === $term)>{{ $term }}</option>
+                                        <option value="{{ $term }}" @selected(old('termin_durumu') === $term)>{{ $term }}</option>
                                     @endforeach
                                 </select>
                                 @error('termin_durumu')<div class="invalid-feedback">{{ $message }}</div>@enderror
@@ -88,7 +88,7 @@
                             </div>
                             <div class="col-sm-6 col-xl-3">
                                 <label for="kacinci_cocuk" class="form-label">Kaçıncı çocuk</label>
-                                <input type="number" min="1" max="20" name="kacinci_cocuk" id="kacinci_cocuk" class="form-control @error('kacinci_cocuk') is-invalid @enderror" value="{{ old('kacinci_cocuk', 1) }}">
+                                <input type="number" min="1" max="20" name="kacinci_cocuk" id="kacinci_cocuk" class="form-control @error('kacinci_cocuk') is-invalid @enderror" value="{{ old('kacinci_cocuk') }}" placeholder="1">
                                 @error('kacinci_cocuk')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-sm-6 col-xl-3">
@@ -114,37 +114,37 @@
                         <div class="row g-3">
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="ates" class="form-label">Ateş (C)</label>
-                                <input type="number" step="0.1" min="34" max="42" name="ates" id="ates" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates', $defaults['ates']) }}">
+                                <input type="number" step="0.1" min="34" max="42" name="ates" id="ates" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates') }}" placeholder="36.5">
                                 @error('ates')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="nabiz" class="form-label">Nabız</label>
-                                <input type="number" min="60" max="220" name="nabiz" id="nabiz" class="form-control @error('nabiz') is-invalid @enderror" value="{{ old('nabiz', $defaults['nabiz']) }}">
+                                <input type="number" step="1" min="60" max="220" name="nabiz" id="nabiz" class="form-control @error('nabiz') is-invalid @enderror" value="{{ old('nabiz') }}" placeholder="120">
                                 @error('nabiz')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="solunum" class="form-label">Solunum</label>
-                                <input type="number" min="10" max="120" name="solunum" id="solunum" class="form-control @error('solunum') is-invalid @enderror" value="{{ old('solunum', $defaults['solunum']) }}">
+                                <input type="number" step="1" min="10" max="120" name="solunum" id="solunum" class="form-control @error('solunum') is-invalid @enderror" value="{{ old('solunum') }}" placeholder="40">
                                 @error('solunum')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="kilo" class="form-label">Kilo (kg) <span class="text-danger">*</span></label>
-                                <input type="number" step="0.01" name="kilo" id="kilo" class="form-control @error('kilo') is-invalid @enderror" value="{{ old('kilo', $defaults['kilo']) }}" required>
+                                <input type="number" step="0.01" min="0.5" max="10" name="kilo" id="kilo" class="form-control @error('kilo') is-invalid @enderror" value="{{ old('kilo') }}" placeholder="3.2" required>
                                 @error('kilo')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="boy" class="form-label">Boy (cm) <span class="text-danger">*</span></label>
-                                <input type="number" step="1" name="boy" id="boy" class="form-control @error('boy') is-invalid @enderror" value="{{ old('boy', $defaults['boy']) }}" required>
+                                <input type="number" step="0.1" min="20" max="100" name="boy" id="boy" class="form-control @error('boy') is-invalid @enderror" value="{{ old('boy') }}" placeholder="50" required>
                                 @error('boy')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="bas_cevresi" class="form-label">Baş Çevresi (cm) <span class="text-danger">*</span></label>
-                                <input type="number" step="0.1" name="bas_cevresi" id="bas_cevresi" class="form-control @error('bas_cevresi') is-invalid @enderror" value="{{ old('bas_cevresi', $defaults['bas_cevresi']) }}" required>
+                                <input type="number" step="0.1" min="10" max="60" name="bas_cevresi" id="bas_cevresi" class="form-control @error('bas_cevresi') is-invalid @enderror" value="{{ old('bas_cevresi') }}" placeholder="34" required>
                                 @error('bas_cevresi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="gogus_cevresi" class="form-label">Göğüs çevresi</label>
-                                <input type="number" step="0.01" min="10" max="80" name="gogus_cevresi" id="gogus_cevresi" class="form-control @error('gogus_cevresi') is-invalid @enderror" value="{{ old('gogus_cevresi', $defaults['gogus_cevresi']) }}">
+                                <input type="number" step="0.1" min="10" max="60" name="gogus_cevresi" id="gogus_cevresi" class="form-control @error('gogus_cevresi') is-invalid @enderror" value="{{ old('gogus_cevresi') }}" placeholder="32">
                                 @error('gogus_cevresi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>

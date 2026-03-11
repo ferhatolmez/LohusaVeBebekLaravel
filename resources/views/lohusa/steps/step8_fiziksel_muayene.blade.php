@@ -5,11 +5,10 @@
 <div class="form-section fade-in p-3 rounded card shadow-sm mb-4">
     <div class="card-header bg-primary text-white">G. Fiziksel Muayene</div>
     <div class="card-body">
-        <p class="text-muted small mb-3">Klinik ölçüler ortalama değerlerle gelir; hastaya göre üzerine yazabilirsiniz.</p>
         <div class="row g-3">
             <div class="col-md-3">
                 <label for="muayene_tarihi" class="form-label">Muayene tarihi <span class="text-danger">*</span></label>
-                <input type="date" name="muayene_tarihi" id="muayene_tarihi" class="form-control @error('muayene_tarihi') is-invalid @enderror" value="{{ old('muayene_tarihi', now()->format('Y-m-d')) }}" required>
+                <input type="date" name="muayene_tarihi" id="muayene_tarihi" class="form-control @error('muayene_tarihi') is-invalid @enderror" value="{{ old('muayene_tarihi') }}" required>
                 @error('muayene_tarihi')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
@@ -19,12 +18,12 @@
             </div>
             <div class="col-md-3">
                 <label for="gebelik_kilosu" class="form-label">Gebelik kilosu</label>
-                <input type="number" step="1" name="gebelik_kilosu" id="gebelik_kilosu" class="form-control @error('gebelik_kilosu') is-invalid @enderror" value="{{ old('gebelik_kilosu', $defaults['gebelik_kilosu']) }}">
+                <input type="number" step="1" min="30" max="250" name="gebelik_kilosu" id="gebelik_kilosu" class="form-control @error('gebelik_kilosu') is-invalid @enderror" value="{{ old('gebelik_kilosu') }}" placeholder="70">
                 @error('gebelik_kilosu')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="mevcut_kilo" class="form-label">Mevcut kilo <span class="text-danger">*</span></label>
-                <input type="number" step="1" name="mevcut_kilo" id="mevcut_kilo" class="form-control @error('mevcut_kilo') is-invalid @enderror" value="{{ old('mevcut_kilo', $defaults['mevcut_kilo']) }}" required>
+                <input type="number" step="1" min="30" max="250" name="mevcut_kilo" id="mevcut_kilo" class="form-control @error('mevcut_kilo') is-invalid @enderror" value="{{ old('mevcut_kilo') }}" placeholder="65" required>
                 @error('mevcut_kilo')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>
@@ -32,22 +31,22 @@
             <label class="fw-bold text-primary">Yaşam bulguları:</label>
             <div class="col-md-3">
                 <label for="ates" class="form-label">Ateş (°C) <span class="text-danger">*</span></label>
-                <input type="number" step="0.1" name="ates" id="ates" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates', $defaults['ates']) }}" placeholder="36.5" required>
+                <input type="number" step="0.1" min="34" max="42" name="ates" id="ates" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates') }}" placeholder="36.6" required>
                 @error('ates')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="nabiz" class="form-label">Nabız</label>
-                <input type="number" name="nabiz" id="nabiz" class="form-control @error('nabiz') is-invalid @enderror" value="{{ old('nabiz', $defaults['nabiz']) }}">
+                <input type="number" step="1" min="40" max="250" name="nabiz" id="nabiz" class="form-control @error('nabiz') is-invalid @enderror" value="{{ old('nabiz') }}" placeholder="80">
                 @error('nabiz')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="solunum" class="form-label">Solunum</label>
-                <input type="number" name="solunum" id="solunum" class="form-control @error('solunum') is-invalid @enderror" value="{{ old('solunum', $defaults['solunum']) }}">
+                <input type="number" step="1" min="8" max="60" name="solunum" id="solunum" class="form-control @error('solunum') is-invalid @enderror" value="{{ old('solunum') }}" placeholder="16">
                 @error('solunum')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="tansiyon" class="form-label">Tansiyon <span class="text-danger">*</span></label>
-                <input type="text" name="tansiyon" id="tansiyon" class="form-control @error('tansiyon') is-invalid @enderror" value="{{ old('tansiyon', $defaults['tansiyon']) }}" placeholder="120/80" required>
+                <input type="text" name="tansiyon" id="tansiyon" class="form-control @error('tansiyon') is-invalid @enderror" value="{{ old('tansiyon') }}" placeholder="120/80" required>
                 @error('tansiyon')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>
@@ -271,7 +270,7 @@
         </div>
         <div class="mt-3">
             <label for="hemoglobin" class="form-label">Hemoglobin:</label>
-            <input type="number" step="0.1" name="hemoglobin" id="hemoglobin" class="form-control @error('hemoglobin') is-invalid @enderror" value="{{ old('hemoglobin', $defaults['hemoglobin']) }}">
+            <input type="number" step="0.1" min="5" max="20" name="hemoglobin" id="hemoglobin" class="form-control @error('hemoglobin') is-invalid @enderror" value="{{ old('hemoglobin') }}" placeholder="12">
             @error('hemoglobin')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
         <div class="mt-3">

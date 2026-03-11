@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Lohusa İzlem Formu')
 
@@ -174,7 +174,11 @@
 
         form.addEventListener('input', function () { calculateProgress(); persistDraft(); });
         form.addEventListener('change', function () { calculateProgress(); persistDraft(); });
-        form.addEventListener('submit', function () { localStorage.removeItem(draftKey); });
+        
+        @if(session('success'))
+            localStorage.removeItem(draftKey);
+        @endif
+
         clearDraftBtn.addEventListener('click', function () { localStorage.removeItem(draftKey); draftNotice.classList.add('d-none'); });
 
         if (errorFields.length > 0) {
@@ -308,10 +312,6 @@
         }
 
         function restoreDraft() {
-            if (errorFields.length > 0) {
-                return;
-            }
-
             const raw = localStorage.getItem(draftKey);
             if (!raw) {
                 return;
@@ -319,6 +319,7 @@
 
             try {
                 const draft = JSON.parse(raw);
+                const hasErrors = errorFields.length > 0;
 
                 Object.entries(draft.values || {}).forEach(function (entry) {
                     const name = entry[0];
@@ -326,12 +327,25 @@
                     const fields = form.querySelectorAll('[name="' + CSS.escape(name) + '"]');
 
                     fields.forEach(function (field) {
+                        // If validation errors exist, don't overwrite fields that have "old" values
+                        // Actually, in Blade we already use value="{{ old(...) }}". 
+                        // But if we restore via JS, we might overwrite the old value.
+                        // Let's only restore if the field currently is empty or has a default (like clinical defaults)
+                        // Or simpler: if there are errors, only restore fields that DON'T have errors.
+                        
+                        if (hasErrors && errorFields.includes(name)) {
+                            return;
+                        }
+
                         if (field.type === 'checkbox') {
                             field.checked = Array.isArray(value) && value.includes(field.value);
                         } else if (field.type === 'radio') {
                             field.checked = value === field.value;
                         } else {
-                            field.value = value;
+                            // Only restore if current value is default/empty
+                            if (!field.value || field.value === field.defaultValue) {
+                                field.value = value;
+                            }
                         }
                     });
                 });

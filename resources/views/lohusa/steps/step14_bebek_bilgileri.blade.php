@@ -12,17 +12,17 @@
             </div>
             <div class="col-md-3">
                 <label for="kac_haftalik" class="form-label">Kaç haftalık</label>
-                <input type="number" min="20" max="45" name="kac_haftalik" id="kac_haftalik" class="form-control @error('kac_haftalik') is-invalid @enderror" value="{{ old('kac_haftalik', $clinicalDefaults['bebek']['kac_haftalik']) }}">
+                <input type="number" min="20" max="45" name="kac_haftalik" id="kac_haftalik" class="form-control @error('kac_haftalik') is-invalid @enderror" value="{{ old('kac_haftalik') }}" placeholder="40">
                 @error('kac_haftalik')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="muayene_tarihi" class="form-label">Muayene tarihi</label>
-                <input type="date" name="muayene_tarihi" id="muayene_tarihi" class="form-control @error('muayene_tarihi') is-invalid @enderror" value="{{ old('muayene_tarihi', now()->format('Y-m-d')) }}">
+                <input type="date" name="muayene_tarihi" id="muayene_tarihi" class="form-control @error('muayene_tarihi') is-invalid @enderror" value="{{ old('muayene_tarihi') }}">
                 @error('muayene_tarihi')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
                 <label for="izlem_sayisi" class="form-label">İzlem sayısı</label>
-                <input type="number" min="1" max="20" name="izlem_sayisi" id="izlem_sayisi" class="form-control @error('izlem_sayisi') is-invalid @enderror" value="{{ old('izlem_sayisi', $clinicalDefaults['bebek']['izlem_sayisi']) }}">
+                <input type="number" min="1" max="20" name="izlem_sayisi" id="izlem_sayisi" class="form-control @error('izlem_sayisi') is-invalid @enderror" value="{{ old('izlem_sayisi') }}" placeholder="1">
                 @error('izlem_sayisi')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-3">
@@ -30,7 +30,7 @@
                 <select name="termin_durumu" id="termin_durumu" class="form-select @error('termin_durumu') is-invalid @enderror">
                     <option value="">Seçiniz</option>
                     @foreach (MedicalFormOptions::termOptions() as $option)
-                        <option value="{{ $option }}" @selected(old('termin_durumu', 'Term') === $option)>{{ $option }}</option>
+                        <option value="{{ $option }}" @selected(old('termin_durumu') === $option)>{{ $option }}</option>
                     @endforeach
                 </select>
                 @error('termin_durumu')<div class="invalid-feedback">{{ $message }}</div>@enderror
