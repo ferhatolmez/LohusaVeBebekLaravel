@@ -82,3 +82,30 @@ it('downloads lohusa pdf for authorized users', function () {
         ->assertOk()
         ->assertHeader('content-type', 'application/pdf');
 });
+
+it('stores a lohusa form with array fields without errors', function () {
+    signInAs('ebe');
+
+    $this->post(route('lohusa.store'), [
+        'ad_soyad' => 'Test Array Fields',
+        'yas' => 25,
+        'muayene_tarihi' => now()->subDays(1)->toDateString(),
+        'mevcut_kilo' => 60,
+        'ates' => 36.5,
+        'tansiyon' => '120/80',
+        'dogum_tarihi' => now()->subDays(10)->toDateString(),
+        'sorun_paylasma' => ['Eşiyle', 'Annesiyle'],
+        'alinan_besin_gruplari' => ['Et grubu', 'Süt grubu'],
+        'psikolojik_belirtiler' => ['Ağlama nöbetleri'],
+        'emzirme_bulgular' => ['Normal'],
+    ])
+        ->assertRedirect(route('lohusa.index'))
+        ->assertSessionHas('clear_lohusa_draft', true);
+
+    $form = LohusaForm::where('ad_soyad', 'Test Array Fields')->firstOrFail();
+    expect($form->sorun_paylasma)->toBeArray();
+    expect($form->alinan_besin_gruplari)->toBeArray();
+    expect($form->alinan_besin_gruplari)->toContain('Et grubu');
+    expect($form->psikolojik_belirtiler)->toBeArray();
+});
+

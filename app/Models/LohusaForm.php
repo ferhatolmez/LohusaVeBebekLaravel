@@ -110,6 +110,7 @@ class LohusaForm extends Model
         'norolojik' => 'array',
         'uykusuzluk' => 'array',
         'fiziksel_muayene' => 'array',
+        'alinan_besin_gruplari' => 'array',
     ];
 
     protected function completionFields(): array

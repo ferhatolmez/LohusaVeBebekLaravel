@@ -63,6 +63,7 @@ class StoreLohusaFormRequest extends FormRequest
             'uriner',
             'kas_iskelet',
             'norolojik',
+            'alinan_besin_gruplari',
         ];
 
         $data = [];
