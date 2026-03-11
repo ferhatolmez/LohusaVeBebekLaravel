@@ -58,7 +58,7 @@
             'Eğitim istekleri' => ['egitim_istekleri'],
             'Ebenin notu' => ['ebenin_yorumu'],
             'Bebek bilgileri' => ['dogum_tarihi', 'kac_haftalik', 'muayene_tarihi', 'izlem_sayisi', 'termin_durumu', 'cinsiyet', 'kacinci_cocuk', 'kan_grubu'],
-            'Bebekte klinik bulgular' => ['kilo', 'boy', 'bas_cevresi', 'gogus_cevresi', 'deri', 'bas', 'gozler', 'burun', 'agiz', 'kulak', 'boyun', 'gogus', 'abdomen', 'kasik', 'genital', 'solunum_sistemi', 'kvs', 'gis', 'uriner', 'kas_iskelet', 'norolojik'],
+            'Bebekte klinik bulgular' => ['kilo', 'boy', 'bebek_ates', 'bebek_nabiz', 'bebek_solunum', 'bas_cevresi', 'gogus_cevresi', 'deri', 'bas', 'gozler', 'burun', 'agiz', 'kulak', 'boyun', 'gogus', 'abdomen', 'kasik', 'genital', 'solunum_sistemi', 'kvs', 'gis', 'uriner', 'kas_iskelet', 'norolojik'],
         ];
     @endphp
 

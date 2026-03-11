@@ -7,18 +7,18 @@
         <div class="row g-3">
             <div class="col-md-2">
                 <label for="ates_bebek" class="form-label">Ateş</label>
-                <input type="number" step="0.1" min="34" max="42" name="ates" id="ates_bebek" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates') }}">
-                @error('ates')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                <input type="number" step="0.1" min="34" max="42" name="bebek_ates" id="ates_bebek" class="form-control @error('bebek_ates') is-invalid @enderror" value="{{ old('bebek_ates') }}">
+                @error('bebek_ates')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-2">
                 <label for="nabiz_bebek" class="form-label">Nabız</label>
-                <input type="number" step="1" min="60" max="220" name="nabiz" id="nabiz_bebek" class="form-control @error('nabiz') is-invalid @enderror" value="{{ old('nabiz') }}">
-                @error('nabiz')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                <input type="number" step="1" min="60" max="220" name="bebek_nabiz" id="nabiz_bebek" class="form-control @error('bebek_nabiz') is-invalid @enderror" value="{{ old('bebek_nabiz') }}">
+                @error('bebek_nabiz')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-2">
                 <label for="solunum_bebek" class="form-label">Solunum</label>
-                <input type="number" step="1" min="10" max="120" name="solunum" id="solunum_bebek" class="form-control @error('solunum') is-invalid @enderror" value="{{ old('solunum') }}">
-                @error('solunum')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                <input type="number" step="1" min="10" max="120" name="bebek_solunum" id="solunum_bebek" class="form-control @error('bebek_solunum') is-invalid @enderror" value="{{ old('bebek_solunum') }}">
+                @error('bebek_solunum')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-2">
                 <label for="kilo_bebek" class="form-label">Kilo</label>

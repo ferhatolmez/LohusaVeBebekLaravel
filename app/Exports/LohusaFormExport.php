@@ -53,6 +53,9 @@ class LohusaFormExport implements FromCollection, WithColumnWidths, WithHeadings
             $form->solunum,
             $form->tansiyon,
             $form->mevcut_kilo,
+            $form->bebek_ates,
+            $form->bebek_nabiz,
+            $form->bebek_solunum,
             is_array($form->psikolojik_belirtiler) ? implode(', ', $form->psikolojik_belirtiler) : $form->psikolojik_belirtiler,
             is_array($form->emzirme_bulgular) ? implode(', ', $form->emzirme_bulgular) : $form->emzirme_bulgular,
             $form->bebek_beslenmesi,
@@ -80,10 +83,13 @@ class LohusaFormExport implements FromCollection, WithColumnWidths, WithHeadings
             'P' => 8,   // Solunum
             'Q' => 12,  // Tansiyon
             'R' => 8,   // Kilo
-            'S' => 30,  // Psikolojik Belirtiler (Wrap)
-            'T' => 30,  // Emzirme Bulguları (Wrap)
-            'U' => 15,  // Bebek Beslenmesi
-            'V' => 40,  // Ebenin Yorumu (Wrap)
+            'S' => 10,  // Bebek Ateş
+            'T' => 10,  // Bebek Nabız
+            'U' => 12,  // Bebek Solunum
+            'V' => 30,  // Psikolojik Belirtiler (Wrap)
+            'W' => 30,  // Emzirme Bulguları (Wrap)
+            'X' => 15,  // Bebek Beslenmesi
+            'Y' => 40,  // Ebenin Yorumu (Wrap)
         ];
     }
 
@@ -108,6 +114,9 @@ class LohusaFormExport implements FromCollection, WithColumnWidths, WithHeadings
             'Solunum',
             'Tansiyon',
             'Kilo',
+            'Bebek Ateş',
+            'Bebek Nabız',
+            'Bebek Solunum',
             'Psikolojik Belirtiler',
             'Emzirme Bulguları',
             'Bebek Beslenmesi',
@@ -121,19 +130,19 @@ class LohusaFormExport implements FromCollection, WithColumnWidths, WithHeadings
     public function styles(Worksheet $sheet)
     {
         $lastRow = count($this->forms) + 1;
-        $lastColumn = 'V';
+        $lastColumn = 'Y';
         
         // General text alignment for better visual harmony
         $sheet->getStyle('A1:' . $lastColumn . $lastRow)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         
         // Center alignment for specific columns (ID, Yas, Dates, Scores)
-        $centerColumns = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'M', 'N', 'O', 'P', 'Q', 'R'];
+        $centerColumns = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U'];
         foreach ($centerColumns as $col) {
             $sheet->getStyle($col . '1:' . $col . $lastRow)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         }
 
         // Enable Wrap Text for long text columns
-        $wrapColumns = ['S', 'T', 'V'];
+        $wrapColumns = ['V', 'W', 'Y'];
         foreach ($wrapColumns as $col) {
             $sheet->getStyle($col . '2:' . $col . $lastRow)->getAlignment()->setWrapText(true);
             $sheet->getStyle($col . '2:' . $col . $lastRow)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
@@ -200,7 +209,7 @@ class LohusaFormExport implements FromCollection, WithColumnWidths, WithHeadings
                 $sheet->freezePane('C2');
                 
                 // Set auto-filter for the whole range
-                $lastColumn = 'V';
+                $lastColumn = 'Y';
                 $lastRow = count($this->forms) + 1;
                 $sheet->setAutoFilter('A1:' . $lastColumn . '1');
 
