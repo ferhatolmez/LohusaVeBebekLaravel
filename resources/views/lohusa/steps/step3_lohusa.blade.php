@@ -1,4 +1,4 @@
-﻿<div class="form-section fade-in p-3 rounded card shadow-sm mb-4">
+<div class="form-section fade-in p-3 rounded card shadow-sm mb-4">
     <div class="card-header bg-danger text-white">B. Ailenin Sağlıkla İlgili Tutum ve Deneyimleri</div>
     <div class="card-body">
         @php
@@ -16,82 +16,90 @@
         @endphp
 
         <div class="mb-3">
-            <label>1. Aile üyelerinden birinin geçirdiği hastalık, operasyon, hastane deneyimi, ölüm, boşanma, işsizlik olmuş mu? Bu kriz durumlarını nasıl geçirmişler?</label>
-            <textarea name="ailenin_hastalik_durumu" class="form-control @error('ailenin_hastalik_durumu') is-invalid @enderror" rows="4" placeholder="Açıklayınız...">{{ old('ailenin_hastalik_durumu') }}</textarea>
+            <label for="ailenin_hastalik_durumu">1. Aile üyelerinden birinin geçirdiği hastalık, operasyon, hastane deneyimi, ölüm, boşanma, işsizlik olmuş mu? Bu kriz durumlarını nasıl geçirmişler?</label>
+            <textarea name="ailenin_hastalik_durumu" id="ailenin_hastalik_durumu" class="form-control @error('ailenin_hastalik_durumu') is-invalid @enderror" rows="4" placeholder="Açıklayınız...">{{ old('ailenin_hastalik_durumu') }}</textarea>
+            @error('ailenin_hastalik_durumu')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
 
         <div class="mb-3">
             <label>2. Aile sağlıklı iken kontrollerin önemini biliyor mu?</label><br>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="kontrollerin_onemi_biliniyor" value="Evet">
-                <label class="form-check-label">Evet</label>
+                <input class="form-check-input @error('kontrollerin_onemi_biliniyor') is-invalid @enderror" type="radio" name="kontrollerin_onemi_biliniyor" id="kontrollerin_onemi_evet" value="Evet" @checked(old('kontrollerin_onemi_biliniyor') === 'Evet')>
+                <label class="form-check-label" for="kontrollerin_onemi_evet">Evet</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="kontrollerin_onemi_biliniyor" value="Hayır">
-                <label class="form-check-label">Hayır</label>
+                <input class="form-check-input @error('kontrollerin_onemi_biliniyor') is-invalid @enderror" type="radio" name="kontrollerin_onemi_biliniyor" id="kontrollerin_onemi_hayir" value="Hayır" @checked(old('kontrollerin_onemi_biliniyor') === 'Hayır')>
+                <label class="form-check-label" for="kontrollerin_onemi_hayir">Hayır</label>
             </div>
+            @error('kontrollerin_onemi_biliniyor')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
         </div>
 
         <div class="mb-3">
-            <label>3. Aile bireylerinde mevcut hastalık / alerjiler / genetik bozukluklar var mı?</label>
-            <select name="aile_mevcut_hastaliklar" class="form-select @error('aile_mevcut_hastaliklar') is-invalid @enderror">
+            <label for="aile_mevcut_hastaliklar">3. Aile bireylerinde mevcut hastalık / alerjiler / genetik bozukluklar var mı?</label>
+            <select name="aile_mevcut_hastaliklar" id="aile_mevcut_hastaliklar" class="form-select @error('aile_mevcut_hastaliklar') is-invalid @enderror">
                 <option value="">Seçiniz</option>
                 @foreach ($familyCurrentDiseaseOptions as $option)
                     <option value="{{ $option }}" @selected(old('aile_mevcut_hastaliklar') === $option)>{{ $option }}</option>
                 @endforeach
             </select>
+            @error('aile_mevcut_hastaliklar')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
 
         <div class="mb-3">
-            <label>4. Ailenin ebeden beklentileri neler?</label>
-            <select name="aile_ebeden_beklentiler" class="form-select @error('aile_ebeden_beklentiler') is-invalid @enderror">
+            <label for="aile_ebeden_beklentiler">4. Ailenin ebeden beklentileri neler?</label>
+            <select name="aile_ebeden_beklentiler" id="aile_ebeden_beklentiler" class="form-select @error('aile_ebeden_beklentiler') is-invalid @enderror">
                 <option value="">Seçiniz</option>
                 @foreach ($midwifeExpectationOptions as $option)
                     <option value="{{ $option }}" @selected(old('aile_ebeden_beklentiler') === $option)>{{ $option }}</option>
                 @endforeach
             </select>
+            @error('aile_ebeden_beklentiler')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
 
         <div class="mb-3">
             <label>5. Ücretsiz sağlık hizmetleri hakkında bilgisi var mı?</label><br>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="ucretsiz_saglik_bilgisi" value="Evet">
-                <label class="form-check-label">Evet</label>
+                <input class="form-check-input @error('ucretsiz_saglik_bilgisi') is-invalid @enderror" type="radio" name="ucretsiz_saglik_bilgisi" id="ucretsiz_saglik_evet" value="Evet" @checked(old('ucretsiz_saglik_bilgisi') === 'Evet')>
+                <label class="form-check-label" for="ucretsiz_saglik_evet">Evet</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="ucretsiz_saglik_bilgisi" value="Hayır">
-                <label class="form-check-label">Hayır</label>
+                <input class="form-check-input @error('ucretsiz_saglik_bilgisi') is-invalid @enderror" type="radio" name="ucretsiz_saglik_bilgisi" id="ucretsiz_saglik_hayir" value="Hayır" @checked(old('ucretsiz_saglik_bilgisi') === 'Hayır')>
+                <label class="form-check-label" for="ucretsiz_saglik_hayir">Hayır</label>
             </div>
+            @error('ucretsiz_saglik_bilgisi')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
         </div>
 
         <div class="mb-3">
-            <label>6. Ailenin sosyoekonomik durumu nasıl?</label>
-            <select name="sosyoekonomik_durum" class="form-select @error('sosyoekonomik_durum') is-invalid @enderror">
+            <label for="sosyoekonomik_durum">6. Ailenin sosyoekonomik durumu nasıl?</label>
+            <select name="sosyoekonomik_durum" id="sosyoekonomik_durum" class="form-select @error('sosyoekonomik_durum') is-invalid @enderror">
                 <option value="">Seçiniz</option>
                 @foreach ($socioeconomicStatusOptions as $option)
                     <option value="{{ $option }}" @selected(old('sosyoekonomik_durum') === $option)>{{ $option }}</option>
                 @endforeach
             </select>
+            @error('sosyoekonomik_durum')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
 
         <div class="mb-3">
-            <label>7. Aile içinde önemli kararlarda kim karar veriyor?</label>
-            <select name="ailede_karar_veren" class="form-select @error('ailede_karar_veren') is-invalid @enderror">
+            <label for="ailede_karar_veren">7. Aile içinde önemli kararlarda kim karar veriyor?</label>
+            <select name="ailede_karar_veren" id="ailede_karar_veren" class="form-select @error('ailede_karar_veren') is-invalid @enderror">
                 <option value="">Seçiniz</option>
                 @foreach ($familyDecisionMakerOptions as $option)
                     <option value="{{ $option }}" @selected(old('ailede_karar_veren') === $option)>{{ $option }}</option>
                 @endforeach
             </select>
+            @error('ailede_karar_veren')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
 
         <div class="mb-3">
-            <label>8. Aile bireyleri duygu ve gereksinimlerini ne derece ortaya koyabiliyorlar?</label>
-            <select name="aile_duygu_ortaya_koyma" class="form-select @error('aile_duygu_ortaya_koyma') is-invalid @enderror">
+            <label for="aile_duygu_ortaya_koyma">8. Aile bireyleri duygu ve gereksinimlerini ne derece ortaya koyabiliyorlar?</label>
+            <select name="aile_duygu_ortaya_koyma" id="aile_duygu_ortaya_koyma" class="form-select @error('aile_duygu_ortaya_koyma') is-invalid @enderror">
                 <option value="">Seçiniz</option>
                 @foreach ($expressionLevelOptions as $option)
                     <option value="{{ $option }}" @selected(old('aile_duygu_ortaya_koyma') === $option)>{{ $option }}</option>
                 @endforeach
             </select>
+            @error('aile_duygu_ortaya_koyma')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
 
         <div class="mb-3">
@@ -129,15 +137,14 @@
         </div>
 
         <div class="mb-3">
-            <label>11. Yaşanılan evin tipi:</label>
-            <select name="ev_tipi" class="form-control">
+            <label for="ev_tipi">11. Yaşanılan evin tipi:</label>
+            <select name="ev_tipi" id="ev_tipi" class="form-select @error('ev_tipi') is-invalid @enderror">
                 <option value="">Seçiniz</option>
-                <option value="Konut">Konut</option>
-                <option value="Apartman">Apartman</option>
-                <option value="Müstakil">Müstakil</option>
-                <option value="Gecekondu">Gecekondu</option>
-                <option value="Diğer">Diğer</option>
+                @foreach ($homeTypeOptions as $option)
+                    <option value="{{ $option }}" @selected(old('ev_tipi') === $option)>{{ $option }}</option>
+                @endforeach
             </select>
+            @error('ev_tipi')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
 
         <div class="mb-3">
@@ -151,13 +158,14 @@
         </div>
 
         <div class="mb-3">
-            <label>13. Pencere sayısı, aydınlanma nasıl?</label>
-            <select name="pencere_aydinlik" class="form-select @error('pencere_aydinlik') is-invalid @enderror">
+            <label for="pencere_aydinlik">13. Pencere sayısı, aydınlanma nasıl?</label>
+            <select name="pencere_aydinlik" id="pencere_aydinlik" class="form-select @error('pencere_aydinlik') is-invalid @enderror">
                 <option value="">Seçiniz</option>
                 @foreach ($cleanlinessLevelOptions as $option)
                     <option value="{{ $option }}" @selected(old('pencere_aydinlik') === $option)>{{ $option }}</option>
                 @endforeach
             </select>
+            @error('pencere_aydinlik')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
 
         <div class="mb-3">

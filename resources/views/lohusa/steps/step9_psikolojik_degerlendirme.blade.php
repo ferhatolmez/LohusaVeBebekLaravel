@@ -13,16 +13,18 @@
                 ];
                 @endphp
 
-                @foreach ($psikolojik_belirtiler as $belirti)
+                @foreach ($psikolojik_belirtiler as $index => $belirti)
                     <div class="form-check form-check-inline">
-                        <input type="checkbox" name="psikolojik_belirtiler[]" value="{{ $belirti }}" class="form-check-input">
-                        <label class="form-check-label">{{ $belirti }}</label>
+                        <input type="checkbox" name="psikolojik_belirtiler[]" id="psikolojik_{{ $index }}" value="{{ $belirti }}" class="form-check-input @error('psikolojik_belirtiler') is-invalid @enderror" @checked(in_array($belirti, old('psikolojik_belirtiler', [])))>
+                        <label class="form-check-label" for="psikolojik_{{ $index }}">{{ $belirti }}</label>
                     </div>
                 @endforeach
+                @error('psikolojik_belirtiler')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
 
                 <div class="mt-3">
-                    <label>Diğer Belirtiler Açıklama:</label>
-                    <textarea name="psikolojik_diger_aciklama" class="form-control" rows="2" placeholder="Varsa açıklayınız..."></textarea>
+                    <label for="psikolojik_diger_aciklama">Diğer Belirtiler Açıklama:</label>
+                    <textarea name="psikolojik_diger_aciklama" id="psikolojik_diger_aciklama" class="form-control @error('psikolojik_diger_aciklama') is-invalid @enderror" rows="2" placeholder="Varsa açıklayınız...">{{ old('psikolojik_diger_aciklama') }}</textarea>
+                    @error('psikolojik_diger_aciklama')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
             </div>
         </div>

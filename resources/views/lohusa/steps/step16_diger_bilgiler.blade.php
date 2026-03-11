@@ -1,5 +1,5 @@
 <div class="form-section fade-in p-3 rounded card shadow-sm mb-4">
-    <div class="card-header bg-primary text-white">Diğer Kısımlar</div>
+    <div class="card-header bg-primary text-white">Diğer Kısımlar (Bebek Fiziksel Bulguları)</div>
     <div class="card-body">
         @php
         $kategoriler = [
@@ -25,13 +25,14 @@
 
         @foreach ($kategoriler as $alan => $secenekler)
             <div class="mt-4">
-                <h5>{{ strtoupper($alan) }}</h5>
-                @foreach ($secenekler as $secenek)
+                <h5>{{ strtoupper(str_replace('_', ' ', $alan)) }}</h5>
+                @foreach ($secenekler as $index => $secenek)
                     <div class="form-check form-check-inline">
-                        <input type="checkbox" name="{{ $alan }}[]" value="{{ $secenek }}" class="form-check-input">
-                        <label class="form-check-label">{{ $secenek }}</label>
+                        <input type="checkbox" name="{{ $alan }}[]" id="{{ $alan }}_{{ $index }}" value="{{ $secenek }}" class="form-check-input @error($alan) is-invalid @enderror" @checked(in_array($secenek, old($alan, [])))>
+                        <label class="form-check-label" for="{{ $alan }}_{{ $index }}">{{ $secenek }}</label>
                     </div>
                 @endforeach
+                @error($alan)<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
             </div>
         @endforeach
     </div>

@@ -1,4 +1,4 @@
-﻿@php
+@php
     use App\Support\MedicalFormOptions;
 @endphp
 <div class="form-section card shadow-sm mb-4">
@@ -17,8 +17,8 @@
                 @error('yas')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-6">
-                <label for="egitim_durumu" class="form-label">Eğitim durumu <span class="text-danger">*</span></label>
-                <select name="egitim_durumu" id="egitim_durumu" class="form-select form-select-lg @error('egitim_durumu') is-invalid @enderror" required>
+                <label for="egitim_durumu" class="form-label">Eğitim durumu</label>
+                <select name="egitim_durumu" id="egitim_durumu" class="form-select form-select-lg @error('egitim_durumu') is-invalid @enderror">
                     <option value="">Seçiniz</option>
                     @foreach (MedicalFormOptions::educationLevels() as $option)
                         <option value="{{ $option }}" @selected(old('egitim_durumu') === $option)>{{ $option }}</option>
@@ -27,13 +27,13 @@
                 @error('egitim_durumu')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-6">
-                <label for="meslek" class="form-label">Meslek <span class="text-danger">*</span></label>
-                <input type="text" name="meslek" id="meslek" class="form-control form-control-lg only-letters @error('meslek') is-invalid @enderror" value="{{ old('meslek') }}" placeholder="Örn: Ebe" required>
+                <label for="meslek" class="form-label">Meslek</label>
+                <input type="text" name="meslek" id="meslek" class="form-control form-control-lg only-letters @error('meslek') is-invalid @enderror" value="{{ old('meslek') }}" placeholder="Örn: Ebe">
                 @error('meslek')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-6">
-                <label for="saglik_guvence" class="form-label">Sağlık güvencesi <span class="text-danger">*</span></label>
-                <select name="saglik_guvence" id="saglik_guvence" class="form-select form-select-lg @error('saglik_guvence') is-invalid @enderror" required>
+                <label for="saglik_guvence" class="form-label">Sağlık güvencesi</label>
+                <select name="saglik_guvence" id="saglik_guvence" class="form-select form-select-lg @error('saglik_guvence') is-invalid @enderror">
                     <option value="">Seçiniz</option>
                     @foreach (MedicalFormOptions::healthInsuranceOptions() as $option)
                         <option value="{{ $option }}" @selected(old('saglik_guvence') === $option)>{{ $option }}</option>
@@ -65,8 +65,8 @@
                 </select>
             </div>
             <div class="col-md-6">
-                <label for="gebelik_planlandimi" class="form-label">Gebelik planlandı mı? <span class="text-danger">*</span></label>
-                <select name="gebelik_planlandimi" id="gebelik_planlandimi" class="form-select form-select-lg @error('gebelik_planlandimi') is-invalid @enderror" required>
+                <label for="gebelik_planlandimi" class="form-label">Gebelik planlandı mı?</label>
+                <select name="gebelik_planlandimi" id="gebelik_planlandimi" class="form-select form-select-lg @error('gebelik_planlandimi') is-invalid @enderror">
                     <option value="">Seçiniz</option>
                     @foreach (MedicalFormOptions::yesNoOptions() as $option)
                         <option value="{{ $option }}" @selected(old('gebelik_planlandimi') === $option)>{{ $option }}</option>
@@ -75,8 +75,8 @@
                 @error('gebelik_planlandimi')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
             <div class="col-md-6">
-                <label for="dogum_yeri" class="form-label">Doğum yeri <span class="text-danger">*</span></label>
-                <input type="text" name="dogum_yeri" id="dogum_yeri" class="form-control form-control-lg only-letters @error('dogum_yeri') is-invalid @enderror" value="{{ old('dogum_yeri') }}" placeholder="Örn: İstanbul" required>
+                <label for="dogum_yeri" class="form-label">Doğum yeri</label>
+                <input type="text" name="dogum_yeri" id="dogum_yeri" class="form-control form-control-lg only-letters @error('dogum_yeri') is-invalid @enderror" value="{{ old('dogum_yeri') }}" placeholder="Örn: İstanbul">
                 @error('dogum_yeri')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
         </div>

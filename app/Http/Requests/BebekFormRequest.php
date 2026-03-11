@@ -27,21 +27,21 @@ class BebekFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dogum_tarihi' => ['required', 'date', 'before_or_equal:today'],
-            'kac_haftalik' => ['required', 'integer', 'between:20,45'],
+            'dogum_tarihi' => ['nullable', 'date', 'before_or_equal:today'],
+            'kac_haftalik' => ['nullable', 'integer', 'between:20,45'],
             'muayene_tarihi' => ['required', 'date', 'after_or_equal:dogum_tarihi', 'before_or_equal:today'],
             'izlem_sayisi' => ['required', 'integer', 'between:1,20'],
-            'termin_durumu' => ['required', Rule::in(MedicalFormOptions::termOptions())],
+            'termin_durumu' => ['nullable', Rule::in(MedicalFormOptions::termOptions())],
             'cinsiyet' => ['required', Rule::in(MedicalFormOptions::genderOptions())],
-            'kacinci_cocuk' => ['required', 'integer', 'between:1,20'],
-            'kan_grubu' => ['required', Rule::in(MedicalFormOptions::bloodGroups())],
-            'ates' => ['required', 'numeric', 'between:34,42'],
-            'nabiz' => ['required', 'integer', 'between:60,220'],
-            'solunum' => ['required', 'integer', 'between:10,120'],
-            'kilo' => ['required', 'numeric', 'between:0.5,10'],
-            'boy' => ['required', 'numeric', 'between:20,100'],
-            'bas_cevresi' => ['required', 'numeric', 'between:10,80'],
-            'gogus_cevresi' => ['required', 'numeric', 'between:10,80'],
+            'kacinci_cocuk' => ['nullable', 'integer', 'between:1,20'],
+            'kan_grubu' => ['nullable', Rule::in(MedicalFormOptions::bloodGroups())],
+            'ates' => ['nullable', 'numeric', 'between:34,42'],
+            'nabiz' => ['nullable', 'integer', 'between:60,220'],
+            'solunum' => ['nullable', 'integer', 'between:10,120'],
+            'kilo' => ['nullable', 'numeric', 'between:0.5,10'],
+            'boy' => ['nullable', 'numeric', 'between:20,100'],
+            'bas_cevresi' => ['nullable', 'numeric', 'between:10,80'],
+            'gogus_cevresi' => ['nullable', 'numeric', 'between:10,80'],
             'deri' => ['nullable', 'array'],
             'bas' => ['nullable', 'array'],
             'gozler' => ['nullable', 'array'],
@@ -65,12 +65,13 @@ class BebekFormRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'required' => ':attribute zorunludur.',
-            'integer' => ':attribute sadece sayı olmalı.',
-            'numeric' => ':attribute sayısal bir değer olmalı.',
-            'after_or_equal' => ':attribute doğum tarihinden önce olamaz.',
-            'before_or_equal' => ':attribute bugünden ileri bir tarih olamaz.',
-            'between' => ':attribute kabul edilen aralığın dışındadır.',
+            'required' => ':attribute alanı zorunludur.',
+            'integer' => ':attribute alanı tam sayı olmalıdır.',
+            'numeric' => ':attribute alanı sayısal bir değer olmalıdır.',
+            'after_or_equal' => ':attribute tarihi, :date tarihinden önce olamaz.',
+            'before_or_equal' => ':attribute tarihi bugünden ileri bir tarih olamaz.',
+            'between' => ':attribute değeri kabul edilen aralığın (:min - :max) dışındadır.',
+            'in' => 'Seçilen :attribute geçersiz.',
         ];
     }
 
@@ -92,6 +93,23 @@ class BebekFormRequest extends FormRequest
             'boy' => 'Boy',
             'bas_cevresi' => 'Baş çevresi',
             'gogus_cevresi' => 'Göğüs çevresi',
+            'deri' => 'Deri bulguları',
+            'bas' => 'Baş bulguları',
+            'gozler' => 'Göz bulguları',
+            'burun' => 'Burun bulguları',
+            'agiz' => 'Ağız bulguları',
+            'kulak' => 'Kulak bulguları',
+            'boyun' => 'Boyun bulguları',
+            'gogus' => 'Göğüs bulguları',
+            'abdomen' => 'Abdomen bulguları',
+            'kasik' => 'Kasık bulguları',
+            'genital' => 'Genital bulguları',
+            'solunum_sistemi' => 'Solunum sistemi bulguları',
+            'kvs' => 'KVS bulguları',
+            'gis' => 'GIS bulguları',
+            'uriner' => 'Üriner sistem bulguları',
+            'kas_iskelet' => 'Kas-iskelet sistemi bulguları',
+            'norolojik' => 'Nörolojik sistem bulguları',
         ];
     }
 }

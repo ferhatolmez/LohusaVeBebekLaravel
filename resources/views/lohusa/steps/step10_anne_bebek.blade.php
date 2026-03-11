@@ -15,11 +15,12 @@
                 ];
                 @endphp
                 
-                @foreach ($iliskiler as $item)
+                @foreach ($iliskiler as $index => $item)
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="anne_bebek_iliskisi[]" value="{{ $item }}">
-                        <label class="form-check-label">{{ $item }}</label>
+                        <input class="form-check-input @error('anne_bebek_iliskisi') is-invalid @enderror" type="checkbox" name="anne_bebek_iliskisi[]" id="iliski_{{ $index }}" value="{{ $item }}" @checked(in_array($item, old('anne_bebek_iliskisi', [])))>
+                        <label class="form-check-label" for="iliski_{{ $index }}">{{ $item }}</label>
                     </div>
                 @endforeach
+                @error('anne_bebek_iliskisi')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
             </div>
         </div>
