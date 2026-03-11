@@ -48,9 +48,15 @@
     @endif
 
     <div id="draftNotice" class="alert alert-info glass-panel border-0 mb-4 d-none">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
-            <div><strong>Taslak geri yüklendi.</strong><span class="small d-block text-secondary" id="draftTimestamp"></span></div>
-            <button type="button" class="btn btn-sm btn-outline-primary" id="clearDraftBtn">Taslağı temizle</button>
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div>
+                <strong class="d-block">Yarım kalan bir formunuz var.</strong>
+                <span class="small text-secondary" id="draftTimestamp"></span>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-primary px-3" id="restoreDraftBtn">Taslağı Geri Yükle</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary px-3" id="clearDraftBtn">Temizle</button>
+            </div>
         </div>
     </div>
 
@@ -140,6 +146,7 @@
         const stepButtons = document.querySelectorAll('.step-chip');
         const draftNotice = document.getElementById('draftNotice');
         const draftTimestamp = document.getElementById('draftTimestamp');
+        const restoreDraftBtn = document.getElementById('restoreDraftBtn');
         const clearDraftBtn = document.getElementById('clearDraftBtn');
         const stepLabel = document.getElementById('currentStepLabel');
         const stepHint = document.getElementById('currentStepHint');
@@ -184,12 +191,28 @@
 
         form.addEventListener('input', function () { calculateProgress(); persistDraft(); });
         form.addEventListener('change', function () { calculateProgress(); persistDraft(); });
+        form.addEventListener('submit', function () { localStorage.removeItem(draftKey); });
         
         @if(session('success'))
             localStorage.removeItem(draftKey);
         @endif
 
-        clearDraftBtn.addEventListener('click', function () { localStorage.removeItem(draftKey); draftNotice.classList.add('d-none'); });
+        clearDraftBtn.addEventListener('click', function () {
+            if (confirm('Taslağı temizlemek istediğinize emin misiniz?')) {
+                localStorage.removeItem(draftKey);
+                draftNotice.classList.add('d-none');
+                console.log('Draft cleared by user.');
+            }
+        });
+
+        restoreDraftBtn.addEventListener('click', function() {
+            const raw = localStorage.getItem(draftKey);
+            if (raw) {
+                applyDraft(JSON.parse(raw));
+                draftNotice.classList.add('d-none');
+                alert('Taslak başarıyla geri yüklendi.');
+            }
+        });
 
         if (errorFields.length > 0) {
             const firstField = document.querySelector('[name="' + errorFields[0] + '"]');
@@ -323,49 +346,42 @@
 
         function restoreDraft() {
             const raw = localStorage.getItem(draftKey);
-            if (!raw) {
-                return;
-            }
+            if (!raw) return;
 
             try {
                 const draft = JSON.parse(raw);
-                const hasErrors = errorFields.length > 0;
-
-                Object.entries(draft.values || {}).forEach(function (entry) {
-                    const name = entry[0];
-                    const value = entry[1];
-                    const fields = form.querySelectorAll('[name="' + CSS.escape(name) + '"]');
-
-                    fields.forEach(function (field) {
-                        // If validation errors exist, don't overwrite fields that have "old" values.
-                        // We prioritize server-side old() values, then fall back to draft if field is empty.
-                        
-                        if (hasErrors && errorFields.includes(name)) {
-                            return;
-                        }
-
-                        if (field.type === 'checkbox') {
-                            field.checked = Array.isArray(value) && value.includes(field.value);
-                        } else if (field.type === 'radio') {
-                            field.checked = value === field.value;
-                        } else {
-                            // Only restore if current value is default/empty
-                            if (!field.value || field.value === field.defaultValue) {
-                                field.value = value;
-                            }
-                        }
-                    });
-                });
-
-                currentStep = Number(draft.step || localStorage.getItem(draftKey + ':step') || 1);
-
                 if (draft.savedAt) {
                     draftNotice.classList.remove('d-none');
-                    draftTimestamp.textContent = 'Son taslak: ' + new Date(draft.savedAt).toLocaleString('tr-TR');
+                    draftTimestamp.textContent = 'Kaydedilme: ' + new Date(draft.savedAt).toLocaleString('tr-TR');
                 }
-            } catch (error) {
+            } catch (e) {
                 localStorage.removeItem(draftKey);
             }
+        }
+
+        function applyDraft(draft) {
+            const hasErrors = errorFields.length > 0;
+
+            Object.entries(draft.values || {}).forEach(function (entry) {
+                const name = entry[0];
+                const value = entry[1];
+                const fields = form.querySelectorAll('[name="' + CSS.escape(name) + '"]');
+
+                fields.forEach(function (field) {
+                    if (hasErrors && errorFields.includes(name)) return;
+
+                    if (field.type === 'checkbox') {
+                        field.checked = Array.isArray(value) && value.includes(field.value);
+                    } else if (field.type === 'radio') {
+                        field.checked = value === field.value;
+                    } else {
+                        field.value = value;
+                    }
+                });
+            });
+
+            const targetStep = Number(draft.step || localStorage.getItem(draftKey + ':step') || 1);
+            showStep(targetStep);
         }
     });
 </script>

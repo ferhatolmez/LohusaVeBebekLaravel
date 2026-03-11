@@ -34,6 +34,19 @@
         </div>
     @endif
 
+    <div id="draftNotice" class="alert alert-info glass-panel border-0 mb-4 d-none">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div>
+                <strong class="d-block">Yarım kalan bir bebek formunuz var.</strong>
+                <span class="small text-secondary" id="draftTimestamp"></span>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-primary px-3" id="restoreDraftBtn">Taslağı Geri Yükle</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary px-3" id="clearDraftBtn">Temizle</button>
+            </div>
+        </div>
+    </div>
+
     <div class="step-layout">
         <div>
             <form id="bebekForm" method="POST" action="{{ route('bebek.store', [], false) }}" novalidate>
@@ -53,7 +66,7 @@
                             </div>
                             <div class="col-sm-6 col-xl-3">
                                 <label for="kac_haftalik" class="form-label">Kaç haftalık</label>
-                                <input type="number" min="20" max="45" name="kac_haftalik" id="kac_haftalik" class="form-control @error('kac_haftalik') is-invalid @enderror" value="{{ old('kac_haftalik') }}" placeholder="40">
+                                <input type="number" min="20" max="45" name="kac_haftalik" id="kac_haftalik" class="form-control @error('kac_haftalik') is-invalid @enderror" value="{{ old('kac_haftalik') }}">
                                 @error('kac_haftalik')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-sm-6 col-xl-3">
@@ -63,7 +76,7 @@
                             </div>
                             <div class="col-sm-6 col-xl-3">
                                 <label for="izlem_sayisi" class="form-label">İzlem sayısı <span class="text-danger">*</span></label>
-                                <input type="number" min="1" max="20" name="izlem_sayisi" id="izlem_sayisi" class="form-control @error('izlem_sayisi') is-invalid @enderror" value="{{ old('izlem_sayisi') }}" placeholder="1" required>
+                                <input type="number" min="1" max="20" name="izlem_sayisi" id="izlem_sayisi" class="form-control @error('izlem_sayisi') is-invalid @enderror" value="{{ old('izlem_sayisi') }}" required>
                                 @error('izlem_sayisi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-sm-6 col-xl-3">
@@ -88,7 +101,7 @@
                             </div>
                             <div class="col-sm-6 col-xl-3">
                                 <label for="kacinci_cocuk" class="form-label">Kaçıncı çocuk</label>
-                                <input type="number" min="1" max="20" name="kacinci_cocuk" id="kacinci_cocuk" class="form-control @error('kacinci_cocuk') is-invalid @enderror" value="{{ old('kacinci_cocuk') }}" placeholder="1">
+                                <input type="number" min="1" max="20" name="kacinci_cocuk" id="kacinci_cocuk" class="form-control @error('kacinci_cocuk') is-invalid @enderror" value="{{ old('kacinci_cocuk') }}">
                                 @error('kacinci_cocuk')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-sm-6 col-xl-3">
@@ -114,37 +127,37 @@
                         <div class="row g-3">
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="ates" class="form-label">Ateş (C)</label>
-                                <input type="number" step="0.1" min="34" max="42" name="ates" id="ates" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates') }}" placeholder="36.5">
+                                <input type="number" step="0.1" min="34" max="42" name="ates" id="ates" class="form-control @error('ates') is-invalid @enderror" value="{{ old('ates') }}">
                                 @error('ates')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="nabiz" class="form-label">Nabız</label>
-                                <input type="number" step="1" min="60" max="220" name="nabiz" id="nabiz" class="form-control @error('nabiz') is-invalid @enderror" value="{{ old('nabiz') }}" placeholder="120">
+                                <input type="number" step="1" min="60" max="220" name="nabiz" id="nabiz" class="form-control @error('nabiz') is-invalid @enderror" value="{{ old('nabiz') }}">
                                 @error('nabiz')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="solunum" class="form-label">Solunum</label>
-                                <input type="number" step="1" min="10" max="120" name="solunum" id="solunum" class="form-control @error('solunum') is-invalid @enderror" value="{{ old('solunum') }}" placeholder="40">
+                                <input type="number" step="1" min="10" max="120" name="solunum" id="solunum" class="form-control @error('solunum') is-invalid @enderror" value="{{ old('solunum') }}">
                                 @error('solunum')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="kilo" class="form-label">Kilo (kg) <span class="text-danger">*</span></label>
-                                <input type="number" step="0.01" min="0.5" max="10" name="kilo" id="kilo" class="form-control @error('kilo') is-invalid @enderror" value="{{ old('kilo') }}" placeholder="3.2" required>
+                                <input type="number" step="0.01" min="0.5" max="10" name="kilo" id="kilo" class="form-control @error('kilo') is-invalid @enderror" value="{{ old('kilo') }}" required>
                                 @error('kilo')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="boy" class="form-label">Boy (cm) <span class="text-danger">*</span></label>
-                                <input type="number" step="0.1" min="20" max="100" name="boy" id="boy" class="form-control @error('boy') is-invalid @enderror" value="{{ old('boy') }}" placeholder="50" required>
+                                <input type="number" step="0.1" min="20" max="100" name="boy" id="boy" class="form-control @error('boy') is-invalid @enderror" value="{{ old('boy') }}" required>
                                 @error('boy')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="bas_cevresi" class="form-label">Baş Çevresi (cm) <span class="text-danger">*</span></label>
-                                <input type="number" step="0.1" min="10" max="60" name="bas_cevresi" id="bas_cevresi" class="form-control @error('bas_cevresi') is-invalid @enderror" value="{{ old('bas_cevresi') }}" placeholder="34" required>
+                                <input type="number" step="0.1" min="10" max="60" name="bas_cevresi" id="bas_cevresi" class="form-control @error('bas_cevresi') is-invalid @enderror" value="{{ old('bas_cevresi') }}" required>
                                 @error('bas_cevresi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-6 col-md-4 col-xl">
                                 <label for="gogus_cevresi" class="form-label">Göğüs çevresi</label>
-                                <input type="number" step="0.1" min="10" max="60" name="gogus_cevresi" id="gogus_cevresi" class="form-control @error('gogus_cevresi') is-invalid @enderror" value="{{ old('gogus_cevresi') }}" placeholder="32">
+                                <input type="number" step="0.1" min="10" max="60" name="gogus_cevresi" id="gogus_cevresi" class="form-control @error('gogus_cevresi') is-invalid @enderror" value="{{ old('gogus_cevresi') }}">
                                 @error('gogus_cevresi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>
@@ -204,6 +217,11 @@
         const progressBar = document.getElementById('bebekProgressBar');
         const progressText = document.getElementById('bebekProgressText');
         const requiredFields = Array.from(form.querySelectorAll('[required]'));
+        const draftKey = 'bebek-form-draft-v2';
+        const draftNotice = document.getElementById('draftNotice');
+        const draftTimestamp = document.getElementById('draftTimestamp');
+        const restoreDraftBtn = document.getElementById('restoreDraftBtn');
+        const clearDraftBtn = document.getElementById('clearDraftBtn');
 
         function refreshProgress() {
             const completed = requiredFields.filter(function (field) {
@@ -214,8 +232,85 @@
             progressText.textContent = '%' + percent;
         }
 
-        form.addEventListener('input', refreshProgress);
-        form.addEventListener('change', refreshProgress);
+        // --- Draft persistence ---
+        function saveDraft() {
+            var payload = { values: {}, savedAt: new Date().toISOString() };
+            var elements = form.elements;
+            for (var i = 0; i < elements.length; i++) {
+                var field = elements[i];
+                if (!field.name || field.name === '_token' || field.name === '_method') continue;
+                if (field.type === 'checkbox') {
+                    payload.values[field.name] = payload.values[field.name] || [];
+                    if (field.checked) payload.values[field.name].push(field.value);
+                } else if (field.type === 'radio') {
+                    if (field.checked) payload.values[field.name] = field.value;
+                } else {
+                    payload.values[field.name] = field.value;
+                }
+            }
+            localStorage.setItem(draftKey, JSON.stringify(payload));
+        }
+
+        function checkDraft() {
+            var raw = localStorage.getItem(draftKey);
+            if (!raw) return;
+            try {
+                var draft = JSON.parse(raw);
+                if (draft.savedAt) {
+                    draftNotice.classList.remove('d-none');
+                    draftTimestamp.textContent = 'Kaydedilme: ' + new Date(draft.savedAt).toLocaleString('tr-TR');
+                }
+            } catch(e) {
+                localStorage.removeItem(draftKey);
+            }
+        }
+
+        function applyDraft(draft) {
+            Object.entries(draft.values || {}).forEach(function(entry) {
+                var name = entry[0], value = entry[1];
+                var fields = form.querySelectorAll('[name="' + CSS.escape(name) + '"]');
+                fields.forEach(function(field) {
+                    if (field.type === 'checkbox') {
+                        field.checked = Array.isArray(value) && value.includes(field.value);
+                    } else if (field.type === 'radio') {
+                        field.checked = value === field.value;
+                    } else {
+                        field.value = value;
+                    }
+                });
+            });
+            refreshProgress();
+        }
+
+        // Show notice if draft exists (don't auto-fill)
+        checkDraft();
+
+        // Restore only on explicit click
+        restoreDraftBtn.addEventListener('click', function() {
+            var raw = localStorage.getItem(draftKey);
+            if (raw) {
+                applyDraft(JSON.parse(raw));
+                draftNotice.classList.add('d-none');
+                alert('Taslak başarıyla geri yüklendi.');
+            }
+        });
+
+        clearDraftBtn.addEventListener('click', function() {
+            if (confirm('Taslağı temizlemek istediğinize emin misiniz?')) {
+                localStorage.removeItem(draftKey);
+                draftNotice.classList.add('d-none');
+            }
+        });
+
+        // Auto-save draft on changes
+        form.addEventListener('input', function() { saveDraft(); refreshProgress(); });
+        form.addEventListener('change', function() { saveDraft(); refreshProgress(); });
+
+        // Clear draft on successful submission
+        form.addEventListener('submit', function() {
+            localStorage.removeItem(draftKey);
+        });
+
         refreshProgress();
     });
 </script>
