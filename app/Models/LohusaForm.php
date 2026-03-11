@@ -15,6 +15,14 @@ class LohusaForm extends Model
     use HasFactory;
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
+    protected ?int $riskScoreCache = null;
+    protected ?string $riskLevelCache = null;
+    protected ?string $riskBadgeCache = null;
+    protected ?Carbon $suggestedFollowUpDateCache = null;
+    protected ?string $suggestedFollowUpLabelCache = null;
+    protected ?string $followUpToneCache = null;
+    protected bool $isFollowUpDateCached = false;
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $dispatchesEvents = [
@@ -144,73 +152,98 @@ class LohusaForm extends Model
 
     public function getSuggestedFollowUpDateAttribute(): ?Carbon
     {
+        if ($this->isFollowUpDateCached) {
+            return $this->suggestedFollowUpDateCache;
+        }
+
+        $this->isFollowUpDateCached = true;
         $referenceDate = $this->dogum_tarihi ?? $this->muayene_tarihi;
 
         if (! $referenceDate) {
-            return null;
+            return $this->suggestedFollowUpDateCache = null;
         }
 
         if ($this->postpartum_gun !== null) {
             if ($this->postpartum_gun < 7) {
-                return $referenceDate->copy()->addDays(max(0, 7 - $this->postpartum_gun));
+                return $this->suggestedFollowUpDateCache = $referenceDate->copy()->addDays(max(0, 7 - $this->postpartum_gun));
             }
 
             if ($this->postpartum_gun < 42) {
-                return $referenceDate->copy()->addDays(max(0, 42 - $this->postpartum_gun));
+                return $this->suggestedFollowUpDateCache = $referenceDate->copy()->addDays(max(0, 42 - $this->postpartum_gun));
             }
 
-            return null;
+            return $this->suggestedFollowUpDateCache = null;
         }
 
         if ($this->postpartum_hafta !== null) {
             if ($this->postpartum_hafta < 1) {
-                return $referenceDate->copy()->addWeek();
+                return $this->suggestedFollowUpDateCache = $referenceDate->copy()->addWeek();
             }
 
             if ($this->postpartum_hafta < 6) {
-                return $referenceDate->copy()->addWeeks(6 - $this->postpartum_hafta);
+                return $this->suggestedFollowUpDateCache = $referenceDate->copy()->addWeeks(6 - $this->postpartum_hafta);
             }
         }
 
-        return null;
+        return $this->suggestedFollowUpDateCache = null;
     }
 
     public function getSuggestedFollowUpLabelAttribute(): ?string
     {
+        if ($this->suggestedFollowUpLabelCache !== null) {
+            return $this->suggestedFollowUpLabelCache;
+        }
+
         if (! $this->suggested_follow_up_date) {
-            return null;
+            return $this->suggestedFollowUpLabelCache = null;
         }
 
         if (($this->postpartum_gun !== null && $this->postpartum_gun < 7) || ($this->postpartum_hafta !== null && $this->postpartum_hafta < 1)) {
-            return '1. hafta kontrolu';
+            return $this->suggestedFollowUpLabelCache = '1. hafta kontrolu';
         }
 
-        return '6. hafta kontrolu';
+        return $this->suggestedFollowUpLabelCache = '6. hafta kontrolu';
     }
 
     public function getFollowUpToneAttribute(): string
     {
+        if ($this->followUpToneCache !== null) {
+            return $this->followUpToneCache;
+        }
+
         $date = $this->suggested_follow_up_date;
 
         if (! $date) {
-            return 'secondary';
+            return $this->followUpToneCache = 'secondary';
         }
 
-        return $date->isPast() ? 'danger' : ($date->diffInDays(now()) <= 7 ? 'warning' : 'success');
+        return $this->followUpToneCache = $date->isPast() ? 'danger' : ($date->diffInDays(now()) <= 7 ? 'warning' : 'success');
     }
 
     public function getRiskScoreAttribute(): int
     {
-        return \App\Support\RiskCalculator::calculateForLohusa($this);
+        if ($this->riskScoreCache !== null) {
+            return $this->riskScoreCache;
+        }
+
+        return $this->riskScoreCache = \App\Support\RiskCalculator::calculateForLohusa($this);
     }
 
     public function getRiskLevelAttribute(): string
     {
-        return \App\Support\RiskCalculator::getRiskLevel($this->risk_score);
+        if ($this->riskLevelCache !== null) {
+            return $this->riskLevelCache;
+        }
+
+        return $this->riskLevelCache = \App\Support\RiskCalculator::getRiskLevel($this->risk_score);
     }
 
     public function getRiskBadgeAttribute(): string
     {
-        return \App\Support\RiskCalculator::getRiskBadge($this->risk_score);
+        if ($this->riskBadgeCache !== null) {
+            return $this->riskBadgeCache;
+        }
+
+        return $this->riskBadgeCache = \App\Support\RiskCalculator::getRiskBadge($this->risk_score);
     }
 }

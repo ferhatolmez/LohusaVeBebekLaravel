@@ -37,10 +37,12 @@ class LohusaFormRepository
 
     public function filterOptions(): array
     {
-        return [
-            'dogumYerleri' => LohusaForm::query()->whereNotNull('dogum_yeri')->distinct()->orderBy('dogum_yeri')->pluck('dogum_yeri'),
-            'bebekBeslenmeSekilleri' => LohusaForm::query()->whereNotNull('bebek_beslenmesi')->distinct()->orderBy('bebek_beslenmesi')->pluck('bebek_beslenmesi'),
-        ];
+        return \Illuminate\Support\Facades\Cache::remember('lohusa_filter_options', 60, function () {
+            return [
+                'dogumYerleri' => LohusaForm::query()->whereNotNull('dogum_yeri')->distinct()->orderBy('dogum_yeri')->pluck('dogum_yeri'),
+                'bebekBeslenmeSekilleri' => LohusaForm::query()->whereNotNull('bebek_beslenmesi')->distinct()->orderBy('bebek_beslenmesi')->pluck('bebek_beslenmesi'),
+            ];
+        });
     }
 
     public function latest(int $limit = 4): Collection

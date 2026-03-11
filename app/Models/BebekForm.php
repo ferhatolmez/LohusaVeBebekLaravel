@@ -15,6 +15,10 @@ class BebekForm extends Model
     use HasFactory;
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
+    protected ?Carbon $suggestedFollowUpDateCache = null;
+    protected ?string $followUpToneCache = null;
+    protected bool $isFollowUpDateCached = false;
+
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $dispatchesEvents = [
@@ -94,24 +98,33 @@ class BebekForm extends Model
 
     public function getSuggestedFollowUpDateAttribute(): ?Carbon
     {
+        if ($this->isFollowUpDateCached) {
+            return $this->suggestedFollowUpDateCache;
+        }
+
+        $this->isFollowUpDateCached = true;
         if (! $this->muayene_tarihi) {
-            return null;
+            return $this->suggestedFollowUpDateCache = null;
         }
 
         $daysByVisit = [1 => 2, 2 => 5, 3 => 10, 4 => 30];
         $days = $daysByVisit[$this->izlem_sayisi] ?? 30;
 
-        return $this->muayene_tarihi->copy()->addDays($days);
+        return $this->suggestedFollowUpDateCache = $this->muayene_tarihi->copy()->addDays($days);
     }
 
     public function getFollowUpToneAttribute(): string
     {
+        if ($this->followUpToneCache !== null) {
+            return $this->followUpToneCache;
+        }
+
         $date = $this->suggested_follow_up_date;
 
         if (! $date) {
-            return 'secondary';
+            return $this->followUpToneCache = 'secondary';
         }
 
-        return $date->isPast() ? 'danger' : ($date->diffInDays(now()) <= 7 ? 'warning' : 'success');
+        return $this->followUpToneCache = $date->isPast() ? 'danger' : ($date->diffInDays(now()) <= 7 ? 'warning' : 'success');
     }
 }

@@ -6,13 +6,20 @@ trait CalculatesCompletionScore
 {
     abstract protected function completionFields(): array;
 
+    protected ?int $completionScoreCache = null;
+    protected ?string $completionToneCache = null;
+
     public function getCompletionScoreAttribute(): int
     {
+        if ($this->completionScoreCache !== null) {
+            return $this->completionScoreCache;
+        }
+
         $fields = $this->completionFields();
         $total = count($fields);
 
         if ($total === 0) {
-            return 0;
+            return $this->completionScoreCache = 0;
         }
 
         $filled = 0;
@@ -23,12 +30,16 @@ trait CalculatesCompletionScore
             }
         }
 
-        return (int) round(($filled / $total) * 100);
+        return $this->completionScoreCache = (int) round(($filled / $total) * 100);
     }
 
     public function getCompletionToneAttribute(): string
     {
-        return match (true) {
+        if ($this->completionToneCache !== null) {
+            return $this->completionToneCache;
+        }
+
+        return $this->completionToneCache = match (true) {
             $this->completion_score >= 80 => 'success',
             $this->completion_score >= 50 => 'warning',
             default => 'danger',
